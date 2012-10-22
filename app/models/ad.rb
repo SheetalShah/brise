@@ -16,4 +16,5 @@ class Ad < ActiveRecord::Base
 
   validates_presence_of :ad_type
   validates_presence_of :eval_type	  
+  validates :details, presence: true, length: { maximum: 250 }
 end
