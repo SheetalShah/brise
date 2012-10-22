@@ -6,12 +6,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :represents_company, :represents_individual, :display_name
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name
   # attr_accessible :title, :body
   before_save { |user| user.email = email.downcase }
 
   validates :display_name, presence: true, length: { maximum: 50 }
   validates :user_type, presence: true
+  validates :password, length: { manimum: 6 }
  
   USER_TYPES = %w(individual company)
   validates_inclusion_of :user_type, :in => USER_TYPES
