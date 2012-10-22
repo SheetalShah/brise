@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  description: MyString
+  industry: MyString
+  category: MyString
+  raw_material: false
+  finished_product: false
+
+two:
+  name: MyString
+  description: MyString
+  industry: MyString
+  category: MyString
+  raw_material: false
+  finished_product: false

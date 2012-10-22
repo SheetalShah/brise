@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description: MyString
+  indicative_price: 1
+  indicative_options: MyString
+
+two:
+  description: MyString
+  indicative_price: 1
+  indicative_options: MyString

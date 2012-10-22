@@ -1,0 +1,33 @@
+<h1>Listing ads</h1>
+
+<table>
+  <tr>
+    <th>Details</th>
+    <th>Buy</th>
+    <th>Sell</th>
+    <th>Rent</th>
+    <th>Price eval</th>
+    <th>Options eval</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ads.each do |ad| %>
+  <tr>
+    <td><%= ad.details %></td>
+    <td><%= ad.buy %></td>
+    <td><%= ad.sell %></td>
+    <td><%= ad.rent %></td>
+    <td><%= ad.price_eval %></td>
+    <td><%= ad.options_eval %></td>
+    <td><%= link_to 'Show', ad %></td>
+    <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
+    <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ad', new_ad_path %>

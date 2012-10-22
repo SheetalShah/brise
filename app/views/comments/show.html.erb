@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Description:</b>
+  <%= @comment.description %>
+</p>
+
+<p>
+  <b>Indicative price:</b>
+  <%= @comment.indicative_price %>
+</p>
+
+<p>
+  <b>Indicative options:</b>
+  <%= @comment.indicative_options %>
+</p>
+
+
+<%= link_to 'Edit', edit_comment_path(@comment) %> |
+<%= link_to 'Back', comments_path %>

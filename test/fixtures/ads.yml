@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  details: MyString
+  buy: false
+  sell: false
+  rent: false
+  price_eval: false
+  options_eval: false
+
+two:
+  details: MyString
+  buy: false
+  sell: false
+  rent: false
+  price_eval: false
+  options_eval: false
