@@ -67,5 +67,7 @@ Brise::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  root :to => "home#index"
+  constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
+    root :to => "devise/sessions#new"
+  end
 end

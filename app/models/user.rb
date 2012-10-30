@@ -2,7 +2,15 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :confirmable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :invite_for => 2.weeks
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
@@ -12,7 +20,7 @@ class User < ActiveRecord::Base
 
   validates :display_name, presence: true, length: { maximum: 50 }
   validates :user_type, presence: true
-  validates :password, length: { manimum: 6 }
+  validates :password, length: { minimum: 6 }
  
   USER_TYPES = %w(individual company)
   validates_inclusion_of :user_type, :in => USER_TYPES

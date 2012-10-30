@@ -1,6 +1,6 @@
 class Ad < ActiveRecord::Base
-  attr_accessible :ad_type, :details, :eval_type 
-  belongs_to :product
+  attr_accessible :ad_type, :details, :eval_type, :title 
+  has_and_belongs_to_many :product
   belongs_to :user
   has_many :comments, :dependent => :destroy
 
@@ -17,4 +17,11 @@ class Ad < ActiveRecord::Base
   validates_presence_of :ad_type
   validates_presence_of :eval_type	  
   validates :details, presence: true, length: { maximum: 250 }
+
+
+  TYPES.each do |state_name|
+    define_method "#{state_name}?"
+	state == state_name
+    end
+  end
 end

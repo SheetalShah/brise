@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  attr_accessible :city, :country, :name, :company_type, :state, :street_address1, :street_address2
+  attr_accessible :city, :raw_material_manufacturer, :finished_product_manufacturer, :retailer, :country, :name, :company_type, :state, :street_address1, :street_address2
   has_and_belongs_to_many :products
 
   validates_presence_of :city

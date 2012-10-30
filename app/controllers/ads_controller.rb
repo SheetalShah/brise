@@ -1,4 +1,6 @@
 class AdsController < ApplicationController
+  before_filter :authenticate_user!, only: [:create, :edit, :update, :destroy, :show_all_ads_by_user]
+  before_filter :correct_user, only: [:edit, :update, :destroy]
   # GET /ads
   # GET /ads.json
   def index
@@ -21,6 +23,14 @@ class AdsController < ApplicationController
     end
   end
 
+  def show_all_ads_by_user
+    @ads = current_user.ads
+    respond_to do |format|
+      format.html
+      format.json { render json: @ads }
+    end
+  end
+        		
   # GET /ads/new
   # GET /ads/new.json
   def new

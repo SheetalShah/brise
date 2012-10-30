@@ -11,19 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022062318) do
+ActiveRecord::Schema.define(:version => 20121025140713) do
 
   create_table "ads", :force => true do |t|
     t.string   "details"
-    t.boolean  "buy"
-    t.boolean  "sell"
-    t.boolean  "rent"
-    t.boolean  "price_eval"
-    t.boolean  "options_eval"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "tags"
     t.string   "state"
+    t.string   "ad_type"
+    t.string   "eval_type"
+    t.string   "title"
   end
 
   add_index "ads", ["tags"], :name => "index_ads_on_tags"
@@ -46,31 +44,25 @@ ActiveRecord::Schema.define(:version => 20121022062318) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.boolean  "public"
-    t.boolean  "private"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
-    t.boolean  "raw_material_manufacturer"
-    t.boolean  "finished_product_manufacturer"
-    t.boolean  "retailer"
     t.text     "used_by"
     t.text     "you_use"
     t.string   "zip_code"
+    t.string   "company_type"
+    t.boolean  "raw_material_manufacturer"
+    t.boolean  "finished_product_manufacturer"
+    t.boolean  "retailer"
   end
-
-  add_index "companies", ["finished_product_manufacturer"], :name => "index_companies_on_finished_product_manufacturer"
-  add_index "companies", ["raw_material_manufacturer"], :name => "index_companies_on_raw_material_manufacturer"
-  add_index "companies", ["retailer"], :name => "index_companies_on_retailer"
 
   create_table "products", :force => true do |t|
     t.string   "name"
     t.string   "industry"
     t.string   "category"
-    t.boolean  "raw_material"
-    t.boolean  "finished_product"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.text     "description"
+    t.string   "product_type"
   end
 
   create_table "relationship_ads", :force => true do |t|
@@ -103,25 +95,37 @@ ActiveRecord::Schema.define(:version => 20121022062318) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                                :default => "", :null => false
+    t.string   "encrypted_password",                   :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                        :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.string   "display_name"
-    t.boolean  "individual"
-    t.boolean  "company"
+    t.string   "user_type"
+    t.string   "invitation_token",       :limit => 60
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer  "invitation_limit"
+    t.integer  "invited_by_id"
+    t.string   "invited_by_type"
+    t.time     "confirmed_at"
+    t.string   "confirmation_token"
+    t.time     "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["display_name"], :name => "index_users_on_display_name", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
+  add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
