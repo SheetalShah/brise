@@ -6,15 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :invite_for => 2.weeks
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country
+  attr_writer :signup_current_step
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name
   # attr_accessible :title, :body
   before_save { |user| user.email = email.downcase }
 
@@ -37,4 +31,36 @@ class User < ActiveRecord::Base
   has_many :followedads, through: :relationship_ads
   has_many :reverse_relationship_ads, foreign_key: "followedad_id", class_name: "RelationshipAd", dependent: :destroy
   has_many :followers, through: :reverse_relationship_ads
+  accepts_nested_attributes_for :company
+
+  def signup_current_step
+    @signup_current_step || signup_steps.first
+  end
+
+  def signup_steps
+    %w[basicinfo additionalinfo]
+  end
+
+  def signup_next_step
+    self.signup_current_step = signup_steps[signup_steps.index(signup_current_step)+1]
+  end
+
+  def signup_previous_step
+    self.signup_current_step = signup_steps[signup_steps.index(signup_current_step)-1]
+  end
+
+  def signup_first_step?
+    signup_current_step == signup_steps.first
+  end
+
+  def signup_last_step?
+    signup_current_step == signup_steps.last
+  end
+
+  def signup_all_valid?
+    signup_steps.all? do |signup_step|
+      self.signup_current_step = signup_step
+      valid?
+    end
+  end
 end
