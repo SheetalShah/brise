@@ -7,6 +7,8 @@ gem 'bootstrap-sass', '2.0.4'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'country_select'
+gem 'geokit-rails3'
 
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '> 1.0.0'

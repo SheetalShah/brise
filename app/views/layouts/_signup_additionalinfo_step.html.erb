@@ -1,0 +1,39 @@
+<%= f.label :user_type %>
+<%= select(:user, :user_type,  [[ 'Individual', 'individual'], ['Company','company']]) %><br/>
+
+<%= f.label :street_address1 %>
+<%= f.text_field :street_address1 %><br/>
+
+<%= f.label :street_address2 %>    
+<%= f.text_field :street_address2 %><br/>
+
+<%= f.label :city %>
+<%= f.text_field :city %><br/>
+
+<%= f.label :state %>
+<%= f.text_field :state %><br/>
+
+<%= f.label :country %>
+<%= f.country_select :country, ["India"] %>
+
+<%= f.label :zip_code %>
+<%= f.text_field :zip_code %><br/>
+<div class="modal" style="display:none;">
+</div>
+<div id="dialog" title="Basic dialog">
+    Helps find nearest to position ads.
+</div>
+<a href="#" id="help" class="ui-state-default ui-corner-all">Why do I need to provide my address?</a>
+
+<%= f.fields_for :company do |c| %>
+  <%= render "/layouts/company_details", :c => c %>
+<% end %>
+
+
+
+
+
+  
+
+
+	  

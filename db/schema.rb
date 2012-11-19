@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121025140713) do
+ActiveRecord::Schema.define(:version => 20121108075625) do
 
   create_table "ads", :force => true do |t|
     t.string   "details"
@@ -38,21 +38,18 @@ ActiveRecord::Schema.define(:version => 20121025140713) do
   add_index "comments", ["price"], :name => "index_comments_on_price"
 
   create_table "companies", :force => true do |t|
-    t.string   "name"
-    t.string   "street_address1"
-    t.string   "street_address2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.text     "used_by"
-    t.text     "you_use"
-    t.string   "zip_code"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "company_type"
-    t.boolean  "raw_material_manufacturer"
-    t.boolean  "finished_product_manufacturer"
     t.boolean  "retailer"
+    t.integer  "user_id"
+    t.string   "company_name"
+    t.boolean  "manufacturer"
+  end
+
+  create_table "companies_products", :force => true do |t|
+    t.integer "company_id", :null => false
+    t.integer "product_id", :null => false
   end
 
   create_table "products", :force => true do |t|
@@ -95,7 +92,7 @@ ActiveRecord::Schema.define(:version => 20121025140713) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                :default => "", :null => false
+    t.string   "email",                                :default => "",           :null => false
     t.string   "encrypted_password",                   :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -105,10 +102,10 @@ ActiveRecord::Schema.define(:version => 20121025140713) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
     t.string   "display_name"
-    t.string   "user_type"
+    t.string   "user_type",                            :default => "individual"
     t.string   "invitation_token",       :limit => 60
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
@@ -119,6 +116,12 @@ ActiveRecord::Schema.define(:version => 20121025140713) do
     t.string   "confirmation_token"
     t.time     "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.integer  "zip_code"
+    t.string   "city"
+    t.string   "country"
+    t.string   "street_address1"
+    t.string   "street_address2"
+    t.string   "state"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

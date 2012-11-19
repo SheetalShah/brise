@@ -25,7 +25,9 @@ class CompaniesController < ApplicationController
   # GET /companies/new.json
   def new
     @company = Company.new
-
+    manufacturer_products = @company.manufacturer_products.build
+    retailer_products = @company.retailer_products.build
+   	
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @company }
@@ -41,7 +43,7 @@ class CompaniesController < ApplicationController
   # POST /companies.json
   def create
     @company = Company.new(params[:company])
-
+    
     respond_to do |format|
       if @company.save
         format.html { redirect_to @company, notice: 'Company was successfully created.' }

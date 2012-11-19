@@ -1,0 +1,25 @@
+<h1>Listing company_products</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Product</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @company_products.each do |company_product| %>
+  <tr>
+    <td><%= company_product.company %></td>
+    <td><%= company_product.product %></td>
+    <td><%= link_to 'Show', company_product %></td>
+    <td><%= link_to 'Edit', edit_company_product_path(company_product) %></td>
+    <td><%= link_to 'Destroy', company_product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Company product', new_company_product_path %>

@@ -27,24 +27,57 @@ p {
 	line-height: 1.7em;
 }
 
+a:visited { color:blue };
+a:hover { color: blue; background-color: $grayLighter  };
+a:link { color:blue };
+
+.spacer {
+	margin-top: 50px;
+}
+
+.half-half-spacer {
+	margin-top: 12px;
+}
 
 #logo {
 	float: left;
 	margin-right: 10px;
 	font-size: 1.7em;
-	color: #fff;
+	color: #2E8B57;
 	text-transform: uppercase;
 	letter-spacing: -1px;
 	padding-top: 9px;
 	font-weight: bold;
 	line-height: 1;
+	text-align: center;
+ 	
 }
 
 #logo:hover {
-	color: #fff;
+	color: #2E8B57;
 	text-decoration: none;
 }
 
+img.floatLeft {
+	float: left;
+	margin: 4px;
+}
+
+img.floatRight {
+	float: right;
+	margin: 4px;
+}
+
+img.relative {
+	position: relative;
+	top: 100px;
+	left: 150px;
+}
+#row {
+	position: relative;
+	top: 50px;
+}
+	
 footer {
 	margin-top: 45px;
 	padding-top: 5px;
@@ -147,14 +180,18 @@ input, textarea, select, .uneditable-input {
 
 aside {
 	margin: 35px;
-	background-color: $grayLighter;
 	padding: 9px;
-
+	background-color: white;
 	textarea {
 		height: 100px;
 		margin-bottom: 5px;
 	}
 }
+
+.backcolor {
+        background-color: $grayLighter;
+	}
+
 aside header {
 		line-height: 1;
 		font-size: 1.7em;
@@ -193,5 +230,55 @@ aside header {
 	.gravatar {
 	   margin: 1px 1px;
 	}
+}
+
+.breadcrumb-inactive {
+	color: blue;
+	text-decoration: underline;
+}	
+
+.breadcrumb-active {
+	
+}
+
+.groupbox {
+
+	background-color: $grayLighter;
+
+}
+
+.float-right {
+	float: right;
+}
+
+.error_message {
+	color: red;
+}
+
+@for $i from 1 through 12 {
+  .row-fluid .offset#{$i} {
+    margin-left: (6.382978723% * $i) + (2.127659574% * $i);
+    *margin-left: (6.329787233638298% * $i) + (2.0744680846382977% * $i);
+  }
+}
+
+.toggler { 
+	width: 500px; 
+	height: 200px; 
+}
+#help { 
+	padding: .5em 1em; 
+	text-decoration: none; 
+}
+#effect { 
+	width: 240px; 
+	height: 135px; 
+	padding: 0.4em; 
+	position: relative; 
+}
+#effect h3 { 
+	margin: 0; 
+	padding: 0.4em; 
+	text-align: center; 
 }
 

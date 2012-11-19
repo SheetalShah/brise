@@ -1,16 +1,41 @@
 Brise::Application.routes.draw do
+  resources :company_products
+
+  resources :helps
+
   resources :companies
 
   resources :reviews
 
   resources :comments
 
-  resources :ads
+  resources :events
 
-  resources :products
+  resources :ads do
+    resources :comments
+  end
 
-  devise_for :users
+  resources :products do
+    resources :reviews
+  end
 
+  
+#  match '/users/signup_additionalinfo', to: 'users#signup_additionalinfo'
+#  match '/users/signup_preferences', to: 'users#signup_preferences'
+#  match '/users/signup_basicinfo', to: 'users#signup_basicinfo'
+  constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
+    devise_for :users, :controllers => {:sessions => 'devise/sessions', :registrations => 'users'} do
+      get "/login", :to => "devise/sessions#new", :as => :login
+      get "/signup", :to => "devise/registration#new", :as => :signup
+      get "/logout", :to => "devise/sessions#destroy", :as => :logout
+    end
+  end
+
+  constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
+    resources :users do
+      resources :companies
+    end
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

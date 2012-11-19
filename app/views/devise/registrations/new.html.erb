@@ -1,21 +1,39 @@
-<h2>Sign up</h2>
-
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
-      <%= f.label :display_name %><br/>
-      <%= f.text_field :display_name %>
-      <%= f.label :email %><br/>
-      <%= f.email_field :email %>
-      <%= f.label :password %><br/>
-      <%= f.password_field :password %>
-      <%= f.label :password_confirmation %><br/>
-      <%= f.password_field :password_confirmation %>
-      <%= f.label :user_type %><br/>
-      <%= select(:user, :user_type,  [[ 'Individual', 'individual'], ['Company','company']]) %>
-      <%= f.submit "Sign up", class: "btn btn-large btn-primary" %>
-    <% end %>
-    <%= render "devise/shared/links" %>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="utf-8"> 
+</head>
+<body>
+  <%= render 'layouts/header' %>
+  <title>
+    <h2 class="spacer">
+      Sign up
+    </h2>
+  </title>
+  <div class="container-fluid spacer">
+    <div class="row-fluid">
+      <div class="offset3 span6"> 
+	<div class="row-fluid">
+	  <div class="span12">
+            <ul class="breadcrumb">
+	      <li class="active">Basic Info<span class="divider">></span></li>
+ 	      <li>Additional Info<span class="divider">></span></li>
+ 	      <li>Preferences<span class="divider">></span></li>
+            </ul>
+          </div>
+          <div class="span12">
+            <%= form_for(@user) do |f| %>
+	      <%= render "/layouts/signup_#{@user.signup_current_step}_step", :f => f %>
+              <%= render "/shared/error_messages", object: f.object %>
+              <p><%= f.submit "Continue" %></p>
+              <p><%= f.submit "Back", :name => "back_button" unless @user.signup_first_step? %></p>
+	      <p><%= f.submit "Sign up", class: "btn btn-large btn-primary" if @user.signup_last_step? %></p>
+	    <% end %>
+            <%= render "devise/shared/links" %>
+	  </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</body>
+</html> 

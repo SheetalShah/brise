@@ -1,0 +1,19 @@
+  <hr>
+  <%= c.label :company_name, :class => 'hidden_option'  %>
+  <%= c.text_field :company_name, :class => 'hidden_option' %><br/>
+  <br/>
+
+  <div class="groupbox control-group check_boxes optional">
+    <label class="check_boxes optional control-label hidden_option">Are you a?</label>
+    <div class="controls hidden_option">
+          <label class="checkbox hidden_option">	
+          <%= c.check_box :manufacturer, :class => 'check_boxes optional hidden_option'  %>Manufacturer</label>
+          <p class="hidden_option"><%= link_to_add_fields "Add Manufacturered Product", c, :manufacturer_products %></p>
+
+        <label class="checkbox hidden_option">	
+        <%= c.check_box :retailer, :class => 'check_boxes optional hidden_option'  %>Retailer</label>
+
+        <p class="hidden_option"><%= link_to_add_fields "Add Retail Product", c, :retailer_products %></p>
+    </div>
+  </div>
+<br/>
