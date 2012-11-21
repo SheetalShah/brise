@@ -1,12 +1,11 @@
 <%= form_for(@ad) do |f| %>
   <div class="row-fluid center">
+    <headertag class="span12">New Ad</headertag>
     <div class="extraneous-non-semantic-markup">
       <section>
         <groupthin>
-	  <div class="row-fluid">
-	    <div class="span2">Looking to</div>
-	    <div class="span2"><%= f.select(:ad_type, [['Buy', 'Buy'], [ 'Sell', 'Sell' ], [ 'Rent', 'Rent' ]]) %></div>
-	    
+          <%= f.select(:ad_type, [['Buy', 'Buy'], [ 'Sell', 'Sell' ], [ 'Rent', 'Rent' ]]) %>
+
 	  Product <%= f.text_field :title %><br />
           <br/>
           <%= f.text_area :details, placeholder: "Description/Content" %>

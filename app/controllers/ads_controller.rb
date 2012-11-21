@@ -34,7 +34,7 @@ class AdsController < ApplicationController
   # GET /ads/new
   # GET /ads/new.json
   def new
-    @ad = Ad.new
+    @ad = current_user.ads.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,15 +50,19 @@ class AdsController < ApplicationController
   # POST /ads
   # POST /ads.json
   def create
-    @ad = Ad.new(params[:ad])
+    @ad = current_user.ads.build(params[:ad])
 
     respond_to do |format|
       if @ad.save
-        format.html { redirect_to @ad, notice: 'Ad was successfully created.' }
-        format.json { render json: @ad, status: :created, location: @ad }
+	@ad = current_user.ads.build
+	redirect_to root_url
+	@notice = 'Ad was successfully created.'
+#        format.html { ,  }
+#        format.json { render json: @ad, status: :created, location: @ad }
       else
-        format.html { render action: "new" }
-        format.json { render json: @ad.errors, status: :unprocessable_entity }
+#        format.html { render action: "new" }
+#        format.json { render json: @ad.errors, status: :unprocessable_entity }
+	redirect_to root_url
       end
     end
   end

@@ -9,7 +9,7 @@ gem 'bootstrap-sass', '2.0.4'
 gem 'sqlite3'
 gem 'country_select'
 gem 'geokit-rails3'
-
+gem 'faker', '1.0.1'
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '> 1.0.0'
 

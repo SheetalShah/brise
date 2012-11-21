@@ -1,5 +1,24 @@
-<p id="notice"><%= notice %></p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="utf-8"> 
+</head>
+<body>
+  <%= render 'layouts/header' %>
+    <div class="row-fluid">
+     <aside>	
+        <div class="center unit span3">
+          <h3><%= link_to "#{@user.display_name}", new_user_path %></h3>
+          <section>
+            <%= render 'shared/stats' %>
+          </section>
+	  <br>
+          <section>
+            <%= render 'shared/adpost_form' %>
+          </section>
+        </div>
+      </aside>
+    </div>
+   	
+  </body>
+</html>

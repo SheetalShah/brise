@@ -19,23 +19,23 @@ Brise::Application.routes.draw do
     resources :reviews
   end
 
+  resources :relationships, only: [:create, :destroy]
   
-#  match '/users/signup_additionalinfo', to: 'users#signup_additionalinfo'
-#  match '/users/signup_preferences', to: 'users#signup_preferences'
-#  match '/users/signup_basicinfo', to: 'users#signup_basicinfo'
   constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
     devise_for :users, :controllers => {:sessions => 'devise/sessions', :registrations => 'users'} do
       get "/login", :to => "devise/sessions#new", :as => :login
       get "/signup", :to => "devise/registration#new", :as => :signup
       get "/logout", :to => "devise/sessions#destroy", :as => :logout
     end
-  end
-
-  constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
     resources :users do
+      member do
+        get :following, :followers, :following_ads, :show
+      end
       resources :companies
     end
+    root :to => "users#home"
   end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -92,7 +92,4 @@ Brise::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
-    root :to => "devise/sessions#new"
-  end
 end

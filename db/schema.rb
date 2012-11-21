@@ -11,19 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108075625) do
+ActiveRecord::Schema.define(:version => 20121120152701) do
 
   create_table "ads", :force => true do |t|
     t.string   "details"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "tags"
-    t.string   "state"
+    t.string   "state",        :default => "active", :null => false
     t.string   "ad_type"
-    t.string   "eval_type"
     t.string   "title"
+    t.integer  "user_id"
+    t.boolean  "price_eval"
+    t.boolean  "options_eval"
   end
 
+  add_index "ads", ["options_eval"], :name => "index_ads_on_options_eval"
+  add_index "ads", ["price_eval"], :name => "index_ads_on_price_eval"
   add_index "ads", ["tags"], :name => "index_ads_on_tags"
 
   create_table "comments", :force => true do |t|
