@@ -7,4 +7,8 @@ module UsersHelper
   def admin_user
     redirect_to(root_path) unless current_user.admin?
   end
+
+  def product_name(product_id)
+    Product.find(product_id)
+  end
 end

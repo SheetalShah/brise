@@ -10,12 +10,17 @@ Brise::Application.routes.draw do
   resources :comments
 
   resources :events
+  
 
-  resources :ads do
+  resources :ads, only: [ :create, :destroy, :edit, :update ] do
+    resources :brand
+    resources :product 
     resources :comments
   end
 
   resources :products do
+    resources :brands_products
+    resources :brands
     resources :reviews
   end
 
@@ -29,7 +34,7 @@ Brise::Application.routes.draw do
     end
     resources :users do
       member do
-        get :following, :followers, :following_ads, :show
+        get :following, :followers, :following_ads, :show, :home
       end
       resources :companies
     end
@@ -92,4 +97,5 @@ Brise::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+  match '/home', to: 'users#home'
 end

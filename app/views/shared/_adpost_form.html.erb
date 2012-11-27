@@ -1,12 +1,17 @@
 <%= form_for(@ad) do |f| %>
   <div class="row-fluid center">
-    <headertag class="span12">New Ad</headertag>
+    <headertag class="span12">Looking to</headertag>
     <div class="extraneous-non-semantic-markup">
       <section>
         <groupthin>
           <%= f.select(:ad_type, [['Buy', 'Buy'], [ 'Sell', 'Sell' ], [ 'Rent', 'Rent' ]]) %>
-
-	  Product <%= f.text_field :title %><br />
+	  <%= fields_for :product do |c| %>
+	    <%= render "/layouts/ad_product_details", :c => c %>
+          <% end %>
+          <%= fields_for :brand do |builder| %>
+            <%= render "layouts/ad_brand_details", :c => builder %>
+          <% end %>
+	  <br />
           <br/>
           <%= f.text_area :details, placeholder: "Description/Content" %>
           <div class="groupbox control-group check_boxes optional">
@@ -20,6 +25,7 @@
           </div>
 	  <%= render "/shared/error_messages", object: f.object %>
 	  <%= f.submit "POST AD", class: "btn btn-large btn-primary" %>
+	  <%= debug(params) if Rails.env.development? %>
         </groupthin>
       </section>
     </div>

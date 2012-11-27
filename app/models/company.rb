@@ -3,6 +3,7 @@ class Company < ActiveRecord::Base
 
   has_and_belongs_to_many :manufacturer_products, :class_name => "Product"
   has_and_belongs_to_many :retailer_products, :class_name => "Product"
+  has_many :brands
   
   accepts_nested_attributes_for :manufacturer_products, :allow_destroy => true
   accepts_nested_attributes_for :retailer_products, :allow_destroy => true

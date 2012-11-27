@@ -5,6 +5,14 @@ namespace :db do
   end
 end
 
+def ads
+ users = User.all(limit: 6)
+    50.times do
+      details = Faker::Lorem.sentence(5)
+      productname = Faker::Name.name
+      users.each { |user| user.ads.create!(details: details, productname: productname) }
+    end
+end
 def make_users
   admin = User.create!(display_name:     "SheetalShah",
                        email:    "onlysheetal@gmail.com",

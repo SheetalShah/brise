@@ -1,0 +1,8 @@
+<h3>Ad Feed(<%= @user.ads.count %>)</h3>
+<div class="center">
+  <% if @user.ads.any? %>
+    <ol class="ads">
+      <%= render @ads %>
+    </ol>
+  <% end %>
+</div>

@@ -4,18 +4,14 @@ class AdsController < ApplicationController
   # GET /ads
   # GET /ads.json
   def index
-    @ads = Ad.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @ads }
-    end
   end
 
   # GET /ads/1
   # GET /ads/1.json
   def show
     @ad = Ad.find(params[:id])
+    @product = @ad.build_product
+    @brand = @ad.build_brand
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,8 +30,12 @@ class AdsController < ApplicationController
   # GET /ads/new
   # GET /ads/new.json
   def new
-    @ad = current_user.ads.build
-
+    @ad = Ad.new
+    @product = Product.new
+    @brand = Brand.new
+    @ad.product = @product
+    @ad.brand = @brand
+	
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @ad }
@@ -50,20 +50,20 @@ class AdsController < ApplicationController
   # POST /ads
   # POST /ads.json
   def create
-    @ad = current_user.ads.build(params[:ad])
+    @user = current_user
+    @ad = current_user.ads.build(params[:ad])	
+    @brand_product = BrandProduct.new
+    @product = @brand_product.build_product(params[:product])
+    @brand = @brand_product.build_brand(params[:brand])
+    @ad.brand_product = @brand_product
+    @ads = current_user.ads
 
-    respond_to do |format|
-      if @ad.save
-	@ad = current_user.ads.build
-	redirect_to root_url
-	@notice = 'Ad was successfully created.'
-#        format.html { ,  }
-#        format.json { render json: @ad, status: :created, location: @ad }
-      else
-#        format.html { render action: "new" }
-#        format.json { render json: @ad.errors, status: :unprocessable_entity }
-	redirect_to root_url
-      end
+    if @ad.valid?
+      @ad.save!	
+      @notice = 'Ad was successfully created.'
+      redirect_to @user
+    else
+      render :template => 'users/show'
     end
   end
 

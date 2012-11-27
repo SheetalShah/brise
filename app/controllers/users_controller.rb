@@ -19,16 +19,12 @@ class UsersController < Devise::RegistrationsController
     if user_signed_in?
       @user = current_user
       @ad = current_user.ads.build
-      @ad_feed = Ad.all
-#      redirect_to user_url
+      @ads = current_user.ads
+
       respond_to do |format|
         format.html { render action: "show" }
         format.json { render json: @user }
       end 	
-#      respond_to do |format|
- #       format.html # home.html.erb
- #       format.json  { render :xml => @user }
- #     end
     else
       redirect_to user_session_path
     end 
@@ -37,9 +33,10 @@ class UsersController < Devise::RegistrationsController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    @ad = @user.ads.build
-    @ad_feed = Ad.all	 
+    @ad = @user.ads.build(params[:ad])
+    @ads = @user.ads
     
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }

@@ -11,24 +11,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121120152701) do
+ActiveRecord::Schema.define(:version => 20121126150324) do
 
   create_table "ads", :force => true do |t|
     t.string   "details"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "tags"
-    t.string   "state",        :default => "active", :null => false
+    t.string   "state",            :default => "active", :null => false
     t.string   "ad_type"
-    t.string   "title"
     t.integer  "user_id"
     t.boolean  "price_eval"
     t.boolean  "options_eval"
+    t.integer  "brand_product_id"
   end
 
   add_index "ads", ["options_eval"], :name => "index_ads_on_options_eval"
   add_index "ads", ["price_eval"], :name => "index_ads_on_price_eval"
   add_index "ads", ["tags"], :name => "index_ads_on_tags"
+
+  create_table "brand_products", :force => true do |t|
+    t.integer  "brand_id"
+    t.integer  "product_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "brands", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "company_id"
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "indicative_price"
@@ -64,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20121120152701) do
     t.datetime "updated_at",   :null => false
     t.text     "description"
     t.string   "product_type"
+    t.string   "model"
   end
 
   create_table "relationship_ads", :force => true do |t|

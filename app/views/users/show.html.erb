@@ -7,7 +7,7 @@
   <%= render 'layouts/header' %>
     <div class="row-fluid">
      <aside>	
-        <div class="center unit span3">
+        <div class="center unit span2">
           <h3><%= link_to "#{@user.display_name}", new_user_path %></h3>
           <section>
             <%= render 'shared/stats' %>
@@ -15,6 +15,11 @@
 	  <br>
           <section>
             <%= render 'shared/adpost_form' %>
+          </section>
+        </div>
+        <div class="center span6">  
+	  <section>
+            <%= render 'shared/adfeed' %>
           </section>
         </div>
       </aside>

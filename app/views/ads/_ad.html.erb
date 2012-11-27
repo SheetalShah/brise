@@ -1,0 +1,27 @@
+  <li>
+    <ad-titlebold><%= ad.ad_type %>  
+    <%= ad.product_name %> 
+       <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
+        (Brand: <%= ad.brand_name %>, Model: <%= ad.model_name %>)
+      <% else %>
+        <% if !ad.brand_name.blank? %>
+          (Brand-<%= ad.brand_name %>)
+        <% else %>
+          <% if !ad.model_name.blank? %>
+            (Model-<%= ad.model_name %>)
+          <% end %>
+        <% end %>
+      <% end %>
+    </ad-titlebold>
+    <%= link_to "review", reviews_path %>
+    <span class="float-right"><%= ad.by_type %></span>
+    <span id="content" class="more details"><%= ad.details %></span>
+  <% if ad.created_at %>
+    <span class="timestamp">
+      Posted <%= time_ago_in_words(ad.created_at) %> ago.
+    </span>
+  <% end %>
+  </li>
+
+
+
