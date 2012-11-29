@@ -44,9 +44,10 @@ a.morelink {
     display: none;
 }
 .comment {
-    width: 400px;
+    margin: 0px;
+    padding: 0px 0px 0px 0px;
     background-color: #f0f0f0;
-    margin: 10px;
+    border: 1px solid white;
 }
 .spacer {
 	margin-top: 50px;
@@ -159,12 +160,12 @@ input, textarea, select, .uneditable-input {
 	@extend .error;
 }
 
-.users {
+.collection {
 	list-style: none;
 	margin: 0;
 	li {
 		overflow: auto;
-		padding: 10px 0;
+		padding: 2px 2px;
 		border-top: 1px solid $grayLighter;
 		&:last-child {
 			border-bottom: 1px solid $grayLighter;
@@ -209,6 +210,11 @@ headertag {
 		text-align: center;
 		font-weight: normal;
 		color: #999;
+}
+
+display-name {
+	font-weight: bold;
+
 }
 .stats {
    overflow: auto;
@@ -270,9 +276,18 @@ headertag {
   }
 }
 
+.comments-display{
+	display: none;
+}
+
 .toggler { 
 	width: 500px; 
 	height: 200px; 
+}
+.timestamp {
+	font-size: 13px;
+        font-family: "Times New Roman";
+	padding: 0px;
 }
 #help { 
 	padding: .5em 1em; 

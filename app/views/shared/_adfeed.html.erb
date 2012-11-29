@@ -1,7 +1,7 @@
-<h3>Ad Feed(<%= @user.ads.count %>)</h3>
+<h3>Ad Feed(<%= @ads.count %>)</h3>
 <div class="center">
-  <% if @user.ads.any? %>
-    <ol class="ads">
+  <% if @ads.any? %>
+    <ol class="ads collection">
       <%= render @ads %>
     </ol>
   <% end %>

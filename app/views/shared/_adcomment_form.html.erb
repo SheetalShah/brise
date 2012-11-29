@@ -1,0 +1,5 @@
+<%= form_for([ad,@comment]) do |f| %>
+  <div class="comment">
+    <%= f.text_field :description, placeholder: "Add a comment", size: "1x1", class: "float-right" %>
+  </div>
+<% end %>

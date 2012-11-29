@@ -20,6 +20,7 @@ class UsersController < Devise::RegistrationsController
       @user = current_user
       @ad = current_user.ads.build
       @ads = current_user.ads
+      @comment = @ad.comments.build
 
       respond_to do |format|
         format.html { render action: "show" }
@@ -35,6 +36,7 @@ class UsersController < Devise::RegistrationsController
     @user = User.find(params[:id])
     @ad = @user.ads.build(params[:ad])
     @ads = @user.ads
+    @comment = @ad.comments.build(params[:comment])
     
 
     respond_to do |format|

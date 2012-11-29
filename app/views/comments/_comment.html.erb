@@ -1,0 +1,8 @@
+<% if comment.created_at %>
+  <li class="comment">
+    <a href="#"><%= comment.ad.display_name %></a>: <%= comment.description %><br/>
+    <span class="timestamp">
+      Posted <%= time_ago_in_words(comment.created_at) %> ago.
+    </span>
+  </li>
+<% end %>

@@ -1,4 +1,5 @@
   <li>
+  <% if ad.created_at %>
     <ad-titlebold><%= ad.ad_type %>  
     <%= ad.product_name %> 
        <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
@@ -16,9 +17,16 @@
     <%= link_to "review", reviews_path %>
     <span class="float-right"><%= ad.by_type %></span>
     <span id="content" class="more details"><%= ad.details %></span>
-  <% if ad.created_at %>
     <span class="timestamp">
       Posted <%= time_ago_in_words(ad.created_at) %> ago.
+    </span>
+    <span class="comment">
+    <span class="float-left">
+      <%= render 'shared/commentfeed', :ad => ad %>
+    </span>
+    <section>
+      <%= render 'shared/adcomment_form', :ad => ad %>
+    </section>
     </span>
   <% end %>
   </li>

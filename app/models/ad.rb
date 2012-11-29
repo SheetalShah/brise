@@ -5,6 +5,9 @@ class Ad < ActiveRecord::Base
     def by_type
       "By " + user.user_type if user
     end
+    def display_name
+      user.display_name if user
+    end
   belongs_to :brand_product, :foreign_key => :brand_product_id
     def product_name
       brand_product.product_name if brand_product

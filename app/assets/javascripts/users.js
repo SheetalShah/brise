@@ -22,7 +22,6 @@ $(document).ready(function(){
   });
   // set effect from select menu value
   $( "#help" ).click(function() {
-    alert("hello ma'am")
     $( "#dialog" ).dialog( "open" );
     return false;
   });

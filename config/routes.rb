@@ -7,10 +7,9 @@ Brise::Application.routes.draw do
 
   resources :reviews
 
-  resources :comments
-
   resources :events
   
+  resources :comments
 
   resources :ads, only: [ :create, :destroy, :edit, :update ] do
     resources :brand
