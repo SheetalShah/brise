@@ -35,6 +35,8 @@ class CommentsController < ApplicationController
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
+
+    render "form"
   end
 
   # POST /comments
@@ -73,11 +75,12 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
+    @user = current_user
     @comment = Comment.find(params[:id])
     @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to comments_url }
+      format.html { redirect_to @user }
       format.json { head :no_content }
     end
   end

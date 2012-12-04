@@ -6,6 +6,11 @@ h1, h2, h3, h4, h5, h6  {
 	margin-top: 45px;
 }
 
+h3-no-padding {
+        font-size: 1.5em;
+        line-height: 1;
+	font-weight: bold;
+}
 ad-titlebold {
 	font-size: 1.2em;
 	font-weight: normal;
@@ -33,7 +38,7 @@ p {
 }
 
 a:visited { color:blue };
-a:hover { color: blue; background-color: $grayLighter  };
+a:hover { color: blue; background-color: $grayLighter;  };
 a:link { color:blue };
 
 a.morelink {
@@ -162,6 +167,7 @@ input, textarea, select, .uneditable-input {
 
 .collection {
 	list-style: none;
+        border: 1px solid $grayLighter;
 	margin: 0;
 	li {
 		overflow: auto;
@@ -171,6 +177,10 @@ input, textarea, select, .uneditable-input {
 			border-bottom: 1px solid $grayLighter;
 		}
 	}
+}
+
+border {
+	border: 1px solid $grayLighter;
 }
 
 .gravatar {
@@ -263,6 +273,7 @@ display-name {
 
 .float-right {
 	float: right;
+	text-align: right;
 }
 
 .error_message {
@@ -304,4 +315,22 @@ display-name {
 	padding: 0.4em; 
 	text-align: center; 
 }
+
+
+nav ul li:hover > ul {
+	display: block;
+}
+
+nav ul {
+	list-style: none;
+	position: relative;
+	display: inline-table;
+	text-align: right;
+}
+
+.dropdown-menu {
+	min-width: 80px;
+}
+
+
 

@@ -7,7 +7,7 @@ class Company < ActiveRecord::Base
   
   accepts_nested_attributes_for :manufacturer_products, :allow_destroy => true
   accepts_nested_attributes_for :retailer_products, :allow_destroy => true
-  validates  :company_name, :presence => true
+  #validates  :company_name, :presence => true
   belongs_to :user, foreign_key => :user_id
 
 end

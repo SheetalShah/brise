@@ -3,7 +3,7 @@ class Ad < ActiveRecord::Base
 
   belongs_to :user
     def by_type
-      "By " + user.user_type if user
+      user.user_type if user
     end
     def display_name
       user.display_name if user
@@ -20,7 +20,7 @@ class Ad < ActiveRecord::Base
     end
   
   validates :user_id, presence: true
-  has_many :comments, :dependent => :destroy
+  has_many :comments, :inverse_of => :ad, :dependent => :destroy
   default_scope order: 'ads.created_at DESC'
 
   TYPES = %w(active inactive closed)
@@ -32,6 +32,12 @@ class Ad < ActiveRecord::Base
   validates :ad_type, presence: true
   validates :details, presence: true
 
+  def self.from_users_followed_by(user)
+    followed_user_ids = "SELECT followed_id FROM relationships
+                         WHERE follower_id = :user_id"
+    where("user_id IN (#{followed_user_ids}) OR user_id = :user_id", 
+          user_id: user.id)
+  end
 
  TYPES.each do |state_name|
     define_method "#{state_name}?" do

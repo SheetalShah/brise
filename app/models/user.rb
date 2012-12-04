@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country, :company_attributes
-  attr_writer :signup_current_step
+  attr_writer :signup_current_step, :show_ads_by
 
   # attr_accessible :title, :body
   before_save { |user| user.email = email.downcase }
@@ -75,5 +75,26 @@ class User < ActiveRecord::Base
 
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
+  end
+
+  def adfeed_by_type
+    %w[followedusers followedads followedproducts]
+  end
+
+  def show_ads_by
+    @show_ads_by || adfeed_by_type.first
+  end
+
+  def feed
+    
+    if(self.show_ads_by == "followedusers")
+      @ads = Ad.from_users_followed_by(self)	
+    else
+      if(self.show_ads_by == "followedads")
+        @ads = Ad.from_ads_followed_by(self)
+      else
+        @ads = Ad.all
+      end
+    end
   end
 end

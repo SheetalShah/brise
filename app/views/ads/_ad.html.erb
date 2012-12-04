@@ -1,21 +1,21 @@
   <li>
   <% if ad.created_at %>
     <ad-titlebold><%= ad.ad_type %>  
-    <%= ad.product_name %> 
-       <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
-        (Brand: <%= ad.brand_name %>, Model: <%= ad.model_name %>)
+      <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
+        <%= ad.brand_name %> <%= ad.model_name %>
       <% else %>
         <% if !ad.brand_name.blank? %>
-          (Brand-<%= ad.brand_name %>)
+          <%= ad.brand_name %>
         <% else %>
           <% if !ad.model_name.blank? %>
-            (Model-<%= ad.model_name %>)
+            <%= ad.model_name %>
           <% end %>
         <% end %>
       <% end %>
+      <%= ad.product_name %>
     </ad-titlebold>
     <%= link_to "review", reviews_path %>
-    <span class="float-right"><%= ad.by_type %></span>
+    <span class="float-right"><%= ad.by_type %> <%= link_to image_tag('symbols-delete.png', :size => "16x10"), ad, method: :delete %></span>
     <span id="content" class="more details"><%= ad.details %></span>
     <span class="timestamp">
       Posted <%= time_ago_in_words(ad.created_at) %> ago.
@@ -24,9 +24,6 @@
     <span class="float-left">
       <%= render 'shared/commentfeed', :ad => ad %>
     </span>
-    <section>
-      <%= render 'shared/adcomment_form', :ad => ad %>
-    </section>
     </span>
   <% end %>
   </li>

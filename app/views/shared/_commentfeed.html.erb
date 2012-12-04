@@ -1,9 +1,12 @@
 <span class="float-right"><a href="" id="commentslink" class="commentslink">Comments</a>(<%= ad.comments.count %>)</span>
-<% if ad.comments.any? %>
-  <span class="center">
+<span class="center">
+  <% if ad.comments.any? %>
     <ol class="collection comments-display">
-      <%= render :partial => 'comments/comment', :collection => ad.comments, :ad => ad %>
+    <%= render :partial => 'comments/comment', :collection => ad.comments, :ad => ad %>
     </ol>
-  </span>
-<% end %>
+ <% end %>
+ <section class="comments-display">
+   <%= render 'shared/adcomment_form', :ad => ad %>
+  </section>
+</span>
 

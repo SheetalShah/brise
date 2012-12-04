@@ -56,13 +56,15 @@ class AdsController < ApplicationController
     @product = @brand_product.build_product(params[:product])
     @brand = @brand_product.build_brand(params[:brand])
     @ad.brand_product = @brand_product
-    @ads = current_user.ads
+    @ads = current_user.feed
 
     if @ad.valid?
       @ad.save!	
+      @comment = @ad.comments.build(params[:comment])
       @notice = 'Ad was successfully created.'
       redirect_to @user
     else
+      @ad.destroy
       render :template => 'users/show'
     end
   end
@@ -86,12 +88,20 @@ class AdsController < ApplicationController
   # DELETE /ads/1
   # DELETE /ads/1.json
   def destroy
+    @user = current_user
     @ad = Ad.find(params[:id])
     @ad.destroy
 
     respond_to do |format|
-      format.html { redirect_to ads_url }
+      format.html { redirect_to @user }
       format.json { head :no_content }
     end
   end
+
+private
+
+    def correct_user
+      @ad = current_user.ads.find_by_id(params[:id])
+      redirect_to root_url if @ad.nil?
+    end
 end

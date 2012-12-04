@@ -1,8 +1,13 @@
 <% if comment.created_at %>
   <li class="comment">
-    <a href="#"><%= comment.ad.display_name %></a>: <%= comment.description %><br/>
+    <a href="#"><%= comment.ad.display_name %></a>: <%= comment.description %>
+    <span class="float-right"><%= link_to image_tag('edit-icon.png', :size => "16x10"), comment, :controller => "comments", :action => :edit, :id => @comment, :method => :post %></span>
+    <span class="float-right"><%= link_to image_tag('symbols-delete.png', :size => "16x10"), comment, method: :delete %></span>
+    <br/>
     <span class="timestamp">
       Posted <%= time_ago_in_words(comment.created_at) %> ago.
     </span>
   </li>
 <% end %>
+
+

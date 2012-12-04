@@ -33,7 +33,7 @@ Brise::Application.routes.draw do
     end
     resources :users do
       member do
-        get :following, :followers, :following_ads, :show, :home
+        get :following, :followers, :following_ads, :show, :show_all_ads, :show_followedusers_ads, :home
       end
       resources :companies
     end
