@@ -26,7 +26,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'best_in_place'
 group :development do
 	gem 'ajaxful_rating', '3.0.0.beta3'
 end

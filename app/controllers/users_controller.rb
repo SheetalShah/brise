@@ -1,5 +1,5 @@
 class UsersController < Devise::RegistrationsController
-  before_filter :authenticate_user!, only: [:index, :edit, :update, :destroy, :following, :followers]
+  before_filter :authenticate_user!, except: [:index ]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
 
@@ -38,7 +38,7 @@ class UsersController < Devise::RegistrationsController
     @ad = @user.ads.build(params[:ad])
     @ads = @user.feed
     @comment = @ad.comments.build(params[:comment])
-    
+    @current_user = current_user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -48,6 +48,12 @@ class UsersController < Devise::RegistrationsController
 
   def show_followedusers_ads
     session[:show_ads_by] = "followedusers"
+    @user = User.find(params[:id])
+    redirect_to @user
+  end
+
+  def show_followedads_ads
+    session[:show_ads_by] = "followedads"
     @user = User.find(params[:id])
     redirect_to @user
   end

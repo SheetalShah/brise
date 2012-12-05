@@ -1,5 +1,5 @@
 class AdsController < ApplicationController
-  before_filter :authenticate_user!, only: [:create, :edit, :update, :destroy, :show_all_ads_by_user]
+  before_filter :authenticate_user!, except: [:index ]
   before_filter :correct_user, only: [:edit, :update, :destroy]
   # GET /ads
   # GET /ads.json
@@ -65,6 +65,7 @@ class AdsController < ApplicationController
       redirect_to @user
     else
       @ad.destroy
+      @comment = Comment.new
       render :template => 'users/show'
     end
   end

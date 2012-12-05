@@ -4,6 +4,11 @@ module UsersHelper
     redirect_to(root_path) unless current_user?(@user)
   end
 
+  def is_correct_user(user_to_check)
+    @user = User.find(user_to_check)
+    current_user?(@user)
+  end
+
   def admin_user
     redirect_to(root_path) unless current_user.admin?
   end

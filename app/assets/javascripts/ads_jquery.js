@@ -28,4 +28,5 @@ $(document).ready(function(){
         $(this).prev().toggle();
         return false;
     });
+    $("span.timeago").timeago();
 });

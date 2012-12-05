@@ -1,12 +1,15 @@
 <% if comment.created_at %>
   <li class="comment">
-    <a href="#"><%= comment.ad.display_name %></a>: <%= comment.description %>
-    <span class="float-right"><%= link_to image_tag('edit-icon.png', :size => "16x10"), comment, :controller => "comments", :action => :edit, :id => @comment, :method => :post %></span>
-    <span class="float-right"><%= link_to image_tag('symbols-delete.png', :size => "16x10"), comment, method: :delete %></span>
+    <% if @current_user == comment.ad.user %> 
+      <a href="#"><%= comment.ad.display_name %></a>: <%= best_in_place comment, :description %>
+      <span class="float-right"><%= link_to image_tag('delete-gray.png', :size => "20x20"), comment, method: :delete %></span>
+    <% else %>
+      <a href="#"><%= comment.ad.display_name %></a>: <%= comment.description %>
+    <% end %>
     <br/>
-    <span class="timestamp">
-      Posted <%= time_ago_in_words(comment.created_at) %> ago.
-    </span>
+    <span class="timestamp timeago" title="<%= comment.updated_at.getutc.iso8601 %>">
+      <%= comment.updated_at.to_s %>
+    </spanr>
   </li>
 <% end %>
 

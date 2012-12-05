@@ -37,9 +37,9 @@ p {
 	line-height: 1.7em;
 }
 
-a:visited { color:blue };
-a:hover { color: blue; background-color: $grayLighter;  };
-a:link { color:blue };
+a:visited { color:#006699 };
+a:hover { color: #006699; background-color: $grayLighter;  };
+a:link { color:#006699 };
 
 a.morelink {
     text-decoration:none;
@@ -273,9 +273,13 @@ display-name {
 
 .float-right {
 	float: right;
-	text-align: right;
+	
 }
 
+.float-right-text {
+	float: right;
+	text-align: right;
+}
 .error_message {
 	color: red;
 }

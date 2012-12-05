@@ -69,12 +69,24 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id)
   end
 
+  def following_ad?(ad)
+    relationship_ads.find_by_followedad_id(ad.id)
+  end
+
   def follow!(other_user)
     relationships.create!(followed_id: other_user.id)
   end
 
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
+  end
+
+  def followad!(ad)
+    relationship_ads.create!(followedad_id: ad.id)
+  end
+
+  def unfollowad!(ad)
+    relationship_ads.find_by_followedad_id(ad.id).destroy
   end
 
   def adfeed_by_type
@@ -86,7 +98,6 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    
     if(self.show_ads_by == "followedusers")
       @ads = Ad.from_users_followed_by(self)	
     else

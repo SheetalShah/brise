@@ -2,7 +2,7 @@
 <span class="center">
   <% if ad.comments.any? %>
     <ol class="collection comments-display">
-    <%= render :partial => 'comments/comment', :collection => ad.comments, :ad => ad %>
+    <%= render :partial => 'comments/comment', :collection => ad.comments, :ad => ad, :current_user => current_user %>
     </ol>
  <% end %>
  <section class="comments-display">

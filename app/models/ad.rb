@@ -8,6 +8,9 @@ class Ad < ActiveRecord::Base
     def display_name
       user.display_name if user
     end
+    def correct_user
+      current_user?(user) if user
+    end
   belongs_to :brand_product, :foreign_key => :brand_product_id
     def product_name
       brand_product.product_name if brand_product
@@ -31,6 +34,13 @@ class Ad < ActiveRecord::Base
   
   validates :ad_type, presence: true
   validates :details, presence: true
+
+  def self.from_ads_followed_by(user)
+    followed_ad_ids = "SELECT followedad_id FROM relationship_ads
+                         WHERE follower_id = :user_id"
+    where("user_id IN (#{followed_ad_ids}) OR user_id = :user_id", 
+          user_id: user.id)
+  end
 
   def self.from_users_followed_by(user)
     followed_user_ids = "SELECT followed_id FROM relationships

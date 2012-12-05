@@ -3,13 +3,14 @@
 <div class="span10">
 <h3-no-padding>Ad Feed(<%= @user.feed.count %>)</h3-no-padding>
 </div>
-<div class="span2 float-right">
+<div class="span2 float-right-text">
       <nav>
         <ul class="nav">
 	<li class="downdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">By:<%= @user.show_ads_by %><b class="caret"></b></a>	    
          <ul class="dropdown-menu">
 	  <li><%= link_to "All", :controller => "users", :action => :show_all_ads, :id => @user %></li>
           <li><%= link_to "followedusers", :controller => "users", :action => :show_followedusers_ads, :id => @user %></li>
+          <li><%= link_to "followedads", :controller => "users", :action => :show_followedads_ads, :id => @user %></li>
 	</ul>
         </li></ul>
 
@@ -21,9 +22,9 @@
 <div class="center">
   <% if @user.feed.any? %>
     <ol class="ads collection">
-      <%= render @ads %>
+      <%= render @ads, :current_user => @current_user %>
     </ol>
   <% end %>
 </div>
-<%= debug(params) if Rails.env.development? %>
+
 

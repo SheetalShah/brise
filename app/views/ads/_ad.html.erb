@@ -15,10 +15,15 @@
       <%= ad.product_name %>
     </ad-titlebold>
     <%= link_to "review", reviews_path %>
-    <span class="float-right"><%= ad.by_type %> <%= link_to image_tag('symbols-delete.png', :size => "16x10"), ad, method: :delete %></span>
+    <% if @current_user == ad.user %> 
+      <span class="float-right-text"><%= link_to image_tag('delete-gray.png', :size => "20x20"), ad, method: :delete %></span>
+    <% else %>
+      <%= render 'followad_form', :ad => ad %>   
+      <span class="float-right-text">By <%= ad.by_type %></span>
+    <% end %>
     <span id="content" class="more details"><%= ad.details %></span>
-    <span class="timestamp">
-      Posted <%= time_ago_in_words(ad.created_at) %> ago.
+    <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>">
+      <%= ad.updated_at.to_s %>
     </span>
     <span class="comment">
     <span class="float-left">

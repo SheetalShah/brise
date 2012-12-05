@@ -31,6 +31,9 @@ GEM
     ajaxful_rating (3.0.0.beta3)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    best_in_place (2.0.2)
+      jquery-rails
+      rails (~> 3.1)
     bootstrap-sass (2.0.4.0)
     builder (3.0.4)
     coffee-rails (3.2.2)
@@ -127,6 +130,7 @@ PLATFORMS
 
 DEPENDENCIES
   ajaxful_rating (= 3.0.0.beta3)
+  best_in_place
   bootstrap-sass (= 2.0.4)
   coffee-rails (~> 3.2.1)
   country_select

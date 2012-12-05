@@ -1,6 +1,6 @@
 <% @user ||= current_user %>
 <div class="stats">
-  <a href="<%= following_user_path(@user) %>">
+  <a href="<%= following_user_path(@user) %>"><%= render 'users/follow_form' %>   
     <strong id="following" class="stat">
       <%= @user.followed_users.count %>
     </strong>
@@ -12,7 +12,12 @@
     </strong>
     followers
   </a>
-  
+  <a href="<%= following_ad_user_path(@user) %>">
+    <strong id="followers" class="stat">
+      <%= @user.followedads.count %>
+    </strong>
+    following ads
+  </a>
 </div>
 
 

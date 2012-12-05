@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include Devise::Controllers::Helpers
   # GET /comments
   # GET /comments.json
   def index
@@ -35,8 +36,8 @@ class CommentsController < ApplicationController
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
-
-    render "form"
+    
+    render :template => 'comments/edit'
   end
 
   # POST /comments

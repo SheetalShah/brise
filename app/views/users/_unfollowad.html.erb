@@ -1,0 +1,5 @@
+<%= form_for(@current_user.relationship_ads.find_by_followedad_id(ad),
+             html: { method: :delete }) do |f| %>
+  <%= f.submit "Unfollow", class: "btn" %>
+<% end %>
+

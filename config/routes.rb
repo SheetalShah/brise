@@ -24,6 +24,8 @@ Brise::Application.routes.draw do
   end
 
   resources :relationships, only: [:create, :destroy]
+
+  resources :relationship_ads, only: [:create, :destroy]
   
   constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
     devise_for :users, :controllers => {:sessions => 'devise/sessions', :registrations => 'users'} do
@@ -33,7 +35,7 @@ Brise::Application.routes.draw do
     end
     resources :users do
       member do
-        get :following, :followers, :following_ads, :show, :show_all_ads, :show_followedusers_ads, :home
+        get :following, :followers, :following_ad, :show, :show_all_ads, :show_followedusers_ads, :show_followedads_ads, :home
       end
       resources :companies
     end
