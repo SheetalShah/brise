@@ -1,6 +1,6 @@
 $('.commentslink').ready(function(){
   $(".commentslink").click(function(){
-        $(this).parent().next().children().toggle();
+        $(this).parent().parent().parent().next().children().toggle();
 	return false;
     });
   $("span.timeago").timeago();

@@ -1,35 +1,41 @@
-  <li>
+  <li class="no-padding">
   <% if ad.created_at %>
-    <ad-titlebold><%= ad.ad_type %>  
+    <ad-title><normal><%= ad.ad_type %>  </normal>
       <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
-        <%= ad.brand_name %> <%= ad.model_name %>
+        <bold><%= ad.brand_name %>  </bold>|<bold>   <%= ad.model_name %></bold>  |
       <% else %>
         <% if !ad.brand_name.blank? %>
-          <%= ad.brand_name %>
+          <bold><%= ad.brand_name %></bold>  |
         <% else %>
           <% if !ad.model_name.blank? %>
-            <%= ad.model_name %>
+            <bold><%= ad.model_name %></bold>  |
           <% end %>
         <% end %>
       <% end %>
-      <%= ad.product_name %>
-    </ad-titlebold>
-    <%= link_to "review", reviews_path %>
+      <bold><%= ad.product_name %></bold>
+    </ad-title>
+    <sub><%= link_to "review", reviews_path %></sub>
     <% if @current_user == ad.user %> 
       <span class="float-right-text"><%= link_to image_tag('delete-gray.png', :size => "20x20"), ad, method: :delete %></span>
     <% else %>
-      <%= render 'followad_form', :ad => ad %>   
       <span class="float-right-text">By <%= ad.by_type %></span>
     <% end %>
     <span id="content" class="more details"><%= ad.details %></span>
-    <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>">
-      <%= ad.updated_at.to_s %>
-    </span>
-    <span class="comment">
-    <span class="float-left">
+        <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>">
+         <%= ad.updated_at.to_s %>
+        </span>
+    <section class="row-fluid no-padding smallfont">
+      <section class="span5 no-padding">
+        <% if @current_user != ad.user %>
+          <section class="span2 no-padding"><%= render 'followad_form', :ad => ad %></section>
+          <section class="span1 no-padding">|</section>
+        <% end %>
+        <section class="span2 no-padding"><a href="" id="commentslink"  class="commentslink no-padding">Comment</a>(<%= ad.comments.count %>)</section>
+      </section>
+    </section>
+    <section class="comment no-padding">
       <%= render 'shared/commentfeed', :ad => ad %>
-    </span>
-    </span>
+    </section>
   <% end %>
   </li>
 

@@ -1,5 +1,4 @@
 <%= form_for(@current_user.relationship_ads.build(followedad_id: ad.id)) do |f| %>
-  <div><%= f.hidden_field :followedad_id %></div>
-  <%= f.submit "Follow", class: "btn" %>
+  <%= f.hidden_field :followedad_id %>
+  <a href="#", onClick="$(this).closest('form').submit(); return false;">Follow</a>
 <% end %>
-

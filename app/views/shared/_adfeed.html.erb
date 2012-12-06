@@ -1,9 +1,10 @@
 <div class="container-fluid">
 <div class="row-fluid">
-<div class="span10">
-<h3-no-padding>Ad Feed(<%= @user.feed.count %>)</h3-no-padding>
+<h3>
+<div class="span9">
+Ad Feed(<%= @user.feed.count %>)
 </div>
-<div class="span2 float-right-text">
+<div class="span3 float-right-text">
       <nav>
         <ul class="nav">
 	<li class="downdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">By:<%= @user.show_ads_by %><b class="caret"></b></a>	    
@@ -13,13 +14,11 @@
           <li><%= link_to "followedads", :controller => "users", :action => :show_followedads_ads, :id => @user %></li>
 	</ul>
         </li></ul>
-
       </nav>
-
 </div>
 </div>
-
-<div class="center">
+</h3>
+<div>
   <% if @user.feed.any? %>
     <ol class="ads collection">
       <%= render @ads, :current_user => @current_user %>
