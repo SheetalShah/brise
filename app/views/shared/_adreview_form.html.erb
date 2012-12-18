@@ -1,0 +1,10 @@
+<%= form_for([product,@review], :html => { :class => 'rating_ballot' }) do |f| %>
+    1. How do you rate this item?<%= rating_for @product, "quality" %><br>
+    2. Add review comment
+    <%= f.text_area :description, size: "1x1" %> 
+    <%= render "/shared/error_messages", object: f.object %>
+    <%= f.submit "POST REVIEW", class: "btn" %>
+<% end %>
+
+
+

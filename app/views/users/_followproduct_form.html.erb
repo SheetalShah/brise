@@ -1,0 +1,6 @@
+<% if @current_user.following_product?(@product) %>
+  <%= render 'products/unfollowproduct', :product => @product %>
+<% else %>
+  <%= render 'products/followproduct', :product => @product %>
+<% end %>
+

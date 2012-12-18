@@ -12,6 +12,7 @@ Ad Feed(<%= @user.feed.count %>)
 	  <li><%= link_to "All", :controller => "users", :action => :show_all_ads, :id => @user %></li>
           <li><%= link_to "followedusers", :controller => "users", :action => :show_followedusers_ads, :id => @user %></li>
           <li><%= link_to "followedads", :controller => "users", :action => :show_followedads_ads, :id => @user %></li>
+          <li><%= link_to "followedproducts", :controller => "users", :action => :show_followedproducts_ads, :id => @user %></li>
 	</ul>
         </li></ul>
       </nav>

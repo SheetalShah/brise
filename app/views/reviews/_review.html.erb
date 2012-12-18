@@ -1,0 +1,29 @@
+<% if review.created_at %>
+  <li class="comment no-padding">
+    <% if @user == @current_user %>
+      <div class="row-fluid">
+        <div class="span6">
+          <a href="#"><%= review.display_name %></a>: <%= best_in_place review, :description, :type => :textarea %>
+        </div>
+        <div class="span6">
+          <div class="row-fluid">
+            <span class="float-right">
+              <div class="span10">
+                <%= rating_for_override @product, "quality", :readonly => true, :user => review.user %>
+              </div>
+              <div class="span2"><sup>
+                <%= link_to image_tag('delete-gray.png', :size => "20x20"), review, method: :delete %></sup
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <%= review.description %>
+    <% end %>
+    <br/>
+    <span class="timestamp timeago" title="<%= review.updated_at.getutc.iso8601 %>">
+      <%= review.updated_at.to_s %>
+    </span>
+  </li>
+<% end %>

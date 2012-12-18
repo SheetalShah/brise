@@ -1,35 +1,45 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @product.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @product.description %>
-</p>
-
-<p>
-  <b>Industry:</b>
-  <%= @product.industry %>
-</p>
-
-<p>
-  <b>Category:</b>
-  <%= @product.category %>
-</p>
-
-<p>
-  <b>Raw material:</b>
-  <%= @product.raw_material %>
-</p>
-
-<p>
-  <b>Finished product:</b>
-  <%= @product.finished_product %>
-</p>
-
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="utf-8"> 
+</head>
+<body class="body">
+  <%= render 'layouts/header' %>
+    <div class="row-fluid">
+     <aside>	
+        <div class="center unit span3">
+        
+        <div class="row-fluid">
+	<h3>
+          <div class="span10" >
+            <%= rating_for_override @product, "quality", :readonly => true %>
+          </div>
+          <div class="row-fluid">
+          <div class="span6">
+            <ad-title> <bold><%= @product.name %>  </bold>
+              <% if !@product.model.blank? %>|<bold>   <%= @product.model %></bold><% end %>
+            </ad-title>
+          </div>
+          <div class="span6">
+            <%= render 'users/followproduct_form' %></div>
+          </div>
+          </div>
+          </h3>
+          <section>
+            <%= render 'shared/productstats' %>
+          </section>
+	  <br>
+          <section>
+            <%= render 'shared/productDetails' %>
+          </section>
+        </div>
+        <div class="center span4">  
+	  <section>
+            <%= render 'shared/reviewfeed' %>
+          </section>
+        </div>
+      </aside>
+    </div>
+   	
+  </body>
+</html>

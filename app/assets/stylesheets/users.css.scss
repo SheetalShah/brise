@@ -364,5 +364,23 @@ nav ul {
 	min-width: 100px;
 }
 
+.layer1 {
+margin: 0;
+padding: 0;
 
+}
+ 
+.brandheading {
+margin: 1px;
+color: $grayLighter;
+padding: 2px 6px;
+cursor: pointer;
+position: relative;
+background-color:#006699;
+}
+.brandcontent {
+padding: 2px 6px;
+background-color:#fafafa;
+}
+p { padding: 5px 0; }
 

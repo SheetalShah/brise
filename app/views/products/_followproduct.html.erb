@@ -1,0 +1,4 @@
+<%= form_for(@current_user.relationship_products.build(followedproduct_id: product.id)) do |f| %>
+  <%= f.hidden_field :followedproduct_id %>
+  <%= f.submit "Follow", class: "btn" %>
+<% end %>

@@ -1,0 +1,18 @@
+<div class="row-fluid center">
+  <div class="extraneous-non-semantic-markup">
+    <section>
+      <groupthin>
+        <headertag><%= @product.name %>:</headertag> <%= best_in_place @product, :description, :type => :textarea %>
+        <br/>
+	<br/>
+        <br/>
+        <% if @product.brands.any? %>
+          <div class="layer1">
+            <%= render @product_brands, :current_user => @current_user %>
+	  </div>
+        <% end %>
+      </groupthin>
+    </section>
+  </div>
+</div>
+

@@ -34,7 +34,7 @@ class UsersController < Devise::RegistrationsController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    @user.show_ads_by = session[:show_ads_by]
+    @user.show_ads_by = session[:show_ads_by] 
     @ad = @user.ads.build(params[:ad])
     @ads = @user.feed
     @comment = @ad.comments.build(params[:comment])
@@ -52,6 +52,11 @@ class UsersController < Devise::RegistrationsController
     redirect_to @user
   end
 
+  def show_followedproducts_ads
+    session[:show_ads_by] = "followedproducts"
+    @user = User.find(params[:id])
+    redirect_to @user
+  end
   def show_followedads_ads
     session[:show_ads_by] = "followedads"
     @user = User.find(params[:id])

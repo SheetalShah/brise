@@ -24,6 +24,8 @@ class Ad < ActiveRecord::Base
   
   validates :user_id, presence: true
   has_many :comments, :inverse_of => :ad, :dependent => :destroy
+  has_many :relationship_ads, foreign_key: "followedad_id", class_name: "RelationshipAd", dependent: :destroy
+  has_many :followers, through: :relationship_ads
   default_scope order: 'ads.created_at DESC'
 
   TYPES = %w(active inactive closed)
@@ -38,7 +40,7 @@ class Ad < ActiveRecord::Base
   def self.from_ads_followed_by(user)
     followed_ad_ids = "SELECT followedad_id FROM relationship_ads
                          WHERE follower_id = :user_id"
-    where("user_id IN (#{followed_ad_ids}) OR user_id = :user_id", 
+    where("id IN (#{followed_ad_ids}) OR user_id = :user_id", 
           user_id: user.id)
   end
 
@@ -46,6 +48,13 @@ class Ad < ActiveRecord::Base
     followed_user_ids = "SELECT followed_id FROM relationships
                          WHERE follower_id = :user_id"
     where("user_id IN (#{followed_user_ids}) OR user_id = :user_id", 
+          user_id: user.id)
+  end
+
+  def self.from_adproducts_followed_by(user)
+    followed_product_ids = "SELECT followedproduct_id FROM relationship_products
+                         WHERE follower_id = :user_id"
+    where("user_id IN (#{followed_product_ids}) OR user_id = :user_id", 
           user_id: user.id)
   end
 

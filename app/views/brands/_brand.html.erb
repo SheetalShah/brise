@@ -1,0 +1,8 @@
+<% if brand.created_at %>
+  <p class="brandheading"><%= brand.name %></p>
+  <div class="brandcontent">
+    <%= best_in_place brand, :description, :type => :textarea %>
+  </div>
+<% end %>
+
+

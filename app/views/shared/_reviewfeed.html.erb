@@ -1,0 +1,23 @@
+<h3>
+<div class="row-fluid">
+      <section class="span9 no-padding">
+      Review Feed(<%= @product.reviews.count %>)
+      </section>
+</div>
+
+    </h3>
+<div>
+  <% if @product.reviews.any? %>
+    <ol class="ads collection">
+      <%= render @product.reviews, :current_user => @current_user %>
+    </ol>
+  <% end %>
+</div>
+
+<section class="no-padding">
+  <%= render 'shared/adreview_form', :product => @product %>
+</section>
+
+<%= debug(params) %>
+
+

@@ -18,6 +18,12 @@
     </strong>
     following ads
   </a>
+  <a href="<%= following_product_user_path(@user) %>">
+    <strong id="followers" class="stat">
+      <%= @user.followedproducts.count %>
+    </strong>
+    following products
+  </a>
 </div>
 
 

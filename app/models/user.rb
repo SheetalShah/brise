@@ -30,8 +30,12 @@ class User < ActiveRecord::Base
   
   has_many :relationship_ads, foreign_key: "follower_id", dependent: :destroy
   has_many :followedads, through: :relationship_ads
-  has_many :reverse_relationship_ads, foreign_key: "followedad_id", class_name: "RelationshipAd", dependent: :destroy
-  has_many :followers, through: :reverse_relationship_ads
+  has_many :reviews
+
+  has_many :relationship_products, foreign_key: "follower_id", dependent: :destroy
+  has_many :followedproducts, through: :relationship_products
+
+  letsrate_rater
   accepts_nested_attributes_for :company, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
 
   def signup_current_step
@@ -73,6 +77,10 @@ class User < ActiveRecord::Base
     relationship_ads.find_by_followedad_id(ad.id)
   end
 
+  def following_product?(product)
+    relationship_products.find_by_followedproduct_id(product.id)
+  end
+
   def follow!(other_user)
     relationships.create!(followed_id: other_user.id)
   end
@@ -89,8 +97,16 @@ class User < ActiveRecord::Base
     relationship_ads.find_by_followedad_id(ad.id).destroy
   end
 
+  def followproduct!(product)
+    relationship_products.create!(followedproduct_id: product.id)
+  end
+
+  def unfollowproduct!(product)
+    relationship_products.find_by_followedproduct_id(product.id).destroy
+  end 
+
   def adfeed_by_type
-    %w[followedusers followedads followedproducts]
+    %w[all followedusers followedads followedproducts]
   end
 
   def show_ads_by
@@ -104,7 +120,11 @@ class User < ActiveRecord::Base
       if(self.show_ads_by == "followedads")
         @ads = Ad.from_ads_followed_by(self)
       else
-        @ads = Ad.all
+	if(self.show_ads_by == "followedproducts")
+          @ads = Ad.from_adproducts_followed_by(self)
+        else
+          @ads = Ad.all
+        end
       end
     end
   end

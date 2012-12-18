@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202121106) do
+ActiveRecord::Schema.define(:version => 20121212073150573) do
 
   create_table "ads", :force => true do |t|
     t.string   "details"
@@ -96,6 +96,26 @@ ActiveRecord::Schema.define(:version => 20121202121106) do
   add_index "rates", ["rateable_id", "rateable_type"], :name => "index_rates_on_rateable_id_and_rateable_type"
   add_index "rates", ["rater_id"], :name => "index_rates_on_rater_id"
 
+  create_table "rating_caches", :force => true do |t|
+    t.integer  "cacheable_id"
+    t.string   "cacheable_type"
+    t.float    "avg",            :null => false
+    t.integer  "qty",            :null => false
+    t.string   "dimension"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "rating_caches", ["cacheable_id", "cacheable_type"], :name => "index_rating_caches_on_cacheable_id_and_cacheable_type"
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.integer  "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "relationship_ads", :force => true do |t|
     t.integer  "follower_id"
     t.integer  "followedad_id"
@@ -106,6 +126,17 @@ ActiveRecord::Schema.define(:version => 20121202121106) do
   add_index "relationship_ads", ["followedad_id"], :name => "index_relationship_ads_on_followedad_id"
   add_index "relationship_ads", ["follower_id", "followedad_id"], :name => "index_relationship_ads_on_follower_id_and_followedad_id", :unique => true
   add_index "relationship_ads", ["follower_id"], :name => "index_relationship_ads_on_follower_id"
+
+  create_table "relationship_products", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "followedproduct_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "relationship_products", ["followedproduct_id"], :name => "index_relationship_products_on_followedproduct_id"
+  add_index "relationship_products", ["follower_id", "followedproduct_id"], :name => "index_relationshipproducts_follower_followedprodict_id", :unique => true
+  add_index "relationship_products", ["follower_id"], :name => "index_relationship_products_on_follower_id"
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -124,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20121202121106) do
     t.text     "description"
     t.integer  "rating"
     t.integer  "product_id"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
