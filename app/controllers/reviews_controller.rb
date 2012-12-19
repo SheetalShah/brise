@@ -44,11 +44,16 @@ class ReviewsController < ApplicationController
     @product = Product.find(params[:product_id])
     @review = @product.reviews.build(params[:review])
     @review.user = current_user
+    @rating = @product.rates.build
+    @rating.stars = params[:score]
+    @rating.rater_id = current_user.id
+    @rating.dimension = "quality"
+    
     @user = current_user
     @product_brands = @product.brands
-    if @review.valid?
-      @review.save!	
+    if @product.valid?
       @product.save!
+      #@product.rate params[:score].to_i, current_user.id, "product"
       @notice = 'Review successfully posted.'
       redirect_to @product
     else

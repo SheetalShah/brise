@@ -26,17 +26,6 @@ class Product < ActiveRecord::Base
         val = self.connection.select_value("select AVG(stars) from rates WHERE rateable_id=#{rateable_obj.id}");	
       end
     end
- 
-#    avg = 0
-#    rows.each do |row|
-#      avg += row.score 
-#    end
-    
-   # if rows.empty?
-   #   0
-   # else     
-   #   avg / rows.count
-   # end
    val
   end
 

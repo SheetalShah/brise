@@ -14,14 +14,18 @@
       <% end %>
       <bold><%= ad.product_name %></bold>
     </ad-title>
-    <sub><%= link_to "review", :controller => "products", :action => :show, :id => ad.brand_product.product_id %>
     <% if @current_user == ad.user %> 
       <span class="float-right-text"><%= link_to image_tag('delete-gray.png', :size => "20x20"), ad, method: :delete %></span>
     <% else %>
       <span class="float-right-text">By <%= ad.by_type %></span>
     <% end %>
-    <%= rating_for_override ad.brand_product.product, "quality", :readonly => true %></sub>
-    <span id="content" class="more details"><%= ad.details %></span>
+    <div class="row-fluid">
+    <div class="span3">
+    <%= rating_for_override ad.brand_product.product, "quality", :readonly => true %></div>
+    <div class="span7">
+    <sub><%= link_to "(#{ad.brand_product.product.reviews.count} review/s)", :controller => "products", :action => :show, :id => ad.brand_product.product_id %></sub></div> 
+    </div>
+    <span id="content" class="more details adlink"><%= link_to "#{ad.details}", :controller => "ads", :action => :show, :id => ad.id, :html => { :class => "adlink" } %></span>
         <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>">
          <%= ad.updated_at.to_s %>
         </span>

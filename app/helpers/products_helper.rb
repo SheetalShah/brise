@@ -7,7 +7,7 @@ module ProductsHelper
     star = options[:star] || 5
     readonly = options[:readonly] || false
     
-    content_tag :div, "", "data-dimension" => dimension, :class => 'star', "data-rating" => avg, 
+    content_tag :div, "", "data-dimension" => dimension, :class => 'star', "data-rating" => avg, "name" => "rating",
                           "data-id" => rateable_obj.id, "data-classname" => rateable_obj.class.name,
                           "data-star-count" => star, "data-readOnly" => readonly
     

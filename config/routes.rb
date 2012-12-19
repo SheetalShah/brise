@@ -15,7 +15,7 @@ Brise::Application.routes.draw do
   
   resources :comments
 
-  resources :ads, only: [ :create, :destroy, :edit, :update ] do
+  resources :ads, only: [ :create, :destroy, :edit, :update, :show ] do
     resources :brand
     resources :product 
     resources :comments

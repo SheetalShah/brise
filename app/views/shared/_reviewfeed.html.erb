@@ -1,11 +1,13 @@
 <h3>
-<div class="row-fluid">
-      <section class="span9 no-padding">
+  <section class="no-padding smallbold floatright">
+  Average Review<%= rating_for_override @product, "quality", :readonly => true %>
+  </section>          
+  <div class="row-fluid">
+    <section class="span7 no-padding">
       Review Feed(<%= @product.reviews.count %>)
-      </section>
-</div>
-
-    </h3>
+    </section>
+  </div>
+</h3>
 <div>
   <% if @product.reviews.any? %>
     <ol class="ads collection">
