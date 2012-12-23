@@ -15,6 +15,9 @@ class Product < ActiveRecord::Base
 
   letsrate_rateable "quality"
 
+  def self.findProduct(productname, modelname)
+    connection.select_value("select * from products WHERE name='#{productname}' AND model='#{modelname}'");
+  end
 
   def average_rating(rateable_obj, user=nil, dimension=nil)
     if( user != nil && dimension != nil )

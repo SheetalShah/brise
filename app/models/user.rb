@@ -89,6 +89,10 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
 
+  def followadbuild(ad)
+    relationship_ads.build(followedad_id: ad.id)	
+  end
+
   def followad!(ad)
     relationship_ads.create!(followedad_id: ad.id)
   end

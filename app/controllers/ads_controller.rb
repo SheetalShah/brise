@@ -49,21 +49,49 @@ class AdsController < ApplicationController
   # POST /ads.json
   def create
     @user = current_user
-    @ad = current_user.ads.build(params[:ad])	
-    @brand_product = BrandProduct.new
-    @product = @brand_product.build_product(params[:product])
-    @brand = @brand_product.build_brand(params[:brand])
+    @ad = current_user.ads.build(params[:ad])
+    session[:brandname ] = params[:brand][:name]	
+    @product_found = Product.findProduct(params[:product][:name], params[:product][:model])
+    @brand_found = Brand.findBrand(params[:brand][:name])
+
+    if @product_found != nil
+      @product = Product.find(@product_found)
+    end
+
+    if @brand_found != nil
+      @brand = Brand.find(@brand_found)
+    end
+
+    if( @product_found != nil && @brand_found != nil )
+      @brand_product_found = BrandProduct.findBrandProduct(@product, @brand) 
+      @brand_product = BrandProduct.find(@brand_product_found)
+    end
+
+    if( @product == nil || @brand == nil || @brand_product == nil )
+      @brand_product = BrandProduct.new
+      if(@product == nil) 
+        @product = @brand_product.build_product(params[:product])
+      else
+        @brand_product.product = @product
+      end
+      
+      if( @brand == nil )
+        @brand = @brand_product.build_brand(params[:brand])
+      else
+        @brand_product.brand = @brand
+      end
+    end 
+
     @ad.brand_product = @brand_product
     @ads = current_user.feed
 
     if @ad.valid?
       @ad.save!	
-      @comment = @ad.comments.build(params[:comment])
+      @follow_ad = @user.followad!(@ad)
       @notice = 'Ad was successfully created.'
       redirect_to @user
     else
       @ad.destroy
-      @comment = Comment.new
       render :template => 'users/show'
     end
   end

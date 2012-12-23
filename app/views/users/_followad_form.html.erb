@@ -1,7 +1,6 @@
-<% unless @current_user == ad.user %>
   <% if @current_user.following_ad?(ad) %>
-    <%= render 'unfollowad', :ad => ad %>
+    <%= render 'users/unfollowad', :ad => ad, :type => type %>
   <% else %>
-    <%= render 'followad', :ad => ad %>
+    <%= render 'users/followad', :ad => ad, :type => type %>
   <% end %>
-<% end %>
+

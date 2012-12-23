@@ -166,6 +166,16 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
+  def following_ad
+    @title = "Following"
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      format.html #following.html.erb
+      format.json { render json: @users }
+    end
+  end
+
   def followers
     title = "Followers"
     @user = User.find(params[:id])

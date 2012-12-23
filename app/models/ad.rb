@@ -58,6 +58,10 @@ class Ad < ActiveRecord::Base
           user_id: user.id)
   end
 
+  def userfollowing(user)
+    relationship_ads.create!(follower_id: user.id)
+  end
+
  TYPES.each do |state_name|
     define_method "#{state_name}?" do
 	state == state_name

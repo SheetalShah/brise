@@ -1,9 +1,9 @@
 <% if ad.comments.any? %>
-  <ol class="collection comments-display no-padding">
+  <ol class="collection no-padding">
     <%= render :partial => 'comments/comment', :collection => ad.comments, :ad => ad, :current_user => current_user %>
   </ol>
 <% end %>
-<section class="comments-display no-padding">
+<section class="no-padding">
   <%= render 'shared/adcomment_form', :ad => ad %>
 </section>
 

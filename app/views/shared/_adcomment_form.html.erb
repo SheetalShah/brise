@@ -1,5 +1,15 @@
-<%= form_for([ad,@comment]) do |f| %>
+<%= form_for([ad,ad.comments.build]) do |f| %>
   <div class="comment">
-    <%= f.text_field :description, placeholder: "Add a comment", size: "1x1", class: "float-right" %>
+    <% if ad.price_eval? %>
+      1. Enter what price you suggest a <%= ad.ad_type %><%= f.text_field :indicative_price %>
+      <% if ad.options_eval? %>
+        2. What options or alternatives are available<%= f.text_field :indicative_price, placeholder: "comma separated" %> 		
+      <% end %>
+    <% else %>
+      <% if ad.options_eval? %>
+        1. What options or alternatives are available<%= f.text_field :indicative_price, placeholder: "comma separated" %> 		
+      <% end %> 
+    <% end %>
+    <bold></bold> <%= f.text_area :description, placeholder: "Say something", size: "1x1" %>
   </div>
 <% end %>

@@ -1,3 +1,7 @@
 <%= form_for(@current_user.relationship_ads.find_by_followedad_id(ad), html: { method: :delete }) do |f| %>
-  <a href="#", onClick="$(this).closest('form').submit(); return false;">Unfollow</a>
+  <% if type == "link" %>
+    <a href="#" onClick="$(this).closest('form').submit()">Unfollow</a>
+  <% else %>
+    <%= f.submit "Unfollow", class: "btn" %>
+  <% end %>
 <% end %>

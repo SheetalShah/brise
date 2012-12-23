@@ -25,17 +25,17 @@
     <div class="span7">
     <sub><%= link_to "(#{ad.brand_product.product.reviews.count} review/s)", :controller => "products", :action => :show, :id => ad.brand_product.product_id %></sub></div> 
     </div>
-    <span id="content" class="more details adlink"><%= link_to "#{ad.details}", :controller => "ads", :action => :show, :id => ad.id, :html => { :class => "adlink" } %></span>
+    <span id="content" class="more details adlink"><%= link_to "#{ad.details}", :controller => "ads", :action => :show, :id => ad.id %></span>
         <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>">
          <%= ad.updated_at.to_s %>
         </span>
     <section class="row-fluid no-padding smallfont">
       <section class="span5 no-padding">
-        <% if @current_user != ad.user %>
-          <section class="span2 no-padding"><%= render 'followad_form', :ad => ad %></section>
-          <section class="span1 no-padding">|</section>
-        <% end %>
-        <section class="span2 no-padding"><a href="" id="commentslink"  class="commentslink no-padding">Comment</a>(<%= ad.comments.count %>)</section>
+        
+          
+        
+        <section class="links span12 no-padding"><a href="" id="commentslink"  class="commentslink no-padding">Comment</a>(<%= ad.comments.count %>) | 
+        <%= render 'followad_form', :ad => ad, :type => "link" %></section>
       </section>
     </section>
     <section class="comment no-padding">

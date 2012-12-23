@@ -12,4 +12,8 @@ class BrandProduct < ActiveRecord::Base
       product.model if product
     end
   has_many :ads, :foreign_key => :brand_product_id 
+
+  def self.findBrandProduct(product, brand)
+    where("product_id=#{product.id} AND brand_id=#{brand.id}");
+  end
 end

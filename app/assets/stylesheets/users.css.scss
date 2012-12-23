@@ -74,7 +74,7 @@ a.morelink {
 }
 .comment {
     margin: 0px;
-    padding: 0px 0px 0px 0px;
+    padding: 2px 2px;
     background-color: #f0f0f0;
     border: 1px solid white;
 }
@@ -259,6 +259,12 @@ headertag {
 display-name {
 	font-weight: bold;
 
+}
+.links {
+  columns: 100px 6;
+}  
+form {
+	display: inline;
 }
 .stats {
    overflow: auto;

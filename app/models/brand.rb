@@ -6,4 +6,8 @@ class Brand < ActiveRecord::Base
   accepts_nested_attributes_for :products, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
   belongs_to :company
   has_many :ads, :dependent => :nullify, :class_name => 'Ad', :foreign_key => :brand_id
+
+  def self.findBrand(brand)
+    connection.select_value("select * from brands WHERE name='#{brand}'");
+  end
 end
