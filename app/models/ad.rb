@@ -1,6 +1,5 @@
 class Ad < ActiveRecord::Base
-  attr_accessible :ad_type, :details, :price_eval, :options_eval
-
+  attr_accessible :ad_type, :details, :price_eval, :options_eval, :price_cents, :currency, :use_address_zip_code, :ad_zip_code, :state
   belongs_to :user
     def by_type
       user.user_type if user
@@ -21,6 +20,8 @@ class Ad < ActiveRecord::Base
     def brand_name
       brand_product.brand_name if brand_product
     end
+
+  monetize :price_cents
   
   validates :user_id, presence: true
   has_many :comments, :inverse_of => :ad, :dependent => :destroy

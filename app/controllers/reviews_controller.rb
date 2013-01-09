@@ -41,23 +41,26 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @product = Product.find(params[:product_id])
-    @review = @product.reviews.build(params[:review])
+    @brand_product = BrandProduct.find(params[:brand_product_id])
+    @review = @brand_product.reviews.build(params[:review])
     @review.user = current_user
-    @rating = @product.rates.build
+    @rating = @brand_product.rates.build
     @rating.stars = params[:score]
     @rating.rater_id = current_user.id
     @rating.dimension = "quality"
     
     @user = current_user
-    @product_brands = @product.brands
-    if @product.valid?
-      @product.save!
-      #@product.rate params[:score].to_i, current_user.id, "product"
-      @notice = 'Review successfully posted.'
-      redirect_to @product
-    else
-      render :template => 'products/show'
+    @product_brands = @brand_product.product.brands
+
+    respond_to do |format|
+      if @brand_product.valid?
+        @brand_product.save!
+        format.html { redirect_to @brand_product, notice: 'Review successfully posted.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "show", controller: "brand_product" }
+        format.json { render json: @review.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -81,14 +84,14 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1.json
   def destroy
     @review = Review.find(params[:id])
-    @product = @review.product
+    @brand_product = @review.brand_product
     @review.destroy
     @rating = Rate.find_by_rater_id(current_user)
     @rating.destroy
-
     respond_to do |format|
-      format.html { redirect_to @product }
+      format.html { redirect_to @brand_product }
       format.json { head :no_content }
     end
+   
   end
 end

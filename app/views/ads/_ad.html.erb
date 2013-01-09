@@ -1,48 +1,83 @@
-  <li class="no-padding">
+<li class="no-padding">
   <% if ad.created_at %>
-    <ad-title><normal><%= ad.ad_type %>  </normal>
-      <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
-        <bold><%= ad.brand_name %>  </bold>|<bold>   <%= ad.model_name %></bold>  |
-      <% else %>
-        <% if !ad.brand_name.blank? %>
-          <bold><%= ad.brand_name %></bold>  |
-        <% else %>
-          <% if !ad.model_name.blank? %>
-            <bold><%= ad.model_name %></bold>  |
-          <% end %>
-        <% end %>
-      <% end %>
-      <bold><%= ad.product_name %></bold>
-    </ad-title>
-    <% if @current_user == ad.user %> 
-      <span class="float-right-text"><%= link_to image_tag('delete-gray.png', :size => "20x20"), ad, method: :delete %></span>
-    <% else %>
-      <span class="float-right-text">By <%= ad.by_type %></span>
-    <% end %>
     <div class="row-fluid">
-    <div class="span3">
-    <%= rating_for_override ad.brand_product.product, "quality", :readonly => true %></div>
-    <div class="span7">
-    <sub><%= link_to "(#{ad.brand_product.product.reviews.count} review/s)", :controller => "products", :action => :show, :id => ad.brand_product.product_id %></sub></div> 
+      <div class="span11">
+        <ad-title><normal><%= ad.ad_type %>  </normal>
+          <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
+            <bold><%= ad.brand_name %>  </bold>|<bold>   <%= ad.model_name %></bold>  |
+          <% else %>
+            <% if !ad.brand_name.blank? %>
+              <bold><%= ad.brand_name %></bold>  |
+            <% else %>
+              <% if !ad.model_name.blank? %>
+                <bold><%= ad.model_name %></bold>  |
+              <% end %>
+            <% end %>
+          <% end %>
+          <bold><%= ad.product_name %></bold>
+        </ad-title><money><%= humanized_money_with_symbol ad.price %></money>
+      </div>
+      <div class="span1">
+        <span class="float-right-text">
+          <div class="row-fluid">
+            <div class="span5"><sup>
+              <nav>
+                <ul class="nav">
+	          <li class="downdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <% if ad.state == "active" %>
+                      <%= image_tag("active.png", :size => "16x16") %>
+	            <% else %>
+	              <% if ad.state == "inactive" %>
+                        <%= image_tag("inactive.png", :size => "16x16") %>
+                      <% else %>
+                        <%= image_tag("closed.png", :size => "16x16") %>
+	              <% end %>
+                    <% end %>
+                    </a>	    
+                    <ul class="dropdown-menu">
+	              <li><%= link_to image_tag('active.png', :size => "16x16"), ad_path(ad, :ad => { :state => "active" } ), :method => :put  %></li>
+                      <li><%= link_to image_tag('inactive.png', :size => "16x16"), ad_path(ad, :ad => { :state => "inactive" } ), :method => :put %></li>
+                      <li><%= link_to image_tag('closed.png', :size => "16x16"), ad_path(ad, :ad => { :state => "closed" } ), :method => :put %></li>
+            	    </ul>
+                  </li>
+                </ul>
+              </nav></sup>
+            </div>
+            <div class="span7">
+              <% if @current_user == ad.user %> 
+                <sup><%= link_to image_tag('delete-gray.png', :size => "20x20"), ad, method: :delete %></sup>
+              <% else %>
+                By <%= ad.by_type %>
+              <% end %>
+            </div>
+          </div>
+        </span> 
+      </div>
     </div>
+    <span class="row-fluid">
+      <span class="span3">
+        <%= rating_for_override ad.brand_product, "quality", :readonly => true %>
+      </span>
+      <span class="span7">
+        <sub><%= link_to "(#{ad.brand_product.reviews.count} review/s)", :controller => "brand_products", :action => :show, :id => ad.brand_product %></sub>
+      </span> 
+    </span>
     <span id="content" class="more details adlink"><%= link_to "#{ad.details}", :controller => "ads", :action => :show, :id => ad.id %></span>
-        <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>">
-         <%= ad.updated_at.to_s %>
-        </span>
+    <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>">
+      <%= ad.updated_at.to_s %>
+    </span>
     <section class="row-fluid no-padding smallfont">
       <section class="span5 no-padding">
-        
-          
-        
         <section class="links span12 no-padding"><a href="" id="commentslink"  class="commentslink no-padding">Comment</a>(<%= ad.comments.count %>) | 
-        <%= render 'followad_form', :ad => ad, :type => "link" %></section>
+          <%= render 'users/followad_form', :ad => ad, :type => "link" %>
+        </section>
       </section>
     </section>
     <section class="comment no-padding">
       <%= render 'shared/commentfeed', :ad => ad %>
     </section>
   <% end %>
-  </li>
+</li>
 
 
 

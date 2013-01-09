@@ -1,6 +1,5 @@
 class Product < ActiveRecord::Base
-  attr_accessible :category, :description, :industry, :name, :product_type , :model, :brands_attributes, :ads_attributes
-  has_many :reviews, :dependent => :destroy
+  attr_accessible :category, :description, :industry, :name, :product_type , :model, :brands_attributes, :ads_attributes, :modeldescription
   has_many :ads, :dependent => :nullify, :class_name => 'Ad', :foreign_key => :product_id
   has_and_belongs_to_many :company
   has_many :brand_products, :foreign_key => :product_id
@@ -12,24 +11,15 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :brands, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
   
   validates :name, length: { maximum: 60 }  
-
-  letsrate_rateable "quality"
+  validates_presence_of :name
 
   def self.findProduct(productname, modelname)
     connection.select_value("select * from products WHERE name='#{productname}' AND model='#{modelname}'");
   end
 
-  def average_rating(rateable_obj, user=nil, dimension=nil)
-    if( user != nil && dimension != nil )
-      val = self.connection.select_value("select AVG(stars) from rates WHERE rater_id=#{user.id} and dimension='#{dimension}' and rateable_id=#{rateable_obj.id}");
-    else
-      if( user != nil )
-        val = self.connection.select_value("select AVG(stars) from rates WHERE rater_id=#{user.id} and rateable_id=#{rateable_obj.id}");
-      else
-        val = self.connection.select_value("select AVG(stars) from rates WHERE rateable_id=#{rateable_obj.id}");	
-      end
-    end
-   val
+  def self.models_for_product(name)
+    where("name='#{name}' AND model IS NOT NULL AND model <> ''")
   end
+  
 
 end

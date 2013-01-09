@@ -2,11 +2,19 @@
   <div class="extraneous-non-semantic-markup">
     <section>
       <groupthin>
-        <headertag><%= @product.name %>:</headertag> <%= best_in_place @product, :description, :type => :textarea %>
+        <headertag><%= @product.name %>:</headertag> <%= best_in_place @product, :description, :type => :textarea, :nil => "N/A - Click to provide a generic product description common to all brands" %>
         <br/>
+        <br/>
+	<% if Product.models_for_product(@product.name).any? %>
+        <ad-title>Models:</ad-title><br/>
+          <div class="layer1">
+            <%= render Product.models_for_product(@product.name), :current_user => @current_user %>
+	  </div>
+        <% end %>
 	<br/>
-        <br/>
+	<br/>
         <% if @product.brands.any? %>
+	  <ad-title>Brands:</ad-title><br/>
           <div class="layer1">
             <%= render @product_brands, :current_user => @current_user %>
 	  </div>

@@ -33,7 +33,13 @@ class AdsController < ApplicationController
     @brand = Brand.new
     @ad.product = @product
     @ad.brand = @brand
-	
+
+   @currencies = [] 
+   major_currencies(Money::Currency::TABLE).each do |currency|  
+     name = Money::Currency::TABLE[currency][:name]
+     iso_code = Money::Currency::TABLE[currency][:iso_code]
+     @currencies << [name, iso_code]
+   end	
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @ad }
@@ -51,36 +57,49 @@ class AdsController < ApplicationController
     @user = current_user
     @ad = current_user.ads.build(params[:ad])
     session[:brandname ] = params[:brand][:name]	
+
     @product_found = Product.findProduct(params[:product][:name], params[:product][:model])
-    @brand_found = Brand.findBrand(params[:brand][:name])
-
-    if @product_found != nil
+    if @product_found
       @product = Product.find(@product_found)
+    else
+      @product = nil
     end
-
-    if @brand_found != nil
-      @brand = Brand.find(@brand_found)
-    end
-
-    if( @product_found != nil && @brand_found != nil )
-      @brand_product_found = BrandProduct.findBrandProduct(@product, @brand) 
-      @brand_product = BrandProduct.find(@brand_product_found)
-    end
-
-    if( @product == nil || @brand == nil || @brand_product == nil )
-      @brand_product = BrandProduct.new
-      if(@product == nil) 
-        @product = @brand_product.build_product(params[:product])
+    
+    if !session[:brandname].empty?
+      @brand_found = Brand.findBrand(params[:brand][:name])
+      if @brand_found
+        @brand = Brand.find(@brand_found)
       else
-        @brand_product.product = @product
+        @brand = nil
       end
-      
-      if( @brand == nil )
+    else
+      @brand = nil
+    end
+
+    if @product && @brand
+      @brand_product_found = BrandProduct.findBrandProduct(@product, @brand) 
+      if @brand_product_found    
+        @brand_product = BrandProduct.find(@brand_product_found)
+      else
+        @brand_product = BrandProduct.new
+      end
+    else
+      @brand_product = BrandProduct.new
+    end
+
+    if !@product
+      @product = @brand_product.build_product(params[:product])
+    else
+      @brand_product.product = @product    
+    end
+
+    if !session[:brandname].empty?
+      if !@brand
         @brand = @brand_product.build_brand(params[:brand])
       else
         @brand_product.brand = @brand
       end
-    end 
+    end
 
     @ad.brand_product = @brand_product
     @ads = current_user.feed
@@ -100,14 +119,15 @@ class AdsController < ApplicationController
   # PUT /ads/1.json
   def update
     @ad = Ad.find(params[:id])
+    @user = current_user
 
     respond_to do |format|
       if @ad.update_attributes(params[:ad])
-        format.html { redirect_to @ad, notice: 'Ad was successfully updated.' }
+        format.html { redirect_to @user, notice: 'Ad was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @ad.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end

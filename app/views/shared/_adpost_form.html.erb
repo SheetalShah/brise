@@ -4,7 +4,8 @@
     <div class="extraneous-non-semantic-markup">
       <section>
         <groupthin>
-          <%= f.select(:ad_type, [['Buy', 'Buy'], [ 'Sell', 'Sell' ], [ 'Rent', 'Rent' ]]) %>
+	1. Ad details
+          <%= f.select(:ad_type, [['Buy', 'Buy'], [ 'Sell', 'Sell' ], [ 'Rent', 'Rent' ]], :id => 'adtype') %>
 	  <%= fields_for :product do |c| %>
 	    <%= render "/layouts/ad_product_details", :c => c %>
           <% end %>
@@ -13,19 +14,30 @@
           <% end %>
 	  <br />
           <br/>
-          <%= f.text_area :details, placeholder: "Description/Content" %>
+          <%= f.text_area :details, placeholder: "Description/Content", :size => '1x8' %>
+	  <br/><br/>
+	  2. Help us help you!
           <div class="groupbox control-group check_boxes optional">
-            <label class="check_boxes optional control-label">Are you trying to check?</label>
-            <div class="controls">
-              <label class="checkbox">	
-                <%= f.check_box :price_eval, :class => 'check_boxes optional'  %>Price</label>
-	        <label class="checkbox" >
-	        <%= f.check_box :options_eval, :class => 'check_boxes optional'  %>Available options</label>
+            <div class="controls">            
+		<label class="checkbox" id="checkoption" >
+	        <%= f.check_box :options_eval, :class => 'check_boxes optional'  %>Check available options</label><hr>
+		Your price(if any) 
+		<div class="row-fluid">
+		  <span class="span7">
+   		    <%= f.select(:currency, all_currencies(Money::Currency.table), {:include_blank => 'Currency'}) %>
+		  </span>
+		  <span class="span5">
+		    <%= f.number_field :price_cents %>
+	          </span>
+	        </div>
+		<span class="text-center"> OR</span>
+		<label class="checkbox"><%= f.check_box :price_eval, :class => 'check_boxes optional'  %>I have no specific price. Get me the best price</label><hr>
+		<label class="checkbox"><%= f.check_box :use_address_zip_code, :class => 'check_boxes optional'  %>Use my address to find nearest to location deals</label> OR <%= f.number_field :ad_zip_code, placeholder: "Zip code" %>
+
 	    </div>
           </div>
 	  <%= render "/shared/error_messages", object: f.object %>
 	  <%= f.submit "POST AD", class: "btn btn-large btn-primary" %>
-	  <%= debug(params) if Rails.env.development? %>
         </groupthin>
       </section>
     </div>

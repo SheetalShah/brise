@@ -1,17 +1,14 @@
 <h3>
-  <section class="no-padding smallbold floatright">
-  Average Review<%= rating_for_override @product, "quality", :readonly => true %>
-  </section>          
   <div class="row-fluid">
     <section class="span7 no-padding">
-      Review Feed(<%= @product.reviews.count %>)
+      Review Feed(<%= @brand_product.reviews.count %>)<br/>
     </section>
   </div>
 </h3>
 <div>
-  <% if @product.reviews.any? %>
+  <% if @brand_product.reviews.any? %>
     <ol class="ads collection">
-      <%= render @product.reviews, :current_user => @current_user %>
+      <%= render @brand_product.reviews, :current_user => @current_user %>
     </ol>
   <% end %>
 </div>
@@ -19,7 +16,5 @@
 <section class="no-padding">
   <%= render 'shared/adreview_form', :product => @product %>
 </section>
-
-<%= debug(params) %>
 
 

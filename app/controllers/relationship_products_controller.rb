@@ -6,7 +6,8 @@ class RelationshipProductsController < ApplicationController
     @user = current_user
     current_user.followproduct!(@product)
     respond_to do |format|
-      format.html { redirect_to @product }
+#      session[:return_to] = request.fullpath
+      format.html { redirect_to session[:return_to] }
       format.js
     end
   end
@@ -16,7 +17,8 @@ class RelationshipProductsController < ApplicationController
     @user = current_user
     current_user.unfollowproduct!(@product)
     respond_to do |format|
-      format.html { redirect_to @product }
+      format.html { redirect_to session[:return_to] }
+#      format.html { redirect_to @product }
       format.js
     end
   end

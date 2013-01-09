@@ -1,0 +1,21 @@
+<h1>Listing brand_products</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @brand_products.each do |brand_product| %>
+  <tr>
+    <td><%= link_to 'Show', brand_product %></td>
+    <td><%= link_to 'Edit', edit_brand_product_path(brand_product) %></td>
+    <td><%= link_to 'Destroy', brand_product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Brand product', new_brand_product_path %>

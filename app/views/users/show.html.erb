@@ -7,8 +7,32 @@
   <%= render 'layouts/header' %>
     <div class="row-fluid">
      <aside>	
-        <div class="center unit span2">
-          <h3><%= link_to "#{@user.display_name}", new_user_path %></h3>
+        <div class="unit span2">
+          <div id="help"><h3><%= link_to "#{@user.display_name}", new_user_path %></h3></div>
+	  <div id="modal">
+            <div id="helpcontent">
+              <p>
+		<div class="row-fluid">
+		<div class="placecenter span4">
+		  <%= @user.display_name %>
+		</div>
+		<div class="span8 smallfont">
+		<div class="row-fluid">
+		  <div class="span5">1. Type: </div><div class="span7"><%= @user.user_type %></div><br><br/>
+		  <div class="span5">2. Address:</div>
+		  <div class="span7">
+		    <%= @user.street_address1 %>,<br/>
+                    <%= @user.street_address2 %>,<br/>
+                    <%= @user.city %>-<%= @user.zip_code %>,<br/>
+                    <%= @user.state %>,<br/>
+                    <%= @user.country %>
+		  </div>
+		</div>
+                </div>
+		</div>
+              </p>
+            </div>
+          </div>
           <section>
             <%= render 'shared/stats' %>
           </section>

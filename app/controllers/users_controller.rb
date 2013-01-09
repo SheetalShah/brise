@@ -21,7 +21,7 @@ class UsersController < Devise::RegistrationsController
       @ad = current_user.ads.build
       @ads = current_user.ads
       @comment = @ad.comments.build
-
+      @current_user = current_user
       respond_to do |format|
         format.html { render action: "show" }
         format.json { render json: @user }

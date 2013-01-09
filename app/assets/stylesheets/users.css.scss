@@ -27,6 +27,9 @@ form{
 	padding: 0;
 
 }
+money{
+	color: red;
+}
 
 ad-title {
 	font-size: 1.2em;
@@ -98,6 +101,9 @@ a.morelink {
 	line-height: 1;
 	text-align: center;
  	
+}
+.text-center {
+	text-align: center;
 }
 
 #logo:hover {
@@ -194,6 +200,12 @@ input, textarea, select, .uneditable-input {
 }
 
 section {
+	display: inline;
+	margin: 0px 0px;
+	padding: 0px 0px;
+}
+
+div {
 	margin: 0px 0px;
 	padding: 0px 0px;
 }
@@ -266,6 +278,9 @@ display-name {
 form {
 	display: inline;
 }
+.star {
+	display: inline;
+}
 .stats {
    overflow: auto;
    a {
@@ -319,6 +334,7 @@ form {
 .float-right-text {
 	float: right;
 	text-align: right;
+	display: inline;
 }
 .error_message {
 	color: red;
@@ -361,8 +377,9 @@ form {
 }
 
 
-nav ul li:hover > ul {
-	display: block;
+nav ul li:hover > ul, span {
+	display: inline;
+left:-20px;
 }
 
 nav ul {
@@ -370,10 +387,12 @@ nav ul {
 	position: relative;
 	display: inline-table;
 	text-align: right;
+left:-10px;
+
 }
 
 .dropdown-menu {
-	min-width: 100px;
+	min-width: 10px;
 }
 
 .layer1 {
@@ -382,7 +401,7 @@ padding: 0;
 
 }
  
-.brandheading {
+.brandheading, .currentheading {
 margin: 1px;
 color: $grayLighter;
 padding: 2px 6px;
@@ -396,3 +415,63 @@ background-color:#fafafa;
 }
 p { padding: 5px 0; }
 
+#modal {
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+    position: fixed !important;
+    left: 100px;
+    z-index:101;
+    display: none;
+
+}
+
+.reveal-modal-bg {
+    position: static;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    z-index: 1000;
+    display: none;
+    top: 0;
+    left: 0;
+}
+#helpcontent {
+    width:300px;
+    background:#fcfcfc;
+    -webkit-box-shadow:0px 1px 3px rgba(0,0,0,.25);
+    -moz-box-shadow:0px 1px 3px rgba(0,0,0,.25);
+    box-shadow:0px 1px 3px rgba(0,0,0,.25);
+    -webkit-border-radius:0px 0px 4px 4px;
+    -moz-border-radius:0px 0px 4px 4px;
+    border-radius:0px 0px 4px 4px;
+    border-style: outset;
+    border-color: #ddd;
+}
+#helpcontent p {
+    font-size:13px;
+    font-weight:normal;
+    text-align:left;
+    line-height:22px;
+    color:#555555;
+    width:auto;
+    float: left;
+    margin:0px 0;
+    border-color: #ddd;
+}
+
+#modal {
+	width: 300px;
+	height: auto;
+    }
+    #helpcontent {
+	width: 300px;
+	height: auto;
+    }
+
+
+.placecenter {
+	position: relative;
+	top: 50%;
+ 	left: 4px;
+}

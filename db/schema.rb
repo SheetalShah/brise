@@ -13,22 +13,8 @@
 
 ActiveRecord::Schema.define(:version => 20121212073150573) do
 
-  create_table "ads", :force => true do |t|
-    t.string   "details"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "tags"
-    t.string   "state",            :default => "active", :null => false
-    t.string   "ad_type"
-    t.integer  "user_id"
-    t.boolean  "price_eval"
-    t.boolean  "options_eval"
-    t.integer  "brand_product_id"
-  end
-
-  add_index "ads", ["options_eval"], :name => "index_ads_on_options_eval"
-  add_index "ads", ["price_eval"], :name => "index_ads_on_price_eval"
-  add_index "ads", ["tags"], :name => "index_ads_on_tags"
+# Could not dump table "ads" because of following StandardError
+#   Unknown type 'money' for column 'price'
 
   create_table "brand_products", :force => true do |t|
     t.integer  "brand_id"
@@ -76,11 +62,12 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
     t.string   "name"
     t.string   "industry"
     t.string   "category"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.text     "description"
     t.string   "product_type"
     t.string   "model"
+    t.text     "modeldescription"
   end
 
   create_table "rates", :force => true do |t|
@@ -95,7 +82,6 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
 
   add_index "rates", ["rateable_id", "rateable_type"], :name => "index_rates_on_rateable_id_and_rateable_type"
   add_index "rates", ["rater_id", "rateable_id"], :name => "index_rates_on_rater_id_and_rateable_id", :unique => true
-  add_index "rates", ["rater_id"], :name => "index_rates_on_rater_id"
 
   create_table "rating_caches", :force => true do |t|
     t.integer  "cacheable_id"
@@ -143,14 +129,14 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
 
   create_table "reviews", :force => true do |t|
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.text     "description"
-    t.integer  "product_id"
     t.integer  "user_id"
+    t.integer  "brand_product_id"
   end
 
-  add_index "reviews", ["user_id", "product_id"], :name => "index_reviews_on_user_id_and_product_id", :unique => true
+  add_index "reviews", ["user_id", "brand_product_id"], :name => "index_reviews_on_user_id_and_brand_product_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "",           :null => false

@@ -13,6 +13,9 @@ gem 'faker', '1.0.1'
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '> 1.0.0'
 gem 'letsrate'
+gem 'money'
+gem 'money-rails'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

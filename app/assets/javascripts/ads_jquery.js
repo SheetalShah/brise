@@ -30,4 +30,28 @@ $(document).ready(function(){
     $("span.timeago").timeago();
 
 
+$('#help').mouseover(function(e) {        // Button which will activate our modal
+	$('#modal').show();
+        return false;
+});
+
+$('#help').mouseout(function(e) {        // Button which will activate our modal
+	$('#modal').hide();
+        return false;
+});
+
+$('#ad_ad_type').change(function(e) {        // Button which will activate our modal
+	if( $('#ad_ad_type').val() === 'Buy' )
+	{
+		$('#checkoption').show();
+	}
+	else
+	{
+		$('#checkoption').hide();
+	}
+        return false;
+});
+$('#help').keyup(function(e) {
+	if(e.which===27){ $('#modal').hide(); } // 27 is the keycode for the Escape key
+});
 });

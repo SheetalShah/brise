@@ -1,4 +1,9 @@
 <%= form_for(@current_user.relationship_products.build(followedproduct_id: product.id)) do |f| %>
   <%= f.hidden_field :followedproduct_id %>
-  <%= f.submit "Follow", class: "btn" %>
+  <% if type == "link" %>
+    <a href="#" onClick="$(this).closest('form').submit()">Follow</a>
+  <% else %>
+    <%= f.submit "Follow", class: "btn" %>
+  <% end %>
+
 <% end %>

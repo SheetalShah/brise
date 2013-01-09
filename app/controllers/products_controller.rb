@@ -16,9 +16,9 @@ class ProductsController < ApplicationController
     @user = current_user	
     @product = Product.find(params[:id])
     @product_brands = @product.brands
-    @reviews = @product.reviews
-    @review = @product.reviews.build
     @current_user = current_user	
+    session[:return_to] = request.fullpath
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @product }

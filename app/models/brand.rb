@@ -10,4 +10,6 @@ class Brand < ActiveRecord::Base
   def self.findBrand(brand)
     connection.select_value("select * from brands WHERE name='#{brand}'");
   end
+
+
 end
