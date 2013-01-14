@@ -41,6 +41,14 @@ ad-title {
         }
 }
 
+.leftmargin20 {
+	position: relative;
+	margin-left: 20px;
+}
+.topmargin20 {
+	position: relative;
+	margin-top: 20px;
+}
 h1 {
 	font-size: 3em;
 	letter-spacing: -2px;
@@ -91,7 +99,7 @@ a.morelink {
 
 #logo {
 	float: left;
-	margin-right: 10px;
+	margin-right: 3px;
 	font-size: 1.7em;
 	color: #2E8B57;
 	text-transform: uppercase;
@@ -104,6 +112,7 @@ a.morelink {
 }
 .text-center {
 	text-align: center;
+	vertical-align: middle;
 }
 
 #logo:hover {
@@ -361,8 +370,9 @@ form {
 	padding: 0px;
 }
 #help { 
-	padding: .5em 1em; 
+	padding: 0.5em 1em; 
 	text-decoration: none; 
+        position: absolute;
 }
 #effect { 
 	width: 240px; 
@@ -396,7 +406,7 @@ left:-10px;
 }
 
 .layer1 {
-margin: 0;
+margin: 1px;
 padding: 0;
 
 }

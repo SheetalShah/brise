@@ -2,14 +2,15 @@
   <li class="comment">
     <% if @current_user == comment.ad.user %> 
       <a href="#"><%= comment.ad.display_name %></a>: <%= best_in_place comment, :description %>
-      <span class="float-right"><%= link_to image_tag('delete-gray.png', :size => "20x20"), comment, method: :delete %></span>
+      <span class="float-right"><money><%= humanized_money_with_symbol comment.indicative_price %></money>
+      <sup><%= link_to image_tag('delete-gray.png', :size => "20x20"), comment, method: :delete %></sup></span>
     <% else %>
       <a href="#"><%= comment.ad.display_name %></a>: <%= comment.description %>
     <% end %>
     <br/>
     <span class="timestamp timeago" title="<%= comment.updated_at.getutc.iso8601 %>">
       <%= comment.updated_at.to_s %>
-    </spanr>
+    </span>
   </li>
 <% end %>
 

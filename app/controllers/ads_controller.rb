@@ -11,6 +11,7 @@ class AdsController < ApplicationController
   def show
     @ad = Ad.find(params[:id])
     @user = current_user
+    session[:return_to] = request.fullpath
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @ad }

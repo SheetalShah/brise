@@ -1,0 +1,81 @@
+<div id="chart"></div>
+<title>Price distribution</title>
+<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'column'
+            },
+            loading: {
+               hideDuration: 0,
+               showDuration: 0
+            },
+            title: {
+                text: 'Bid Price'
+            },
+            
+            xAxis: {
+		title: {
+                  text: "Price"
+ 		},
+                labels: {
+                    formatter: function() {
+                        return this.value; // clean, unformatted number for year
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Pct'
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value + "%";
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return Highcharts.numberFormat(this.y, 0);
+                }
+            },
+            columnrange: {
+		dataLabels: {
+		  formatter: function() {
+			return this.percentage;
+	          }
+                  
+                }
+            },
+            plotOptions: {
+		
+                bar: {
+                    pointStart: 1,
+                    marker: {
+                        enabled: false,
+                        symbol: 'circle',
+                        radius: 1,
+                        states: {
+                            hover: {
+                                enabled: true
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+		pointInterval: 1,
+                name: 'Price v/s Pct distribution',
+                data: <%= all_prices(ad.indicative_prices) %>
+            }]
+        });
+    
+});
+    
+});
+		</script>
+<div id="container" style="width: 400px; height: 400px; margin: 0 auto"></div>
+

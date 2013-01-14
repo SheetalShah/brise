@@ -41,18 +41,24 @@
           </section>
         </div>
         <div class="center span4">  
-<h3>
-  <div class="row-fluid">
-    <section class="span7 no-padding">
-      Comment Feed(<%= @ad.comments.count %>)
-    </section>
-  </div>
-</h3>
+          <h3>
+            <div class="row-fluid">
+             <section class="span7 no-padding">
+               Comment Feed(<%= @ad.comments.count %>)
+             </section>
+            </div>
+          </h3>
 	  <section>
             <%= render 'shared/commentfeed', :ad => @ad %>
           </section>
-<%= debug(params) %>
+          <%= debug(params) %>
         </div>
+	<div class="center span4">  
+	  <section>
+            <%= render 'shared/charts', :ad => @ad %>
+          </section>
+        </div>
+
       </aside>
     </div>
    	

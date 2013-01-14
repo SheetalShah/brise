@@ -1,15 +1,24 @@
+
 <%= form_for([ad,ad.comments.build]) do |f| %>
   <div class="comment">
     <% if ad.price_eval? %>
-      1. Enter what price you suggest a <%= ad.ad_type %><%= f.text_field :indicative_price %>
-      <% if ad.options_eval? %>
-        2. What options or alternatives are available<%= f.text_field :indicative_price, placeholder: "comma separated" %> 		
-      <% end %>
-    <% else %>
-      <% if ad.options_eval? %>
-        1. What options or alternatives are available<%= f.text_field :indicative_price, placeholder: "comma separated" %> 		
-      <% end %> 
+      <div class="row-fluid">
+	<span class="span7">
+          1. Enter your best<% if ad.ad_type == "Buy" %> ask<% else %> bid<% end %> price<%= f.number_field :indicative_price_cents %></span>
+	<span class="span2 text-center">
+	OR</span>
+	<span class="span3">
+	  <label class="checkbox">
+            <%= f.check_box :match_price, :class => 'check_boxes optional'  %>Match <% if ad.ad_type == "Buy" %> buyer<% else %> seller<% end %> price
+          </label>
+	</span>
+      </div>
+      
+    
+      
     <% end %>
-    <bold></bold> <%= f.text_area :description, placeholder: "Say something", size: "1x1" %>
+    <bold></bold> <%= f.text_area :description, placeholder: "Share useful information", size: "1x1" %>
   </div>
+  <%= render "/shared/error_messages", object: f.object %>
+  <%= f.submit "Comment", class: "btn" %>
 <% end %>

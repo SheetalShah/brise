@@ -44,14 +44,15 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @ad = Ad.find(params[:ad_id])
-
+    @user = current_user
     @comment = @ad.comments.build(params[:comment])
+    @comment.currency = @ad.currency
    # @comment = Comment.new(params[:comment])
-
+    @ads = Ad.all
     if @comment.valid?
       @comment.save!	
       @notice = 'Ad was successfully created.'
-      redirect_to current_user
+      redirect_to session[:return_to] 
     else
       render :template => 'users/show'
     end

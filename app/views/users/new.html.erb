@@ -15,7 +15,7 @@
 	    <%= render "/layouts/signup_#{@user.signup_current_step}_active" %>
           </div>
           <div class="span12">
-        <%= form_for(@user) do |f| %>
+        <%= form_for @user, :html => { :multipart => true } do |f| %>
 	  <%= render "/layouts/signup_#{@user.signup_current_step}_step", :f => f %>
 	  <%= render "/shared/error_messages", object: f.object %>
           <p><%= f.submit "Continue", :class => "continue_button" unless @user.signup_last_step? %></p>
@@ -24,6 +24,7 @@
 	<% end %>
         <%= render "devise/shared/links" %>
  	<%= debug(params) if Rails.env.development? %>
+ 	<%= debug($temp) if Rails.env.development? %>
 	</div>
       </div>
     </div>

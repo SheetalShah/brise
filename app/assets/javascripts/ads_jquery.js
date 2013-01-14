@@ -1,5 +1,26 @@
 $(document).ready(function(){
-    var showChar = 250;
+
+  function ad_type_change(){
+    if( $('#ad_ad_type').val() === 'Buy' )
+    {	
+	$('#checkoption').show();
+    }
+    else
+    {
+      $('#checkoption').hide();
+    }
+    return false;
+  };
+
+  ad_type_change();
+  $('#ad_ad_type').change(function(e) {        // Button which will activate our modal
+     ad_type_change();
+  });
+
+  
+  
+
+  var showChar = 250;
     var ellipsestext = "...";
     var moretext = "Show more";
     var lesstext = "Show less";
@@ -30,28 +51,15 @@ $(document).ready(function(){
     $("span.timeago").timeago();
 
 
-$('#help').mouseover(function(e) {        // Button which will activate our modal
-	$('#modal').show();
-        return false;
-});
 
-$('#help').mouseout(function(e) {        // Button which will activate our modal
+    $('#help').hover(function() {        // Button which will activate our modal
+      $('#modal').show();
+    }, function(e) {        // Button which will activate our modal
 	$('#modal').hide();
-        return false;
-});
+    });
 
-$('#ad_ad_type').change(function(e) {        // Button which will activate our modal
-	if( $('#ad_ad_type').val() === 'Buy' )
-	{
-		$('#checkoption').show();
-	}
-	else
-	{
-		$('#checkoption').hide();
-	}
-        return false;
-});
-$('#help').keyup(function(e) {
-	if(e.which===27){ $('#modal').hide(); } // 27 is the keycode for the Escape key
-});
+    $('#help').keyup(function(e) {
+      if(e.which===27){ $('#modal').hide(); } // 27 is the keycode for the Escape key
+    });
+   
 });

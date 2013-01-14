@@ -39,6 +39,7 @@ class UsersController < Devise::RegistrationsController
     @ads = @user.feed
     @comment = @ad.comments.build(params[:comment])
     @current_user = current_user
+    @comments = Comment.all
 
     respond_to do |format|
       format.html # show.html.erb
@@ -73,7 +74,9 @@ class UsersController < Devise::RegistrationsController
   # GET /users/new.json
   def new
     session[:signup_params] ||= {}
+    @sowhat ={}
     @user = User.new(session[:signup_params])
+    @user.avatar = @user.useravatar
     @user.signup_current_step = session[:signup_step]	
     @company = @user.build_company
 
@@ -91,19 +94,21 @@ class UsersController < Devise::RegistrationsController
   # POST /users
   # POST /users.json
   def create
-
+    if params[:user][:avatar] 
+      $temp = params[:user][:avatar]
+    end
+    
+    params[:user][:avatar] = nil
     session[:signup_params].deep_merge!(params[:user]) if params[:user]
     @user = User.new(session[:signup_params])
-
+    @user.avatar = $temp
     @user.signup_current_step = session[:signup_step]
 
     if @user
       if params[:back_button]
         @user.signup_previous_step
       elsif @user.signup_last_step?
-	  session[ :notice ] = "here in company, trying to build"
-	  @user.build_company(params[:user][:company_attributes])
-
+	@user.build_company(params[:user][:company_attributes])
         @user.save if @user.signup_all_valid?
       else
         if @user.valid?
@@ -120,6 +125,7 @@ class UsersController < Devise::RegistrationsController
       end
     else
       session[:signup_step] = session[:signup_params] = nil
+      $temp = nil
       respond_to do |format|
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }

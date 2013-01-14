@@ -10,5 +10,14 @@ module ApplicationHelper
     end
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")
   end
+
+  def avatar_url(user)
+    if user.avatar.present?
+      user.avatar.url
+    else	
+      gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+      "http://gravatar.com/avatar/#{gravatar_id}.png?s=48"
+    end
+  end
 end
 

@@ -16,6 +16,17 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
 # Could not dump table "ads" because of following StandardError
 #   Unknown type 'money' for column 'price'
 
+  create_table "avatars", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.boolean  "active",            :default => true
+  end
+
+  add_index "avatars", ["user_id"], :name => "index_avatars_on_user_id"
+
   create_table "brand_products", :force => true do |t|
     t.integer  "brand_id"
     t.integer  "product_id"
@@ -32,16 +43,16 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
   end
 
   create_table "comments", :force => true do |t|
-    t.integer  "indicative_price"
-    t.string   "indicative_options"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.float    "price"
     t.text     "description"
     t.integer  "ad_id"
+    t.integer  "indicative_price_cents",    :default => 0,     :null => false
+    t.string   "indicative_price_currency", :default => "USD", :null => false
+    t.string   "indicative_options"
+    t.boolean  "match_price"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.string   "currency"
   end
-
-  add_index "comments", ["price"], :name => "index_comments_on_price"
 
   create_table "companies", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -169,6 +180,10 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
     t.string   "street_address1"
     t.string   "street_address2"
     t.string   "state"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

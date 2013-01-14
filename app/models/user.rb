@@ -6,8 +6,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :invite_for => 2.weeks
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country, :company_attributes
-  attr_writer :signup_current_step, :show_ads_by
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country, :company_attributes, 
+  :avatar
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/guest.png"
+  attr_writer :signup_current_step, :show_ads_by, :useravatar
 
   # attr_accessible :title, :body
   before_save { |user| user.email = email.downcase }
@@ -35,6 +37,7 @@ class User < ActiveRecord::Base
   has_many :relationship_products, foreign_key: "follower_id", dependent: :destroy
   has_many :followedproducts, through: :relationship_products
 
+  has_many :avatars
   letsrate_rater
   accepts_nested_attributes_for :company, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
 
@@ -44,6 +47,14 @@ class User < ActiveRecord::Base
 
   def signup_steps
     %w[basicinfo additionalinfo]
+  end
+
+  def setuseravatar(avatar)
+    self.useravatar = avatar
+  end
+
+  def useravatar
+    @useravatar || nil
   end
 
   def signup_next_step

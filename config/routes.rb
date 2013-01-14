@@ -2,7 +2,6 @@ Brise::Application.routes.draw do
   match '/rate' => 'rater#create', :as => 'rate'
   match '/following_ad' => 'users#following_ad', :as => 'following_ad'
 
-
   resources :brands
 
   resources :company_products

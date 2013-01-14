@@ -41,7 +41,7 @@ class Ad < ActiveRecord::Base
   def self.from_ads_followed_by(user)
     followed_ad_ids = "SELECT followedad_id FROM relationship_ads
                          WHERE follower_id = :user_id"
-    where("id IN (#{followed_ad_ids}) OR user_id = :user_id", 
+    where("id IN (#{followed_ad_ids})", 
           user_id: user.id)
   end
 
@@ -61,6 +61,10 @@ class Ad < ActiveRecord::Base
 
   def userfollowing(user)
     relationship_ads.create!(follower_id: user.id)
+  end
+
+  def indicative_prices
+    self.comments
   end
 
  TYPES.each do |state_name|

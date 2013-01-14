@@ -59,7 +59,11 @@
         <%= rating_for_override ad.brand_product, "quality", :readonly => true %>
       </span>
       <span class="span7">
-        <sub><%= link_to "(#{ad.brand_product.reviews.count} review/s)", :controller => "brand_products", :action => :show, :id => ad.brand_product %></sub>
+          <% if ad.brand_name.blank? %>
+            <sub><%= link_to "(#{ad.brand_product.reviews.count} review/s)", :controller => "products", :action => :show, :id => ad.brand_product.product %></sub>
+          <% else %>
+            <sub><%= link_to "(#{ad.brand_product.reviews.count} review/s)", :controller => "brand_products", :action => :show, :id => ad.brand_product %></sub>
+          <% end %>
       </span> 
     </span>
     <span id="content" class="more details adlink"><%= link_to "#{ad.details}", :controller => "ads", :action => :show, :id => ad.id %></span>
