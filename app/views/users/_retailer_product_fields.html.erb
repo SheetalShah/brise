@@ -1,14 +1,6 @@
-<p class="product">
-  <div class="row-fluid">
-    <div class="span3">
-      <%= f.label :name, "Product Name", :class_name => "hidden_option" %>
-    </div>
-    <div class="span6">	
-      <%= f.text_field :name, :class_name => "hidden_option" %>
-    </div>
-    <div class="span2">
-      <%= link_to_remove_fields "remove", f %>
-    </div>
-  </div>	
-</p>
+<tr class="product">
+      <td><%= f.text_field :name, :class_name => "hidden_option", :placeholder => "Product name*" %></td>
+      <td><%= f.text_field :model, :class_name => "hidden_option", :placeholder => "Model" %></td>
+      <td><%= link_to_remove_fields "remove", f, "retail" %></td>
+</tr>
 

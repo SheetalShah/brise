@@ -33,6 +33,7 @@ class UsersController < Devise::RegistrationsController
   # GET /users/1
   # GET /users/1.json
   def show
+    if user_signed_in?
     @user = User.find(params[:id])
     @user.show_ads_by = session[:show_ads_by] 
     @ad = @user.ads.build(params[:ad])
@@ -45,6 +46,9 @@ class UsersController < Devise::RegistrationsController
       format.html # show.html.erb
       format.json { render json: @user }
     end
+else
+      redirect_to user_session_path
+    end 
   end
 
   def show_followedusers_ads

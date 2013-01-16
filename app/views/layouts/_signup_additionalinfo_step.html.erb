@@ -17,14 +17,8 @@
 <%= f.country_select :country, ["India"] %>
 
 <%= f.label :zip_code %>
-<%= f.text_field :zip_code %><br/>
-<div class="modal" style="display:none;">
-</div>
-<div id="dialog" title="Basic dialog">
-    Helps find nearest to position ads.
-</div>
-<a href="#" id="help" class="ui-state-default ui-corner-all">Why do I need to provide my address?</a>
-
+<%= f.text_field :zip_code %>
+<a href="#" id="help" class="smallfont" title="Helps find nearest to position ads">Why do I need to provide my address?</a>
 <%= f.fields_for :company do |c| %>
   <%= render "/layouts/signup_company_details", :c => c %>
 <% end %>

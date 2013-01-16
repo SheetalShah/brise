@@ -17,8 +17,10 @@ $(document).ready(function(){
      ad_type_change();
   });
 
-  
-  
+  $(this).find("section#comment").hide();
+  $('a#commentslink').click(function(e) {
+	$(this).closest('section#adlink').next().toggle();
+  } );
 
   var showChar = 250;
     var ellipsestext = "...";

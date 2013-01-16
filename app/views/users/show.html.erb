@@ -5,7 +5,7 @@
 <meta charset="utf-8"> 
 </head>
 <body>
-  <%= render 'layouts/header' %>
+  <%= render 'shared/header' %>
     <div class="row-fluid">
      <aside>
         <div class="unit span2">
@@ -18,20 +18,18 @@
             <div id="helpcontent">
               <p>
 		<div class="row-fluid">
-	          <section id="logo"><%= image_tag @user.avatar.url %>
+	          <section id="logo"><%= image_tag @user.avatar.url, :size => "100x100" %>
 		  </section>
-	          <section id="help" class="topmargin20"><ad-title><bold><%= link_to "#{@user.display_name}", new_user_path %></bold></ad-title>
-		  </section>
-		</div>
-		<ol>
- 		  <li>Registered as: <%= @user.user_type.capitalize %></li>
-		  <li>Address:<br/>
+	          <section id="help" ><ad-title><bold><%= link_to "#{@user.display_name}", new_user_path %></bold></ad-title>(<%= @user.user_type.capitalize %>)<br/>
+
 		    <%= @user.street_address1 %>,<br/>
                     <%= @user.street_address2 %>,<br/>
                     <%= @user.city %>-<%= @user.zip_code %>,<br/>
                     <%= @user.state %>,<br/>
-                    <%= @user.country %></li>
-		</ol>
+                    <%= @user.country %>
+		  </section>
+		</div>
+		
               </p>
             </div>
           </div>

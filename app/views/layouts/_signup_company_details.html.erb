@@ -1,19 +1,23 @@
-  <hr>
-  <%= c.label :company_name, :class => 'hidden_option'  %>
-  <%= c.text_field :company_name, :class => 'hidden_option' %><br/>
   <br/>
+  <%= c.label :company_name, :class => 'hidden_option'  %>
+  <%= c.text_field :company_name, :class => 'hidden_option' %>
 
   <div class="groupbox control-group check_boxes optional">
     <label class="check_boxes optional control-label hidden_option">Are you a?</label>
     <div class="controls hidden_option">
+
           <label class="checkbox hidden_option">	
-          <%= c.check_box :manufacturer, :class => 'check_boxes optional hidden_option'  %>Manufacturer</label>
-          <p class="hidden_option"><%= link_to_add_fields "Add Manufacturered Product", c, :manufacturer_products %></p>
-
+          <%= c.check_box :manufacturer, :class => 'check_boxes optional hidden_option', :id => "manufactured"  %>
+	  Manufacturer</label>
+	<div class="manufactured">
+          <p class="hidden_option" id="manufactured">Click <%= link_to_add_fields "here", c, :manufacturer_products, "manufactured" %> if you manufacture more</p> 
+	</div>
+	
         <label class="checkbox hidden_option">	
-        <%= c.check_box :retailer, :class => 'check_boxes optional hidden_option'  %>Retailer</label>
-
-        <p class="hidden_option"><%= link_to_add_fields "Add Retail Product", c, :retailer_products %></p>
+        <%= c.check_box :retailer, :class => 'check_boxes optional hidden_option', :id => "retail" %>Retailer</label>
+	<div class="retail">
+        <p class="hidden_option" id="retail">Click <%= link_to_add_fields "here", c, :retailer_products, "retail" %> if you retail in more</p>
+	</div>
     </div>
   </div>
 <br/>

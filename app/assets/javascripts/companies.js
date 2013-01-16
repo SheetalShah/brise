@@ -1,7 +1,7 @@
 function remove_fields(link) {
 alert( "how r u?");
   $(link).previous("input[type=hidden]").value = "1";
-  $(link).up("p.product").hide();
+  $(link).up("tr.product").hide();
 }
 
 function add_fields(link, association, content) {

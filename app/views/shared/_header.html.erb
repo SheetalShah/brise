@@ -6,10 +6,9 @@
         <ul class="nav pull-right">
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Ads", "adfeed_path" %></li>
-	<li>abc</li>
         <% if user_signed_in? %>
 	  <li id="fat-menu" class="dropdown">
-	    <a href=settings_path >abc
+	    <a href=settings_path >
 	      <%= @user.display_name %><b class="caret"></b>
 	    </a>
 	    <ul class="dropdown-menu">
