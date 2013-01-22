@@ -1,42 +1,30 @@
 class CommentsController < ApplicationController
   include Devise::Controllers::Helpers
+  respond_to :html, :xml, :json
   # GET /comments
   # GET /comments.json
   def index
     @comments = Comment.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @comments }
-    end
+    respond_with @comments
   end
 
   # GET /comments/1
   # GET /comments/1.json
   def show
     @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @comment }
-    end
+    respond_with @comment
   end
 
   # GET /comments/new
   # GET /comments/new.json
   def new
     @comment = @ad.comments.build
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @comment }
-    end
+    respond_with @comment
   end
 
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
-    
     render :template => 'comments/edit'
   end
 
@@ -46,6 +34,7 @@ class CommentsController < ApplicationController
     @ad = Ad.find(params[:ad_id])
     @user = current_user
     @comment = @ad.comments.build(params[:comment])
+    @comment.user = current_user 
     @comment.currency = @ad.currency
    # @comment = Comment.new(params[:comment])
     @ads = Ad.all

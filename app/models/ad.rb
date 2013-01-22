@@ -67,6 +67,8 @@ class Ad < ActiveRecord::Base
     self.comments
   end
 
+
+
  TYPES.each do |state_name|
     define_method "#{state_name}?" do
 	state == state_name

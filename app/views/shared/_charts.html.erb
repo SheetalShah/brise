@@ -78,4 +78,6 @@ $(function () {
 });
 		</script>
 <div id="container" style="width: 400px; height: 400px; margin: 0 auto"></div>
+      <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @current_user.latitude, "center_longitude" => @current_user.longitude }, "markers" => {"data" => @json} }) %>
+
 

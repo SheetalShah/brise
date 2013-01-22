@@ -31,13 +31,14 @@ money{
 	color: red;
 }
 
+.bold {
+        font-weight: bold;
+}
+
 ad-title {
 	font-size: 1.2em;
         normal {
    	  font-weight: normal;
-        }
-        bold {
-          font-weight: bold;
         }
 }
 
@@ -97,6 +98,12 @@ a.morelink {
 	margin-top: 12px;
 }
 
+.close{
+    float: right;
+    text-align:right;
+    margin-right:10px;
+    cursor:pointer
+}
 
 #logo {
 	float: left;
@@ -370,7 +377,7 @@ form {
         font-family: "Times New Roman";
 	padding: 0px;
 }
-#help { 
+.helppadding { 
 	padding: 0.5em 1em; 
 	text-decoration: none; 
         position: absolute;
@@ -426,30 +433,22 @@ background-color:#fafafa;
 }
 p { padding: 5px 0; }
 
-#modal {
+#modal, .modal, #mapmodal {
     -webkit-border-radius:2px;
     -moz-border-radius:2px;
     border-radius:2px;
-    position: fixed !important;
-    left: 100px;
+    position: relative;
+    left: 20px;
+    
+    clear:both;
     z-index:101;
     display: none;
 }
-
-
-.reveal-modal-bg {
-    position: static;
-    height: 100%;
-    width: 100%;
-    background: #000;
-    z-index: 1000;
-    display: none;
-    top: 0;
-    left: 0;
+#maphelp {
+  cursor: pointer;
+  color:#006699;
 }
-
-
-#helpcontent {
+#helpcontent, #maphelpcontent {
     width:auto;
     background:#fcfcfc;
     -webkit-box-shadow:0px 1px 1px rgba(0,0,0,.25);
@@ -461,25 +460,33 @@ p { padding: 5px 0; }
     border-style: outset;
     border-color: #ddd;
 }
-#helpcontent p {
+#maphelpcontent {
+  background-color: #64666a;
+  border-style: none;
+}
+
+#helpcontent p, #maphelpcontent p {
     font-size:13px;
     font-weight:normal;
     text-align:left;
     line-height:22px;
     color:#555555;
     width:auto;
-    float: left;
     margin:0px 0;
     border-color: #ddd;
 }
 
 #modal {
 	width: 300px;
-	height: auto;
+	height: 150px;
     }
     #helpcontent {
 	width: 300px;
-	height: 120px;
+	height: 150px;
+    }
+    #maphelpcontent {
+        width: 400px;
+        height: 430px;
     }
 
 
@@ -488,3 +495,58 @@ p { padding: 5px 0; }
 	top: 50%;
  	left: 4px;
 }
+
+
+ul#grid {
+  padding: 0;
+  list-style: none;
+  margin: 20px auto 0;
+  width: 100%;  
+  }
+
+#grid li {
+  float: left;
+  padding: 30px;
+  margin: 0 5px 10px 5px;
+  } 
+
+#grid li a {
+  display: block;
+  border: 2px dotted #58595b;
+  }
+
+#grid li img {
+  background-color: #64666a;
+  padding: 7px; margin: 2px;
+  width: 128px;
+  height: 128px;
+  }
+
+#grid li a:hover img {
+opacity:0.3; filter:alpha(opacity=30);
+  }
+
+.grid_display {
+  padding: 20px;
+  margin-left: auto; margin-right: auto;  margin-top:50px; margin-bottom:0;
+  /*background-color: #ffd7ce;*/
+  width: 513px; 
+
+  /*these two properties will be inherited by .grid_display h2 and .grid_display p */
+  font-family: 'GraublauWeb', arial, serif; 
+  text-align: center;
+  }  
+
+div.grid_display h2 {
+  padding: 0; margin: 0;
+  clear: both;
+  font-size: 35px;
+  font-weight: normal;
+  color: #58595b;
+  background: none;
+  font-family: 'GraublauWeb', arial, serif;  
+
+  /* reset for cascade effects that are trickling down from other h2's */
+  text-transform: none;
+  letter-spacing: normal;
+  }

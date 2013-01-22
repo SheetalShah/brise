@@ -2,6 +2,8 @@
 <html lang="en"> 
 <head> 
 <meta charset="utf-8"> 
+<%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
+<%= stylesheet_link_tag "gmaps4rails" %>
 </head>
 <body class="body">
   <%= render 'layouts/header' %>
@@ -63,4 +65,7 @@
     </div>
    	
   </body>
+  <footer>
+	<%= yield :scripts %> 
+  </footer>
 </html>

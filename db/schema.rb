@@ -52,7 +52,10 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
     t.string   "currency"
+    t.integer  "user_id"
   end
+
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "companies", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -174,7 +177,7 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
     t.string   "confirmation_token"
     t.time     "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "zip_code"
+    t.string   "zip_code"
     t.string   "city"
     t.string   "country"
     t.string   "street_address1"
@@ -184,6 +187,9 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "gmaps"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

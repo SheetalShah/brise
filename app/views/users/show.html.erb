@@ -2,6 +2,7 @@
 <html lang="en"> 
 <head> 
 <%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
+<%= stylesheet_link_tag "gmaps4rails" %>
 <meta charset="utf-8"> 
 </head>
 <body>
@@ -10,29 +11,22 @@
      <aside>
         <div class="unit span2">
           <div class="row-fluid">
-          <section id="logo"><%= image_tag @user.avatar.url, :size => "48x48" %>
+          <section id="logo"><%= image_tag avatar_url(@user), :size => "48x48" %>
 	  </section>
-          <section id="help" class="topmargin20"><ad-title><bold><%= link_to "#{@user.display_name}", new_user_path %></bold></ad-title>
-	  </section></div>
-	  <div id="modal">
-            <div id="helpcontent">
-              <p>
-		<div class="row-fluid">
-	          <section id="logo"><%= image_tag @user.avatar.url, :size => "100x100" %>
-		  </section>
-	          <section id="help" ><ad-title><bold><%= link_to "#{@user.display_name}", new_user_path %></bold></ad-title>(<%= @user.user_type.capitalize %>)<br/>
-
-		    <%= @user.street_address1 %>,<br/>
-                    <%= @user.street_address2 %>,<br/>
-                    <%= @user.city %>-<%= @user.zip_code %>,<br/>
-                    <%= @user.state %>,<br/>
-                    <%= @user.country %>
-		  </section>
-		</div>
-		
-              </p>
-            </div>
-          </div>
+	  <%= render 'shared/help', :id => 'modal_user_'+ @user.id.to_s, :object => @user %>
+<section class="helppadding"><%= render 'users/follow_form' %></section>
+         <section class="topmargin20 helppadding" id="help" data-id=modal_user_<%= @user.id %>><ad-title class="bold"><%= link_to @user.display_name, user_path %></ad-title></section>
+	  <br/><small><section id = "maphelp" class="topmargin20 helppadding">View map </section></small></div>
+<div id="mapmodal">
+            <div id="maphelpcontent">
+  <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span><br/>
+  <p>
+    <div class="row-fluid">
+      <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
+    </div>
+  </p>
+</div>
+</div>
           <section>
             <%= render 'shared/stats' %>
           </section>
@@ -50,4 +44,7 @@
     </div>
    	
   </body>
+  <footer>
+	<%= yield :scripts %> 
+  </footer>
 </html>

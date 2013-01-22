@@ -1,6 +1,7 @@
 class AdsController < ApplicationController
   before_filter :authenticate_user!, except: [:index ]
   before_filter :correct_user, only: [:edit, :update, :destroy]
+  respond_to :html, :xml, :json
   # GET /ads
   # GET /ads.json
   def index
@@ -10,20 +11,16 @@ class AdsController < ApplicationController
   # GET /ads/1.json
   def show
     @ad = Ad.find(params[:id])
-    @user = current_user
+    @user = @ad.user
+    @current_user = current_user
+    @json = User.comments_user(@ad).to_gmaps4rails
     session[:return_to] = request.fullpath
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @ad }
-    end
+    respond_with @ad
   end
 
   def show_all_ads_by_user
     @ads = current_user.ads
-    respond_to do |format|
-      format.html
-      format.json { render json: @ads }
-    end
+    respond_with @ads
   end
         		
   # GET /ads/new
@@ -41,10 +38,7 @@ class AdsController < ApplicationController
      iso_code = Money::Currency::TABLE[currency][:iso_code]
      @currencies << [name, iso_code]
    end	
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @ad }
-    end
+   respond_with @ad
   end
 
   # GET /ads/1/edit
@@ -147,7 +141,6 @@ class AdsController < ApplicationController
   end
 
 private
-
     def correct_user
       @ad = current_user.ads.find_by_id(params[:id])
       redirect_to root_url if @ad.nil?

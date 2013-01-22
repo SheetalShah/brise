@@ -4,6 +4,11 @@ class Comment < ActiveRecord::Base
     def display_name
       ad.display_name if ad
     end
+
+  belongs_to :user
+    def display_name
+      user.display_name if user
+    end
      
   validates_presence_of :ad
   validates_presence_of :description  

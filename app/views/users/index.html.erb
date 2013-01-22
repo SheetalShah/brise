@@ -1,21 +1,18 @@
-<h1>Listing users</h1>
-
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @users.each do |user| %>
-  <tr>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
+<%= stylesheet_link_tag "gmaps4rails" %>
+<meta charset="utf-8"> 
+</head>
+<body>
+  <%= render 'shared/header' %>
+    <div id="gallery">
+      <ul id="grid">
+        <% @users.each do |user| %>
+          <li><%= link_to image_tag( avatar_url(user) ), user %><%= user.display_name %></li>
+        <% end %>
+      </ul>
+   </div>
+</body>
+</html>

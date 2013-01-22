@@ -1,0 +1,9 @@
+<div id="mapmodal" %>>
+  <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span>
+  <p>
+    <div class="row-fluid">
+      <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
+    </div>
+  </p>
+</div>
+

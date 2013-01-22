@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country, :company_attributes, 
   :avatar
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/guest.png"
-  attr_writer :signup_current_step, :show_ads_by, :useravatar
+  attr_writer :signup_current_step, :show_ads_by, :show_users_by
 
   # attr_accessible :title, :body
   before_save { |user| user.email = email.downcase }
@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   has_one :company, :dependent => :destroy
   has_many :ads, :dependent => :destroy
-  has_many :comments, :through => :ads 
+  has_many :comments
   has_many :followed_users, through: :relationships, source: :followed
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
@@ -37,9 +37,13 @@ class User < ActiveRecord::Base
   has_many :relationship_products, foreign_key: "follower_id", dependent: :destroy
   has_many :followedproducts, through: :relationship_products
 
-  has_many :avatars
   letsrate_rater
+  acts_as_gmappable validation: false
   accepts_nested_attributes_for :company, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
+
+  def gmaps4rails_address
+    "#{self.city} #{self.zip_code}, #{self.country}" 
+  end
 
   def signup_current_step
     @signup_current_step || signup_steps.first
@@ -47,14 +51,6 @@ class User < ActiveRecord::Base
 
   def signup_steps
     %w[basicinfo additionalinfo]
-  end
-
-  def setuseravatar(avatar)
-    self.useravatar = avatar
-  end
-
-  def useravatar
-    @useravatar || nil
   end
 
   def signup_next_step
@@ -128,19 +124,37 @@ class User < ActiveRecord::Base
     @show_ads_by || adfeed_by_type.first
   end
 
-  def feed
-    if(self.show_ads_by == "followedusers")
-      @ads = Ad.from_users_followed_by(self)	
-    else
-      if(self.show_ads_by == "followedads")
-        @ads = Ad.from_ads_followed_by(self)
+  def show_users_by
+    @show_users_by || "all"
+  end
+
+  def self.comments_user(ad)
+    comments_user_ids = "SELECT user_id FROM comments
+                         WHERE ad_id = :ad_id"
+    where("id IN (#{comments_user_ids})", ad_id: ad.id)
+  end
+
+  def users
+    case self.show_users_by
+      when 'following'
+        self.followed_users
+      when 'followers'
+        self.followers
       else
-	if(self.show_ads_by == "followedproducts")
-          @ads = Ad.from_adproducts_followed_by(self)
-        else
-          @ads = Ad.all
-        end
-      end
+        User.all
+    end
+  end
+
+  def feed
+    case self.show_ads_by
+      when 'followedusers'
+        @ads = Ad.from_users_followed_by(self)	
+      when 'followedads'
+        @ads = Ad.from_ads_followed_by(self)
+      when 'followedproducts'
+        @ads = Ad.from_adproducts_followed_by(self)
+      else
+        @ads = Ad.all
     end
   end
 end

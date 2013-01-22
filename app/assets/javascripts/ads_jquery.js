@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+   Gmaps.loadMaps();
   function ad_type_change(){
     if( $('#ad_ad_type').val() === 'Buy' )
     {	
@@ -54,14 +54,6 @@ $(document).ready(function(){
 
 
 
-    $('#help').hover(function() {        // Button which will activate our modal
-      $('#modal').show();
-    }, function(e) {        // Button which will activate our modal
-	$('#modal').hide();
-    });
 
-    $('#help').keyup(function(e) {
-      if(e.which===27){ $('#modal').hide(); } // 27 is the keycode for the Escape key
-    });
    
 });

@@ -1,5 +1,5 @@
 <%= form_for(current_user.relationships.find_by_followed_id(@user),
              html: { method: :delete }) do |f| %>
-  <%= f.submit "Unfollow", class: "btn btn-large" %>
+  <a href="#" onClick="$(this).closest('form').submit()">Unfollow</a>
 <% end %>
 

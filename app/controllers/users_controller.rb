@@ -7,46 +7,34 @@ class UsersController < Devise::RegistrationsController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
-    end
+    @current_user = current_user
+    @current_user.show_users_by = session[:show_users_by]
+    @users = current_user.users
+    respond_with @users
   end
 
   def home
     if user_signed_in?
-      @user = current_user
-      @ad = current_user.ads.build
-      @ads = current_user.ads
-      @comment = @ad.comments.build
-      @current_user = current_user
-      respond_to do |format|
-        format.html { render action: "show" }
-        format.json { render json: @user }
-      end 	
+      redirect_to current_user
     else
       redirect_to user_session_path
     end 
   end
+
   # GET /users/1
   # GET /users/1.json
   def show
     if user_signed_in?
-    @user = User.find(params[:id])
-    @user.show_ads_by = session[:show_ads_by] 
-    @ad = @user.ads.build(params[:ad])
-    @ads = @user.feed
-    @comment = @ad.comments.build(params[:comment])
-    @current_user = current_user
-    @comments = Comment.all
+      @user             = User.find(params[:id])
+      @user.show_ads_by = session[:show_ads_by] 
+      @current_user     = current_user
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
-    end
-else
+      @ad               = @user.ads.build(params[:ad])
+      @comment          = @ad.comments.build(params[:comment])
+      @ads              = @user.feed
+      @json             = @user.to_gmaps4rails
+      respond_with @user
+    else
       redirect_to user_session_path
     end 
   end
@@ -62,6 +50,7 @@ else
     @user = User.find(params[:id])
     redirect_to @user
   end
+
   def show_followedads_ads
     session[:show_ads_by] = "followedads"
     @user = User.find(params[:id])
@@ -78,11 +67,9 @@ else
   # GET /users/new.json
   def new
     session[:signup_params] ||= {}
-    @sowhat ={}
-    @user = User.new(session[:signup_params])
-    @user.avatar = @user.useravatar
+    @user                     = User.new(session[:signup_params])
     @user.signup_current_step = session[:signup_step]	
-    @company = @user.build_company
+    @company                  = @user.build_company
 
     respond_to do |format|
       format.html # new.html.erb
@@ -114,11 +101,9 @@ else
       elsif @user.signup_last_step?
 	@user.build_company(params[:user][:company_attributes])
         @user.save if @user.signup_all_valid?
-      else
-        if @user.valid?
-          @user.signup_next_step
-          @user.build_company
-        end
+      elsif @user.valid?
+        @user.signup_next_step
+        @user.build_company
       end
       session[:signup_step] = @user.signup_current_step
     end
@@ -168,33 +153,20 @@ else
   def following
     @title = "Following"
     @user = User.find(params[:id])
-    @users = @user.followed_users
-
-    respond_to do |format|
-      format.html #following.html.erb
-      format.json { render json: @users }
-    end
+    session[:show_users_by] = "following"
+    redirect_to users_path
   end
 
   def following_ad
     @title = "Following"
     @user = User.find(params[:id])
-
-    respond_to do |format|
-      format.html #following.html.erb
-      format.json { render json: @users }
-    end
+    respond_with @users
   end
 
   def followers
     title = "Followers"
     @user = User.find(params[:id])
-    @users = @user.followers
-
-
-    respond_to do |format|
-      format.html #followers.html.erb
-      format.json { render json: @users }
-    end
+    session[:show_users_by] = "followers"
+    redirect_to users_path
   end
 end
