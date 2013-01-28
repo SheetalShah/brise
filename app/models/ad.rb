@@ -1,5 +1,6 @@
 class Ad < ActiveRecord::Base
-  attr_accessible :ad_type, :details, :price_eval, :options_eval, :price_cents, :currency, :use_address_zip_code, :ad_zip_code, :state
+  attr_accessible :ad_type, :details, :price_eval, :options_eval, :price_cents, :currency, :use_address_zip_code, :ad_zip_code, :state, :avatar
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/guest.png"
   belongs_to :user
     def by_type
       user.user_type if user

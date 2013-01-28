@@ -11,9 +11,9 @@ module ApplicationHelper
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :id => "add_" + id, :class => id )
   end
 
-  def avatar_url(user)
-    if user.avatar.present?
-      user.avatar.url
+  def avatar_url(object)
+    if object.avatar.present?
+      object.avatar.url
     else	
       "guest.png"
     end

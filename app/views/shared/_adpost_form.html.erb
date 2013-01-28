@@ -5,6 +5,7 @@
     <legend>Step 1. Ad details</legend>
     <%= f.input :ad_type, :collection => [ ['Buy','Buy'], ['Sell','Sell'], ['Rent','Rent'] ],   :input_html => { :class => "span6" }, :priority => [ "Buy" ], :label => "Looking to", :id => 'adtype' %>
     <legend><small>Item</small></legend>
+    Image <%= f.file_field :avatar %>
     <%= simple_fields_for @ad.brand_product do |c| %>
       <%= c.input :id, :collection => BrandProduct.all.map { |r| [r.brand_product, r.id] },   :input_html => { :class => "span6" }, :label => false, :prompt => "Other", :value_method => lambda {|t| t[1]}, :hint => "Select *Other* if your item is not in the above list and specify Product/Model/Brand below"  %>
     <% end %>
