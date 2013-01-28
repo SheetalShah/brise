@@ -16,7 +16,10 @@ Brise::Application.routes.draw do
   
   resources :comments
 
-  resources :ads, only: [ :create, :destroy, :edit, :update, :show ] do
+  resources :ads, only: [ :create, :destroy, :edit, :update, :show, :new, :index, :myads, :myquotedads ] do
+    member do
+      get :myads, :myquotedads
+    end
     resources :brand
     resources :product 
     resources :comments
@@ -49,7 +52,7 @@ Brise::Application.routes.draw do
     end
     resources :users do
       member do
-        get :following, :followers, :following_ad, :following_product, :show, :show_all_ads, :show_followedusers_ads, :show_followedads_ads, :show_followedproducts_ads, :home
+        get :following, :followers, :following_ad, :following_product, :show, :show_all_ads, :show_followedusers_ads, :show_followedads_ads, :show_followedproducts_ads, :show_myads_ads, :show_myquoted_ads, :home
       end
       resources :companies
     end

@@ -1,17 +1,2 @@
-<% if product.created_at %>
-  <% if @product == product %>
-    <div class="currentheading">
-      <%= @product.model %>
-    </div>
-    <%= best_in_place @product, :modeldescription, :type => :textarea, :nil => "N/A - Click here to provide a generic model description common to all brands" %>
-  <% else %>
-    <div class="brandheading">
-      <%= product.model %>
-    </div>
-    <div class="brandcontent">
-      <%= best_in_place product, :modeldescription, :type => :textarea, :nil => "N/A - Click here to provide a generic model description common to all brands" %>
-    </div>
-  <% end %>
-<% end %>
-
-
+<li><%= link_to image_tag( avatar_url(@user) ), @user %><%= product.name %> 
+<%= render 'shared/productstatsimple', statobject: product %></li>

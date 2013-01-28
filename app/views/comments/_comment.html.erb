@@ -2,11 +2,11 @@
   <li class="comment">
     <%= render 'shared/help', :id => 'modal_comment_'+comment.id.to_s, :object => comment.user %>
     <% if @current_user == comment.ad.user %> 
-      <section id="help" data-id=modal_comment_<%= comment.id %>><%= link_to comment.display_name, user_path %></section>: <%= best_in_place comment, :description %>
+      <section id="help"  class="contact-card" data-id=modal_comment_<%= comment.id %>><%= comment.display_name %></section>: <%= best_in_place comment, :description %>
       <span class="float-right"><money><%= humanized_money_with_symbol comment.indicative_price %></money>
       <sup><%= link_to image_tag('delete-gray.png', :size => "20x20"), comment, method: :delete %></sup></span>
     <% else %>
-      <section id="help" type="comment" data-id=modal_comment_<%= comment.id %>><%= link_to comment.display_name, user_path %></section>: <%= comment.description %>
+      <section id="help" type="comment"  class="contact-card" data-id=modal_comment_<%= comment.id %>><%= comment.display_name %></section>: <%= comment.description %>
     <% end %>
     <br/>
     <span class="timestamp timeago" title="<%= comment.updated_at.getutc.iso8601 %>">

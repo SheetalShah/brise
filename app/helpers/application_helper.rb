@@ -18,5 +18,15 @@ module ApplicationHelper
       "guest.png"
     end
   end
+
+  def isValidFollowingType(object)
+    classname = object.class.name
+    # only users can follow other users, products, ads	
+    if classname == "User"
+      return true
+    else
+      return false 
+    end
+  end
 end
 

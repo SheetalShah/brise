@@ -1,0 +1,5 @@
+<ul class="square text-center">
+  <li><%= link_to "Create Ad", :controller => "ads", :action => :new %></li>
+  <li><%= link_to "My Ads", :controller => "users", :action => :show_myads_ads, :id => @user %>(<%= @user.ads.count %>)</li>
+  <li><%= link_to "My Quoted Ads", :controller => "users", :action => :show_myquoted_ads, :id => @user %>(<%= Ad.my_quoted_ads(@user).count %>)</li>
+</ul>

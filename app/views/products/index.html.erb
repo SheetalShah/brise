@@ -1,33 +1,38 @@
-<h1>Listing products</h1>
+<!DOCTYPE html5> 
+<html lang="en"> 
+<head> 
+<%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
+<%= stylesheet_link_tag "gmaps4rails", "bootstrap/bootstrap-responsive" %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Industry</th>
-    <th>Category</th>
-    <th>Raw material</th>
-    <th>Finished product</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @products.each do |product| %>
-  <tr>
-    <td><%= product.name %></td>
-    <td><%= product.description %></td>
-    <td><%= product.industry %></td>
-    <td><%= product.category %></td>
-    <td><%= product.raw_material %></td>
-    <td><%= product.finished_product %></td>
-    <td><%= link_to 'Show', product %></td>
-    <td><%= link_to 'Edit', edit_product_path(product) %></td>
-    <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Product', new_product_path %>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+  <%= render 'shared/header' %>
+   <div class="container-fluid">
+    <div class="row-fluid">
+     <aside>
+        <div class="span2">
+	  <section>
+ 	    <%= render 'shared/userInfo' %>
+	  </section>
+	  <br>
+          <section>
+ 	    <%= render 'shared/userpage_links' %>
+	  </section>
+        </div>
+        <div class="span6 offset1">  
+	  <div id="gallery">
+            <ul id="grid">
+	      <%= render @products %>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+</div>
+  </body>
+  <footer>
+	<%= debug(params) %>
+	<%= yield :scripts %> 
+  </footer>
+</html>

@@ -1,13 +1,13 @@
 class ProductsController < ApplicationController
+  respond_to :html, :xml, :json
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @products }
-    end
+    @current_user = current_user
+    user_id = session[:user_id] || current_user.id
+    @user         = User.find(user_id)
+    @products = Product.feed(@user, session[:show_products_by])
+    respond_with @products
   end
 
   # GET /products/1

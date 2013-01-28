@@ -1,5 +1,36 @@
-<h1>New ad</h1>
+<!DOCTYPE html5> 
+<html lang="en"> 
+<head> 
+<%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
+<%= stylesheet_link_tag "gmaps4rails", "bootstrap/bootstrap-responsive" %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', ads_path %>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+  <%= render 'shared/header' %>
+   <div class="container-fluid">
+    <div class="row-fluid">
+     <aside>
+        <div class="span2">
+	  <section>
+ 	    <%= render 'shared/userInfo' %>
+	  </section>
+	  <br>
+          <section>
+ 	    <%= render 'shared/userpage_links' %>
+	  </section>
+        </div>
+        <div class="span6 offset1">  
+	  <section>
+	    <%= render :partial => "shared/adpost_form" %>
+          </section>
+        </div>
+      </aside>
+    </div>
+</div>
+  </body>
+  <footer>
+	<%= debug(params) %>
+	<%= yield :scripts %> 
+  </footer>
+</html>

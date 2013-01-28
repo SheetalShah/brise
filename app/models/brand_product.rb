@@ -4,19 +4,40 @@ class BrandProduct < ActiveRecord::Base
   letsrate_rateable "quality"
   belongs_to :brand
     def brand_name
-      brand.name if brand
+      if brand
+        brand.name 
+      else
+        ""
+      end 
     end
   belongs_to :product
     def product_name
-      product.name if product
+      if product
+        product.name 
+      else
+        ""
+      end
     end
     def model_name
-      product.model if product
+      if product
+        product.model 
+      else
+        ""
+      end
     end
   has_many :ads, :foreign_key => :brand_product_id 
 
-  def self.findBrandProduct(product, brand)
-    where("product_id=#{product.id} AND brand_id=#{brand.id}");
+  def brand_product
+    brand_name + " " + model_name + " " + product_name
+  end
+
+  def self.search(product, brand)
+    product = Product.find_by_name_and_model(product.name, product.model)
+    brand   = Brand.find_by_name(brand.name) unless brand.name.empty?
+    brand_product = BrandProduct.find_by_brand_id_and_product_id(brand, product) || BrandProduct.new
+    brand_product.product = product || brand_product.build_product(product) if !brand_product
+    brand_product.brand = brand || brand_product.build_brand(brand) if !brand_product
+    brand_product
   end
 
   def average_rating(rateable_obj, user=nil, dimension=nil)

@@ -153,6 +153,10 @@ class User < ActiveRecord::Base
         @ads = Ad.from_ads_followed_by(self)
       when 'followedproducts'
         @ads = Ad.from_adproducts_followed_by(self)
+      when 'myads'
+        @ads = Ad.my_created_ads(self)
+      when 'myquoted'
+        @ads = Ad.my_quoted_ads(self)
       else
         @ads = Ad.all
     end

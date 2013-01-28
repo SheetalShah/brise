@@ -1,9 +1,7 @@
-<script src="javascript/jquery.reveal.js"></script>
 <div class="container-fluid">
 <div class="row-fluid">
-<h3>
 <div class="span9">
-Ad Feed(<%= @user.feed.count %>)
+<headertag>Ad Feed(<%= @user.feed.count %>)</headertag>
 </div>
 <div class="span3 float-right-text">
       <nav>
@@ -19,7 +17,6 @@ Ad Feed(<%= @user.feed.count %>)
       </nav>
 </div>
 </div>
-</h3>
 <div>
   <% if @user.feed.any? %>
     <ol class="ads collection">

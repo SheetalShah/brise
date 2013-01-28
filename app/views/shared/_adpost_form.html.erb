@@ -1,45 +1,49 @@
-<%= form_for(@ad) do |f| %>
-  <div class="row-fluid center">
-    <headertag class="span12">Looking to</headertag>
-    <div class="extraneous-non-semantic-markup">
-      <section>
-        <groupthin>
-	&raquo; Ad details
-          <%= f.select(:ad_type, [['Buy', 'Buy'], [ 'Sell', 'Sell' ], [ 'Rent', 'Rent' ]], :id => 'adtype') %>
-	  <%= fields_for :product do |c| %>
-	    <%= render "/layouts/ad_product_details", :c => c %>
-          <% end %>
-          <%= fields_for :brand do |builder| %>
-            <%= render "layouts/ad_brand_details", :c => builder %>
-          <% end %>
-	  <br />
-          <br/>
-          <%= f.text_area :details, placeholder: "Description/Content", :size => '1x8' %>
-	  <br/><br/>
-	  &raquo; Help us help you!
-          <div class="groupbox control-group check_boxes optional">
-            <div class="controls">            
-		<label class="checkbox" id="checkoption" >
-	        <%= f.check_box :options_eval, :class => 'check_boxes optional'  %>Check available options</label><hr>
-		Your price(if any) 
-		<div class="row-fluid">
-		  <span class="span7">
-   		    <%= f.select(:currency, all_currencies(Money::Currency.table), {:include_blank => 'Currency'}) %>
-		  </span>
-		  <span class="span5">
-		    <%= f.number_field :price_cents %>
-	          </span>
-	        </div>
-		<span class="text-center"> OR</span>
-		<label class="checkbox"><%= f.check_box :price_eval, :class => 'check_boxes optional'  %>I have no specific price. Get me the best price</label><hr>
-		<label class="checkbox"><%= f.check_box :use_address_zip_code, :class => 'check_boxes optional'  %>Use my address to find nearest to location deals</label> OR <%= f.number_field :ad_zip_code, placeholder: "Zip code" %>
+<headertag class="span12">New Ad</headertag>
+<div class="span12">
+  <%= simple_form_for @ad, :html => {:novalidate => true, :class => "form-horizontal"} do |f| %>
+  <fieldset>
+    <legend>Step 1. Ad details</legend>
+    <%= f.input :ad_type, :collection => [ ['Buy','Buy'], ['Sell','Sell'], ['Rent','Rent'] ],   :input_html => { :class => "span6" }, :priority => [ "Buy" ], :label => "Looking to", :id => 'adtype' %>
+    <legend><small>Item</small></legend>
+    <%= simple_fields_for @ad.brand_product do |c| %>
+      <%= c.input :id, :collection => BrandProduct.all.map { |r| [r.brand_product, r.id] },   :input_html => { :class => "span6" }, :label => false, :prompt => "Other", :value_method => lambda {|t| t[1]}, :hint => "Select *Other* if your item is not in the above list and specify Product/Model/Brand below"  %>
+    <% end %>
+    <%= simple_fields_for @ad.brand_product.build_product do |c|%>
+      <%= c.input :name, :wrapper => :prepend, :label => false,  :hint => "e.g. Phone"  do %>
+        <%= content_tag :span, "Product", :class => "add-on" %>
+        <%= c.input_field :name %>
+      <% end %>
+      <%= c.input :model, :wrapper => :prepend, :label => false,  :hint => "e.g. Galaxy5"  do %>
+        <%= content_tag :span, "Model(if any specific)", :class => "add-on" %>
+        <%= c.input_field :model %>
+      <% end %>
+    <% end %>
 
-	    </div>
-          </div>
-	  <%= render "/shared/error_messages", object: f.object %>
-	  <%= f.submit "POST AD", class: "btn btn-large btn-primary" %>
-        </groupthin>
-      </section>
-    </div>
-  </div>
+    <%= simple_fields_for @ad.brand_product.build_brand do |c| %>
+      <%= c.input :name, :wrapper => :prepend, :label => false,  :hint => "e.g. Samsung"  do %>
+        <%= content_tag :span, "Brand(if any specific)", :class => "add-on" %>
+        <%= c.input_field :name %>
+      <% end %>
+    <% end %>
+    <%= f.input :details, :as => :text, :label => "Details", :input_html => { :class => "span6" } %>
+    <legend>Step 2. Help us help you!</legend>
+    <%= f.input :options_eval, :as => :boolean, :inline_label => "I am flexible about other available brands", label: false, :input_html => { :class => "span6" } %>
+    <legend><small>Price</small></legend>
+    <%= f.input :price, :label => "Quoted at", :input_html => { :class => "span6" },  :wrapper => :prepend do %>
+      <%= f.input_field :currency, :collection => all_currencies(Money::Currency.table), label: false, :priority => [ "inr" ], :prompt => "Currency" %>
+      <%= f.input_field :price_cents %>
+    <% end %>
+    <br/>OR<br/>
+    <%= f.input :price_eval, :inline_label => "I have no specific price. Get me the best price", label: false, :as => :boolean  %>
+    <legend><small>Zip code</small></legend>
+    <%= f.input :use_address_zip_code, :inline_label => "Use my address zip-code", label: false, :as => :boolean, :input_html => { :value => true }   %> 
+    OR
+    <%= f.input :ad_zip_code, :label => "Use" %>
+    <%= f.submit "POST AD", class: "btn btn-small" %>
+    <a href= <%= root_path %>><input type="button" name="cancel" value="Cancel" class="btn btn-small" /></a>
+  </fieldset>
 <% end %>
+</div>
+
+
+

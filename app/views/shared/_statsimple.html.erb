@@ -1,24 +1,20 @@
-<% statobject ||= current_user %>
-<main>
-<p>
-  <div class="statviewer">
-    <headertag class="span12"> Stats </headertag>
+<% statobject ||= current_user %><br/>
     <% if isValidFollowingType(statobject) %>
       Following:
       <div class="stats">
-        <a href="<%= following_user_path(statobject) %>" class="following">
+        <a href="<%= following_user_path(statobject) %>">
           <strong class="stat">
             <%= statobject.followed_users.count %>
           </strong>
           users
         </a>
-        <a href="<%= following_ad_user_path(statobject) %>" class="following">
+        <a href="<%= following_ad_user_path(statobject) %>">
           <strong class="stat">
             <%= statobject.followedads.count %>
           </strong>
           ads
         </a>
-        <a href="<%= following_product_user_path(statobject) %>" class="following">
+        <a href="<%= following_product_user_path(statobject) %>">
           <strong class="stat">
             <%= statobject.followedproducts.count %>
           </strong>
@@ -35,6 +31,4 @@
         users
       </a>
     </div>
-  </div>
-</p>
-</main>
+

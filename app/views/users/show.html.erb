@@ -1,50 +1,36 @@
-<!DOCTYPE html> 
+<!DOCTYPE html5> 
 <html lang="en"> 
 <head> 
 <%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
-<%= stylesheet_link_tag "gmaps4rails" %>
-<meta charset="utf-8"> 
+<%= stylesheet_link_tag "gmaps4rails", "bootstrap/bootstrap-responsive" %>
+
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
 <body>
   <%= render 'shared/header' %>
+   <div class="container-fluid">
     <div class="row-fluid">
      <aside>
-        <div class="unit span2">
-          <div class="row-fluid">
-          <section id="logo"><%= image_tag avatar_url(@user), :size => "48x48" %>
+        <div class="span2">
+	  <section>
+ 	    <%= render 'shared/userInfo' %>
 	  </section>
-	  <%= render 'shared/help', :id => 'modal_user_'+ @user.id.to_s, :object => @user %>
-<section class="helppadding"><%= render 'users/follow_form' %></section>
-         <section class="topmargin20 helppadding" id="help" data-id=modal_user_<%= @user.id %>><ad-title class="bold"><%= link_to @user.display_name, user_path %></ad-title></section>
-	  <br/><small><section id = "maphelp" class="topmargin20 helppadding">View map </section></small></div>
-<div id="mapmodal">
-            <div id="maphelpcontent">
-  <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span><br/>
-  <p>
-    <div class="row-fluid">
-      <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
-    </div>
-  </p>
-</div>
-</div>
-          <section>
-            <%= render 'shared/stats' %>
-          </section>
 	  <br>
           <section>
-            <%= render 'shared/adpost_form' %>
-          </section>
+ 	    <%= render 'shared/userpage_links' %>
+	  </section>
         </div>
-        <div class="center span5">  
+        <div class="span6 offset1">  
 	  <section>
             <%= render 'shared/adfeed' %>
           </section>
         </div>
       </aside>
     </div>
-   	
+</div>
   </body>
   <footer>
+	<%= debug(params) %>
 	<%= yield :scripts %> 
   </footer>
 </html>

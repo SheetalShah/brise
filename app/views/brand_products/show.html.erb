@@ -7,7 +7,7 @@
   <%= render 'layouts/header' %>
     <div class="row-fluid">
       <aside>	
-        <div class="unit span3">
+        <div class="unit span2">
       	  <h3></h3>
             <ad-title> 
   	      <bold><%= link_to @product.name, @product %>  </bold></ad-title><sub><%= render 'users/followproduct_form', :product => @product, :type => "link" %></sub>
@@ -15,7 +15,7 @@
               <% if !@product.model.blank? %> | <bold><%= @product.model %>  </bold><% end %>
   	      <% if @brand && !@brand.name.blank? %> | <bold><%= @brand.name %>  </bold><% end %> </ad-title>
           <section>
-            <%= render 'shared/productstats' %>
+            <%= render 'shared/stats', :statobject => @product %>
           </section>
 	  <br>
           <section>

@@ -1,0 +1,4 @@
+<br/>@price: <%= humanized_money_with_symbol statobject.price %>
+<% if statobject.user_price(@user).present? %><br/>Your price: <%= humanized_money_with_symbol statobject.user_price(@user) %><% end %>
+<% if statobject.best_price.present? %><br/>Best <%= statobject.opp_price_type %> price: <%= humanized_money_with_symbol statobject.best_price %><% end %>
+

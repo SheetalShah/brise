@@ -1,6 +1,6 @@
 class UsersController < Devise::RegistrationsController
   before_filter :authenticate_user!, except: [:index ]
-  before_filter :correct_user, only: [:edit, :update]
+ # before_filter :correct_user, only: [:edit, :update, :show]
   before_filter :admin_user, only: :destroy
 
 
@@ -8,8 +8,11 @@ class UsersController < Devise::RegistrationsController
   # GET /users.json
   def index
     @current_user = current_user
-    @current_user.show_users_by = session[:show_users_by]
-    @users = current_user.users
+    id = session[:user_id] || params[:id] || current_user.id
+    params[:id] = id
+    @user         = User.find(params[:id])
+    @user.show_users_by = session[:show_users_by]
+    @users = @user.users
     respond_with @users
   end
 
@@ -30,9 +33,12 @@ class UsersController < Devise::RegistrationsController
       @current_user     = current_user
 
       @ad               = @user.ads.build(params[:ad])
+      @brand_product    = @ad.build_brand_product
       @comment          = @ad.comments.build(params[:comment])
       @ads              = @user.feed
       @json             = @user.to_gmaps4rails
+       
+      @userpage_right = session[:userpage_right ] || "adfeed"
       respond_with @user
     else
       redirect_to user_session_path
@@ -61,6 +67,16 @@ class UsersController < Devise::RegistrationsController
     session[:show_ads_by] = "all"
     @user = User.find(params[:id])
     redirect_to @user
+  end
+
+  def show_myads_ads
+    session[:show_ads_by] = "myads"
+    redirect_to ads_path
+  end
+
+  def show_myquoted_ads
+    session[:show_ads_by] = "myquoted"
+    redirect_to ads_path
   end
 
   # GET /users/new
@@ -151,22 +167,29 @@ class UsersController < Devise::RegistrationsController
   end
   
   def following
-    @title = "Following"
     @user = User.find(params[:id])
     session[:show_users_by] = "following"
+    session[:user_id] = params[:id]
     redirect_to users_path
   end
 
   def following_ad
+    session[:show_ads_by] = "followedads"
+    session[:user_id] = params[:id]
+    redirect_to ads_path
+  end
+
+  def following_product
     @title = "Following"
     @user = User.find(params[:id])
-    respond_with @users
+    session[:show_products_by] = "followedproducts"
+    session[:user_id] = params[:id]
+    redirect_to products_path
   end
 
   def followers
-    title = "Followers"
-    @user = User.find(params[:id])
     session[:show_users_by] = "followers"
+    session[:user_id] = params[:id]
     redirect_to users_path
   end
 end

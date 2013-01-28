@@ -1,11 +1,7 @@
-<div id="modal", data-id=<%= id %> >
-            <div id="helpcontent">
-              <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span>
-              <p>
+<div id="display-hidden" data-id=<%= id %> data-image-url=<%=avatar_url(object)%> data-image-html='   
+              <p><br/>
 		<div class="row-fluid">
-	          <section id="logo"><%= image_tag avatar_url(object), :size => "120x120" %>
-		  </section>
-	          <section><ad-title><bold><%= link_to object.display_name, user_path %></bold></ad-title>(<%= object.user_type.capitalize %>)<br/>
+	          <section>(<%= object.user_type.capitalize %>)<br/>
 		  <% if	object.street_address1.present? %>
 		    <%= object.street_address1 %>,<br/>
                   <% end %>
@@ -19,7 +15,5 @@
                     <%= object.country %>
 		  </section>
 		</div>
-              </p>
-            </div>
-          </div>
-
+              </p>'>
+ </div>

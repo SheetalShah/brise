@@ -10,12 +10,20 @@ $(document).ready(function(){
     }
     return false;
   };
+$(".contact-card").each(function(){
+   var _this = $(this);
+   _this.hovercard({        
+        detailsHTML: $("div[data-id=" + $(this).attr('data-id')+ "]").attr('data-image-html'),
+        width: 300,
+        cardImgSrc: $("div[data-id=" + $(this).attr('data-id') + "]").attr('data-image-url'),
+   });
+});
 
   user_type_change();
   $('#user_user_type').change(function(e) {        // Button which will activate our modal
      user_type_change();
   });
-
+/*
  $(document).click(function() {
    $("div#modal").dialog('close');
    $("div#mapmodal").dialog('close');
@@ -53,5 +61,5 @@ $("div[data-id=" + id + "]").dialog('open');
    return false;
   });
 
-  $('.close').click(function(){  $(this).dialog('close'); });
+  $('.close').click(function(){  $(this).dialog('close'); });*/
 });

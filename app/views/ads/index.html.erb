@@ -1,33 +1,38 @@
-<h1>Listing ads</h1>
+<!DOCTYPE html5> 
+<html lang="en"> 
+<head> 
+<%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
+<%= stylesheet_link_tag "gmaps4rails", "bootstrap/bootstrap-responsive" %>
 
-<table>
-  <tr>
-    <th>Details</th>
-    <th>Buy</th>
-    <th>Sell</th>
-    <th>Rent</th>
-    <th>Price eval</th>
-    <th>Options eval</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @ads.each do |ad| %>
-  <tr>
-    <td><%= ad.details %></td>
-    <td><%= ad.buy %></td>
-    <td><%= ad.sell %></td>
-    <td><%= ad.rent %></td>
-    <td><%= ad.price_eval %></td>
-    <td><%= ad.options_eval %></td>
-    <td><%= link_to 'Show', ad %></td>
-    <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
-    <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Ad', new_ad_path %>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+  <%= render 'shared/header' %>
+   <div class="container-fluid">
+    <div class="row-fluid">
+     <aside>
+        <div class="span2">
+	  <section>
+ 	    <%= render 'shared/userInfo' %>
+	  </section>
+	  <br>
+          <section>
+ 	    <%= render 'shared/userpage_links' %>
+	  </section>
+        </div>
+        <div class="span6 offset1">  
+	  <div id="gallery">
+            <ul id="grid">
+	      <%= render @ads %>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+</div>
+  </body>
+  <footer>
+	<%= debug(params) %>
+	<%= yield :scripts %> 
+  </footer>
+</html>

@@ -7,7 +7,6 @@ class Product < ActiveRecord::Base
 
   has_many :relationship_products, foreign_key: "followedproduct_id", class_name: "RelationshipProduct", dependent: :destroy
   has_many :followers, through: :relationship_products
-
   accepts_nested_attributes_for :brands, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
   
   validates :name, length: { maximum: 60 }  
@@ -21,5 +20,16 @@ class Product < ActiveRecord::Base
     where("name='#{name}' AND model IS NOT NULL AND model <> ''")
   end
   
+  def self.feed(user, type)
+    case type
+      when 'followedproducts'
+        followed_product_ids = "SELECT followedproduct_id FROM relationship_products
+                         WHERE follower_id = :user_id"
+        where("id IN (#{followed_product_ids})", 
+          user_id: user.id)
+      else
+        Product.all
+    end
+  end
 
 end

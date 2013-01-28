@@ -1,10 +1,27 @@
 class AdsController < ApplicationController
   before_filter :authenticate_user!, except: [:index ]
-  before_filter :correct_user, only: [:edit, :update, :destroy]
+  #before_filter :correct_user, only: [:edit, :update, :destroy, :show, :myads, :myquotedads, :index]
   respond_to :html, :xml, :json
   # GET /ads
   # GET /ads.json
   def index
+    @current_user = current_user
+    id = session[:user_id] || params[:id] || current_user.id
+    params[:id] = id
+    @user         = User.find(params[:id])
+    @user.show_ads_by = session[:show_ads_by]
+    @ads = @user.feed
+    respond_with @ads
+  end
+
+  def myads
+    session[:show_ads_by] = "myads"
+    render :action => "index"
+  end
+
+  def myquotedads
+    session[:show_ads_by] = "myquotedads"
+    render :action => "index"
   end
 
   # GET /ads/1
@@ -26,19 +43,13 @@ class AdsController < ApplicationController
   # GET /ads/new
   # GET /ads/new.json
   def new
-    @ad = Ad.new
+    @user = current_user
+    @ad = current_user.ads.build(params[:ad])
+    @ad.brand_product = BrandProduct.new
     @product = Product.new
     @brand = Brand.new
-    @ad.product = @product
-    @ad.brand = @brand
-
-   @currencies = [] 
-   major_currencies(Money::Currency::TABLE).each do |currency|  
-     name = Money::Currency::TABLE[currency][:name]
-     iso_code = Money::Currency::TABLE[currency][:iso_code]
-     @currencies << [name, iso_code]
-   end	
-   respond_with @ad
+    session[:userpage_right] = "adpost_form"
+    respond_with @ad
   end
 
   # GET /ads/1/edit
@@ -50,63 +61,31 @@ class AdsController < ApplicationController
   # POST /ads.json
   def create
     @user = current_user
-    @ad = current_user.ads.build(params[:ad])
-    session[:brandname ] = params[:brand][:name]	
+    @current_user = current_user
+    @ads = Ad.all
 
-    @product_found = Product.findProduct(params[:product][:name], params[:product][:model])
-    if @product_found
-      @product = Product.find(@product_found)
-    else
-      @product = nil
-    end
-    
-    if !session[:brandname].empty?
-      @brand_found = Brand.findBrand(params[:brand][:name])
-      if @brand_found
-        @brand = Brand.find(@brand_found)
-      else
-        @brand = nil
-      end
-    else
-      @brand = nil
-    end
+    @ad   = current_user.ads.build(params[:ad])
+    if params[:brand_product][:id].empty?
+      @product       = Product.find_by_name_and_model(params[:product][:name], params[:product][:model]) 
+      @brand         = Brand.find_by_name(params[:brand][:name]) unless params[:brand][:name].empty?
+      @brand_product = BrandProduct.find_by_brand_id_and_product_id(@brand, @product) || nil
 
-    if @product && @brand
-      @brand_product_found = BrandProduct.findBrandProduct(@product, @brand) 
-      if @brand_product_found    
-        @brand_product = BrandProduct.find(@brand_product_found)
-      else
-        @brand_product = BrandProduct.new
-      end
+      @brand_product = @brand_product || BrandProduct.new
+      @brand_product.product = @product || @brand_product.build_product(params[:product]) if !@brand_product.product
+      @brand_product.brand = @brand || @brand_product.build_brand(params[:brand]) if !@brand_product.brand
     else
-      @brand_product = BrandProduct.new
-    end
-
-    if !@product
-      @product = @brand_product.build_product(params[:product])
-    else
-      @brand_product.product = @product    
-    end
-
-    if !session[:brandname].empty?
-      if !@brand
-        @brand = @brand_product.build_brand(params[:brand])
-      else
-        @brand_product.brand = @brand
-      end
+      @brand_product = BrandProduct.find(params[:brand_product][:id].to_i)
     end
 
     @ad.brand_product = @brand_product
-    @ads = current_user.feed
+
 
     if @ad.valid?
-      @ad.save!	
-      @follow_ad = @user.followad!(@ad)
-      @notice = 'Ad was successfully created.'
-      redirect_to @user
+      @ad.save!
+      @follow_ad = @user.followad!(@ad) # by default user who created the ad follows it
+      respond_with @user
     else
-      @ad.destroy
-      render :template => 'users/show'
+      render action: "new"
     end
   end
 

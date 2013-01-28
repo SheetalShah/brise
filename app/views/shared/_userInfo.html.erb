@@ -1,0 +1,19 @@
+          <div class="row">
+            <section id="logo"><%= image_tag avatar_url(@user), :size => "48x48" %></section>
+  	    <%= render 'shared/help', :id => 'modal_user_'+ @user.id.to_s, :object => @user %>
+            <section class="helppadding"><%= render 'users/follow_form' %>
+            <section class="contact-card" data-id=modal_user_<%= @user.id %>><%= @user.display_name %></section>
+	    <br/><small><section id = "maphelp">View map </section></small></section></div>
+            <div id="mapmodal">
+              <div id="maphelpcontent">
+                <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span><br/>
+                <p>
+                <div class="row">
+                  <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
+    </div>
+  </p>
+</div>
+</div>
+          <section>
+            <%= render 'shared/stats', :statobject => @user %>
+          </section>

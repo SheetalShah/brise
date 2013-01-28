@@ -1,28 +1,3 @@
-<%= form_for(@ad) do |f| %>
-  <div class="row-fluid center">
-    <div class="extraneous-non-semantic-markup">
-      <section>
-        <groupthin>
-	  <div class="row-fluid">
-	    <div class="span2">Looking to</div>
-	    <div class="span2"><%= f.select(:ad_type, [['Buy', 'Buy'], [ 'Sell', 'Sell' ], [ 'Rent', 'Rent' ]]) %></div>
-	    
-	  Product <%= f.text_field :title %><br />
-          <br/>
-          <%= f.text_area :details, placeholder: "Description/Content" %>
-          <div class="groupbox control-group check_boxes optional">
-            <label class="check_boxes optional control-label">Are you trying to check?</label>
-            <div class="controls">
-              <label class="checkbox">	
-                <%= f.check_box :price_eval, :class => 'check_boxes optional'  %>Price</label>
-	        <label class="checkbox" >
-	        <%= f.check_box :options_eval, :class => 'check_boxes optional'  %>Available options</label>
-	    </div>
-          </div>
-	  <%= render "/shared/error_messages", object: f.object %>
-	  <%= f.submit "POST AD", class: "btn btn-large btn-primary" %>
-        </groupthin>
-      </section>
-    </div>
-  </div>
+<% content_for :userpage_rightcontent do %>
+  <%= render 'shared/adpost_form' %>
 <% end %>
