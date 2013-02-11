@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country, :company_attributes, 
-  :avatar
+  :avatar, :description
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/guest.png"
   attr_writer :signup_current_step, :show_ads_by, :show_users_by
 
@@ -134,6 +134,11 @@ class User < ActiveRecord::Base
     where("id IN (#{comments_user_ids})", ad_id: ad.id)
   end
 
+
+  def self.search_query( param )
+    "display_name LIKE '%#{param}%' OR description LIKE '%#{param}%'"
+  end
+
   def users
     case self.show_users_by
       when 'following'
@@ -150,11 +155,11 @@ class User < ActiveRecord::Base
       when 'followedusers'
         @ads = Ad.from_users_followed_by(self)	
       when 'followedads'
-        @ads = Ad.from_ads_followed_by(self)
+        @ads = self.followedads
       when 'followedproducts'
         @ads = Ad.from_adproducts_followed_by(self)
       when 'myads'
-        @ads = Ad.my_created_ads(self)
+        @ads = self.ads
       when 'myquoted'
         @ads = Ad.my_quoted_ads(self)
       else

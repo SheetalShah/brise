@@ -6,22 +6,43 @@ class AdsController < ApplicationController
   # GET /ads.json
   def index
     @current_user = current_user
-    id = session[:user_id] || params[:id] || current_user.id
-    params[:id] = id
-    @user         = User.find(params[:id])
-    @user.show_ads_by = session[:show_ads_by]
-    @ads = @user.feed
+    user_id = params[:user_id] || current_user.id
+    @user   = User.find( user_id )
+    @json             = @user.to_gmaps4rails
+    if( params[:ad_id].present? )
+      @ad  = Ad.find( params[:ad_id] )
+      @ads = @ad.ads_of_type(params[:ads_of_type])
+      flash[:title] = params[:ads_of_type]
+    elsif( params[:product_id].present? )
+      @product = Product.find( params[:product_id] )
+      @ads = @product.ads
+      flash[:title] = "Product Ads"
+    elsif( params[:show_ads_by].present? )
+      @user.show_ads_by = params[:show_ads_by]
+      flash[:title] = params[:show_ads_by]
+      @ads = @user.feed
+    else
+      @ads = Ad.all
+      flash[:title] = "N/A"
+    end
+
+    conditions = params[:conditions] || {}
+    groupby    = params[:group_by] || "id"
+
+    arr = []
+    if( params[:q].present? )
+      arr << Ad.search_query( params[:q] )
+    end
+    conditions.each do |k, value|
+      arr << k + " = " + value
+    end
+
+    if arr.present?
+      strC = arr.join( ' AND ' )
+      @ads = Ad.where( strC )
+    end
+    @groupedads = @ads.group_by{|t| t[groupby]}
     respond_with @ads
-  end
-
-  def myads
-    session[:show_ads_by] = "myads"
-    render :action => "index"
-  end
-
-  def myquotedads
-    session[:show_ads_by] = "myquotedads"
-    render :action => "index"
   end
 
   # GET /ads/1
@@ -34,11 +55,6 @@ class AdsController < ApplicationController
     session[:return_to] = request.fullpath
     respond_with @ad
   end
-
-  def show_all_ads_by_user
-    @ads = current_user.ads
-    respond_with @ads
-  end
         		
   # GET /ads/new
   # GET /ads/new.json
@@ -48,6 +64,7 @@ class AdsController < ApplicationController
     @ad.brand_product = BrandProduct.new
     @product = Product.new
     @brand = Brand.new
+    @json = @user.to_gmaps4rails
     session[:userpage_right] = "adpost_form"
     respond_with @ad
   end
@@ -83,7 +100,8 @@ class AdsController < ApplicationController
     if @ad.valid?
       @ad.save!
       @follow_ad = @user.followad!(@ad) # by default user who created the ad follows it
-      respond_with @user
+      flash[:notice] = 'Ad was successfully created.'
+      respond_with( @ads, :location => ads_url )
     else
       render action: "new"
     end

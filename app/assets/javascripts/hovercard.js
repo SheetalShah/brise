@@ -168,7 +168,6 @@
 
             //Opening Directions adjustment
             function adjustToViewPort(hcPreview) {
-alert("adjusting");
                 var hcDetails = hcPreview.find('.hc-details').eq(0);
                 var hcPreviewRect = hcPreview[0].getBoundingClientRect();
 

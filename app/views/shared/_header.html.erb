@@ -3,8 +3,16 @@
       <%= link_to "Brise", "aboutus_path", id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Ads", "adfeed_path" %></li>
+	<li>
+	  <form class="navbar-search" action="">
+	    <i class='icon-search icon-white'></i>
+	    <input name="q" id="search" class="search-query" placeholder="Search">
+	  </form>
+	</li>
+        <li><a href="/"><i class='icon-home icon-white'></i></a></li>
+        <li><%= link_to "Ads", ads_path %></li>
+        <li><%= link_to "Products", products_path %></li>
+        <li><%= link_to "Users", users_path %></li>
         <% if user_signed_in? %>
 	  <li id="fat-menu" class="dropdown">
 	    <a href=settings_path >

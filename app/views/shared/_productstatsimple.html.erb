@@ -1,11 +1,14 @@
 <br/>
-    Followers:
     <div class="stats">
-      <a href="<%= followers_user_path(statobject) %>">
-        <strong id="followers" class="stat">
+      <a href="<%= product_users_path(statobject) %>">
+        <smallinline id="followers" class="stat">
           <%= statobject.followers.count %>
-        </strong>
-        users
+        follower/s</smallinline>
+      </a>
+      <a href="<%= product_ads_path(statobject) %>">
+        <smallinline id="followers">
+          <%= statobject.ads.count %>
+        ads/s</smallinline>
       </a>
     </div>
 

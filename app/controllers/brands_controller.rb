@@ -41,14 +41,30 @@ class BrandsController < ApplicationController
   # POST /brands.json
   def create
     @brand = Brand.new(params[:brand])
-
-    respond_to do |format|
-      if @brand.save
-        format.html { redirect_to @brand, notice: 'Brand was successfully created.' }
-        format.json { render json: @brand, status: :created, location: @brand }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @brand.errors, status: :unprocessable_entity }
+    if( params[ :product_id ] )
+	@product = Product.find( params[:product_id] )
+        @brand_product = BrandProduct.new
+        @brand_product.product = @product
+        @brand_product.brand   = @brand
+	
+      respond_to do |format|
+        if @brand_product.save
+          format.html { redirect_to @product, notice: 'Brand was successfully created.' }
+          format.json { render json: @product, status: :created, location: @product }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @brand.errors, status: :unprocessable_entity }
+        end
+       end
+    else
+      respond_to do |format|
+        if @brand.save
+          format.html { redirect_to @product, notice: 'Brand was successfully created.' }
+          format.json { render json: @product, status: :created, location: @product }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @brand.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

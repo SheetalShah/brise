@@ -1,0 +1,6 @@
+<li id=brand<%= brand.id %> class=model<%= model.id %>>
+  <a href="#"><%= brand.name %></a>
+  <% if showrating %>
+    <%= rating_for_override BrandProduct.find_by_brand_id_and_product_id(brand, model), "quality", :readonly => true %>
+  <% end %>
+</li>

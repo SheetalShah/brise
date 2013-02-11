@@ -1,0 +1,13 @@
+<div class="addbrand_form" id=fmodel<%= model.id %>>
+  <div class="span12">
+    New brand for model <%= model.model %>
+    <%= simple_form_for([model, Brand.new], :html => {:novalidate => true}) do |f| %>
+      <%= f.hidden_field :id %>
+      <%= f.input :name, placeholder: "Brand name", :label => false, :input_html => { :class => "span12" } %>
+      <%= f.input :description, as: :text, placeholder: "Brand description",  :input_html => { :class => "span12", :rows => "2" }, :label => false  %>
+      <%= render "/shared/error_messages", object: f.object %>
+      <%= f.submit "Add", class: "btn" %>
+    <% end %>
+  </div>
+</div>
+

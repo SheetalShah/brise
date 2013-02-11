@@ -17,7 +17,17 @@ class Product < ActiveRecord::Base
   end
 
   def self.models_for_product(name)
-    where("name='#{name}' AND model IS NOT NULL AND model <> ''")
+    where("name='#{name}' AND model IS NOT NULL")
+  end
+
+  def brand_products_for_product
+    query = "product_id IN (SELECT p.id FROM products p WHERE p.name = '#{name}' )"
+
+    BrandProduct.where(query)
+  end 
+
+  def ads
+    Ad.product_ads(self.name, '')
   end
   
   def self.feed(user, type)

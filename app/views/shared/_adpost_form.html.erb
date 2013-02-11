@@ -4,44 +4,42 @@
   <fieldset>
     <legend>Step 1. Ad details</legend>
     <%= f.input :ad_type, :collection => [ ['Buy','Buy'], ['Sell','Sell'], ['Rent','Rent'] ],   :input_html => { :class => "span6" }, :priority => [ "Buy" ], :label => "Looking to", :id => 'adtype' %>
+    <%= f.input :avatar, :as => "file",  :input_html => { :class => "span6" }, label: "Image"  %>
     <legend><small>Item</small></legend>
-    Image <%= f.file_field :avatar %>
+
     <%= simple_fields_for @ad.brand_product do |c| %>
-      <%= c.input :id, :collection => BrandProduct.all.map { |r| [r.brand_product, r.id] },   :input_html => { :class => "span6" }, :label => false, :prompt => "Other", :value_method => lambda {|t| t[1]}, :hint => "Select *Other* if your item is not in the above list and specify Product/Model/Brand below"  %>
-    <% end %>
-    <%= simple_fields_for @ad.brand_product.build_product do |c|%>
-      <%= c.input :name, :wrapper => :prepend, :label => false,  :hint => "e.g. Phone"  do %>
-        <%= content_tag :span, "Product", :class => "add-on" %>
-        <%= c.input_field :name %>
-      <% end %>
-      <%= c.input :model, :wrapper => :prepend, :label => false,  :hint => "e.g. Galaxy5"  do %>
-        <%= content_tag :span, "Model(if any specific)", :class => "add-on" %>
-        <%= c.input_field :model %>
-      <% end %>
+      <%= c.input :id, :collection => BrandProduct.all.map { |r| [r.brand_product, r.id] },   :input_html => { :class => "span6" }, :label => "Brand|Model|Product", :prompt => "Other", :value_method => lambda {|t| t[1]}, :hint => "Select *Other* if your item is not in the list"  %>
     <% end %>
 
-    <%= simple_fields_for @ad.brand_product.build_brand do |c| %>
-      <%= c.input :name, :wrapper => :prepend, :label => false,  :hint => "e.g. Samsung"  do %>
-        <%= content_tag :span, "Brand(if any specific)", :class => "add-on" %>
-        <%= c.input_field :name %>
-      <% end %>
+    <div class="productcomponents">
+<div class="control-group">
+<%= simple_fields_for @ad.brand_product.build_product do |c|%>
+    <%= c.input :name,        :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "Smartphone",        :input_html => { :maxlength => 10}, :label => "Product" %>
+    <%= c.input :model,      :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "e.g. Galaxy",      :input_html => { :maxlength => 5},  :label => "Model(if any specific)" %>
     <% end %>
+    <%= simple_fields_for @ad.brand_product.build_brand do |c| %>
+    <%= c.input :name, :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "e.g. Samsung", :input_html => { :maxlength => 10}, :label => "Brand(if any specific)" %>
+    <% end %>
+</div>
+
+    </div>
     <%= f.input :details, :as => :text, :label => "Details", :input_html => { :class => "span6" } %>
     <legend>Step 2. Help us help you!</legend>
-    <%= f.input :options_eval, :as => :boolean, :inline_label => "I am flexible about other available brands", label: false, :input_html => { :class => "span6" } %>
-    <legend><small>Price</small></legend>
-    <%= f.input :price, :label => "Quoted at", :input_html => { :class => "span6" },  :wrapper => :prepend do %>
+    <legend><small>Price</small></legend><br/>
+    <div class="priceinputs">
+    <%= f.input :price, :label => "Quoted at", :input_html => { :class => "span6 priceinputs" },  :wrapper => :prepend do %>
       <%= f.input_field :currency, :collection => all_currencies(Money::Currency.table), label: false, :priority => [ "inr" ], :prompt => "Currency" %>
       <%= f.input_field :price_cents %>
     <% end %>
-    <br/>OR<br/>
+    <br/>OR<br/>    </div>
     <%= f.input :price_eval, :inline_label => "I have no specific price. Get me the best price", label: false, :as => :boolean  %>
     <legend><small>Zip code</small></legend>
     <%= f.input :use_address_zip_code, :inline_label => "Use my address zip-code", label: false, :as => :boolean, :input_html => { :value => true }   %> 
+    <div class="zipinput">
     OR
-    <%= f.input :ad_zip_code, :label => "Use" %>
-    <%= f.submit "POST AD", class: "btn btn-small" %>
-    <a href= <%= root_path %>><input type="button" name="cancel" value="Cancel" class="btn btn-small" /></a>
+    <%= f.input :ad_zip_code, :label => "Use" %></div>
+    <%= f.submit "POST", class: "btn-primary" %>
+    <a href= <%= root_path %>><input type="button" name="cancel" value="Cancel" class="btn-primary" /></a>
   </fieldset>
 <% end %>
 </div>

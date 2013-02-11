@@ -1,0 +1,17 @@
+        <script type="text/javascript">
+            CloudZoom.quickStart();
+        </script>
+	  <%= render 'users/followad_form', :ad => @ad, :type => "link" %><br/>
+            <ad-title><normal><%= @ad.ad_type %>  </normal>
+	      <bold><%= @ad.ad_name %></bold>
+            </ad-title><br/>
+	  <section><img src= "<%= avatar_url(@ad) %>", height = 200, width = 140, class = 'cloudzoom ad', data-cloudzoom = '{"captionSource": "#caption1", "captionType": "html"}' /></section>
+<div id="caption1" class="cloudzoom-caption">
+                        This is an <span style="color:#fc0;font-weight:bold">HTML</span> type caption. You can include <i>any</i> type of content in here!</div>
+          <section>
+            <%= render 'shared/adstatsimple', :statobject => @ad %>
+          </section>
+	  <br>
+          <section>
+            <%= render 'shared/adDetails' %>
+          </section>

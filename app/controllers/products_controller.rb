@@ -4,9 +4,11 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @current_user = current_user
-    user_id = session[:user_id] || current_user.id
+    user_id       = params[:user_id] || current_user.id
     @user         = User.find(user_id)
-    @products = Product.feed(@user, session[:show_products_by])
+    @json             = @user.to_gmaps4rails
+    @products     = Product.feed(@user, params[:show_products_by])
+    flash[:title] = params[:show_products_by]
     respond_with @products
   end
 
@@ -29,7 +31,10 @@ class ProductsController < ApplicationController
   # GET /products/new.json
   def new
     @product = Product.new
-    @review = @product.reviews.build
+    if( params[:product_id].present? )
+      @product.name = Product.find(params[:product_id]).name
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @product }
@@ -45,7 +50,9 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(params[:product])
-    @review  = @product.reviews.build(params[:product][:review])
+    if( params[:product_id].present? )
+      @product.name = Product.find(params[:product_id]).name
+    end
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }

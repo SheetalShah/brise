@@ -1,10 +1,16 @@
-<%= form_for([@brand_product,@review], :html => { :class => 'review' }) do |f| %>
-    1. How do you rate this item?<%= rating_for @brand_product, "quality" %><br/><br/>
-    2. Add review comment
-    <%= f.text_area :description, size: "1x1" %> 
-    <%= render "/shared/error_messages", object: f.object %>
-    <%= f.submit "POST REVIEW", class: "btn" %>
+<br/>
+<div class="span12">
+POST A REVIEW<br/>
+<%= simple_form_for([brand_product,brand_product.reviews.build], :html => {:novalidate => true, :class => "form-horizontal"}) do |f| %>
+1. How do you rate this item?<%= rating_for brand_product, "quality" %><br/><br/>
+2. <%= f.text_area :description, placeholder: "Comment", :cols => "80%", :rows => "2" %> 
+<br/>
+  <%= render "/shared/error_messages", object: f.object %>
+  <%= f.submit "Review", class: "btn" %>
 <% end %>
+</div>
+
+
 
 
 

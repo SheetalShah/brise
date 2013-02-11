@@ -2,9 +2,20 @@
   <div class="extraneous-non-semantic-markup">
     <section>
       <groupthin>
-        <%= @ad.details %>
+        <redcolor class="text-left font15">About me: </redcolor><br/>
+	
+        <div class="row-fluid">
+	<div class="span4 float-right-text">State:</div> <div class="span6"><%= @ad.state %></div>
+	<div class="span4 float-right-text">Created by:</div> <div class="span6"><%= @ad.user.display_name %></div>
+	<div class="span4 float-right-text">Description:</div> <div class="span6"><%= @ad.details %></div>
+        <div class="span4 float-right-text">Price:</div> <div class="span6"><% if( @ad.price == 0 ) %> Best <% else %><%= humanized_money_with_symbol @ad.price %> <% end %></div>
+	<div class="span4 float-right-text">Zipcode:</div> <div class="span6"><% if( @ad.use_address_zip_code ) %> <%= @ad.user.zip_code %> <% else %><%= @ad.ad_zip_code %> <% end %></div>
+        </div>
+
       </groupthin>
     </section>
   </div>
 </div>
+
+
 

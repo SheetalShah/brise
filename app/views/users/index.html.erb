@@ -12,16 +12,26 @@
     <div class="row-fluid">
      <aside>
         <div class="span2">
-	  <section>
- 	    <%= render 'shared/userInfo' %>
-	  </section>
-	  <br>
-          <section>
- 	    <%= render 'shared/userpage_links' %>
-	  </section>
+          <% if @ad %>
+            <section>
+              <%= render 'shared/adInfo' %>
+            </section>
+          <% elsif @product %>
+            <section>
+              <%= render 'shared/productInfo' %>
+            </section>
+          <% else %>
+  	    <section>
+ 	      <%= render 'shared/userInfo' %>
+  	    </section>
+	    <br>
+            <section>
+ 	      <%= render 'shared/userpage_links' %>
+	    </section>
+          <% end %>
         </div>
         <div class="span6 offset1">  
-	  <headertag>Now following</headertag>
+	  
 	  <div id="gallery">
             <ul id="grid">
 	      <%= render @users %>

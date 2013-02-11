@@ -1,7 +1,6 @@
 // Place all the styles related to the Ads controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import 'bootstrap';
 
 .ads {
   list-style: none;
@@ -16,5 +15,7 @@
   display: block;
 }
 .timestamp {
-  color: $grayLight;
+  color: #eee;
 }
+
+

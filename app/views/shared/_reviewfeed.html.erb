@@ -1,20 +1,19 @@
-<h3>
-  <div class="row-fluid">
-    <section class="span7 no-padding">
-      Review Feed(<%= @brand_product.reviews.count %>)<br/>
-    </section>
-  </div>
-</h3>
+<div class="reviewfeed" id=reviewbrand<%= brand_product.brand_id %>>
+<section class="span12">
+Reviews for <%= brand_product.brand_name %>(<%= brand_product.reviews.count %>)
+</section>
+<section class="no-padding">
+  <%= render 'shared/adreview_form', :brand_product => brand_product %>
+</section>
+
 <div>
-  <% if @brand_product.reviews.any? %>
+  <% if brand_product.reviews.any? %>
     <ol class="ads collection">
-      <%= render @brand_product.reviews, :current_user => @current_user %>
+      <%= render brand_product.reviews, :current_user => @current_user, :brand_product => brand_product %>
     </ol>
   <% end %>
 </div>
+</div>
 
-<section class="no-padding">
-  <%= render 'shared/adreview_form', :product => @product %>
-</section>
 
 

@@ -7,65 +7,30 @@
 </head>
 <body class="body">
   <%= render 'layouts/header' %>
+   <div class="container-fluid">
     <div class="row-fluid">
      <aside>	
-        <div class="center unit span2">
-        <div class="row-fluid">
-	<h3>
-          <div class="row-fluid">
-          <div class="span6">
-            <ad-title><normal><%= @ad.ad_type %>  </normal>
-              <% if !@ad.brand_name.blank? && !@ad.model_name.blank? %>
-                <bold><%= @ad.brand_name %>  </bold>|<bold>   <%= @ad.model_name %></bold>  |
-              <% else %>
-                <% if !@ad.brand_name.blank? %>
-                  <bold><%= @ad.brand_name %></bold>  |
-                <% else %>
-                  <% if !@ad.model_name.blank? %>
-                    <bold><%= @ad.model_name %></bold>  |
-                  <% end %>
-                <% end %>
-              <% end %>
-              <bold><%= @ad.product_name %></bold>
-            </ad-title>
-          </div>
-          <div class="span6">
-            <%= render 'users/followad_form', :ad => @ad, :type => "showbutton" %></div>
-          </div>
-          </div>
-          </h3>
+        <div class="span2">
           <section>
-            <%= render 'shared/stats', :statobject => @ad %>
-          </section>
-	  <br>
-          <section>
-            <%= render 'shared/adDetails' %>
-          </section>
+ 	    <%= render 'shared/adInfo' %>
+	  </section>
         </div>
-        <div class="center span4">  
-          <h3>
-            <div class="row-fluid">
-             <section class="span7 no-padding">
-               Comment Feed(<%= @ad.comments.count %>)
-             </section>
-            </div>
-          </h3>
+        <div class="span6 offset1">  
 	  <section>
             <%= render 'shared/commentfeed', :ad => @ad %>
           </section>
           <%= debug(params) %>
         </div>
-	<div class="center span4">  
+	<div class="span3">  
 	  <section>
             <%= render 'shared/charts', :ad => @ad %>
           </section>
         </div>
-
       </aside>
     </div>
-   	
+</div>
   </body>
   <footer>
-	<%= yield :scripts %> 
+    <%= yield :scripts %> 
   </footer>
 </html>

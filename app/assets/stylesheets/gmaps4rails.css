@@ -7,11 +7,18 @@
   -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
   box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
   width: 400px;
+  z-index: 999;
 }
 
 .gmaps4rails_map {
   width: 400px;
   height: 400px;
+  position: absolute;
+}
+
+#mapmodal1 {
+  display: none;
+  position: absolute;
 }
 
 .bing_map {
@@ -22,3 +29,23 @@
    height: 400px;
    border:#555555 2px solid;
 }
+
+#maphelpcontent {
+  width: 400px;
+  height: 400px;
+  bottom: 0;
+  padding: 0px;
+}
+
+#mapmodal {
+  position: absolute;
+  left: 0;
+  margin: 0;
+  z-index:101;
+  display: none;
+}
+#maphelp {
+  cursor: pointer;
+  color:#006699;
+}
+

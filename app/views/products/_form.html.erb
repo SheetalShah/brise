@@ -27,15 +27,9 @@
     <%= f.label :category %><br />
     <%= f.text_field :category %>
   </div>
-  <div class="field">
-    <%= f.label :raw_material %><br />
-    <%= f.check_box :raw_material %>
-  </div>
-  <div class="field">
-    <%= f.label :finished_product %><br />
-    <%= f.check_box :finished_product %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+<%= debug( params ) %>

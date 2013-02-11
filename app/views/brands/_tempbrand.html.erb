@@ -1,0 +1,21 @@
+
+
+<% if brand.created_at %>
+  <% if @brand == brand %>
+    <div class="currentheading", id= <%= BrandProduct.find(BrandProduct.findBrandProduct(@product,@brand)).id %> >
+      <%= @brand.name %>
+      <div class="float-right"><%= rating_for_override BrandProduct.find(BrandProduct.findBrandProduct(@product,@brand)), "quality", :readonly => true %>
+      </div>
+    </div>
+    <%= best_in_place @brand, :description, :type => :textarea, :nil => "N/A - Click here to provide brand description" %>
+  <% else %>
+    <div class="brandheading", id= <%= BrandProduct.find(BrandProduct.findBrandProduct(@product,brand)).id %> >
+      <%= brand.name %>
+      <div class="float-right"><%= rating_for_override BrandProduct.find(BrandProduct.findBrandProduct(@product,brand)), "quality", :readonly => true %>
+      </div>
+    </div>
+    <div class="brandcontent">
+      <%= best_in_place brand, :description, :type => :textarea, :nil => "N/A - Click here to provide brand description" %>
+    </div>
+  <% end %>
+<% end %>

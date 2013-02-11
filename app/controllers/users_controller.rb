@@ -3,17 +3,32 @@ class UsersController < Devise::RegistrationsController
  # before_filter :correct_user, only: [:edit, :update, :show]
   before_filter :admin_user, only: :destroy
 
-
   # GET /users
   # GET /users.json
   def index
     @current_user = current_user
-    id = session[:user_id] || params[:id] || current_user.id
-    params[:id] = id
-    @user         = User.find(params[:id])
-    @user.show_users_by = session[:show_users_by]
-    @users = @user.users
-    respond_with @users
+    user_id = params[:user_id] || current_user.id
+    @user   = User.find( user_id )
+    @user.show_users_by = params[:show_users_by]
+    @json             = @user.to_gmaps4rails
+    if( params[:ad_id].present? )
+      @ad         = Ad.find( params[:ad_id]) # if you want to find users following ads
+      @users      = @ad.followers
+      flash[:title] = "Following"
+      respond_with( @ad, @users )
+    elsif( params[ :product_id ] )
+      @product    = Product.find( params[ :product_id ] )
+      @users      = @product.followers
+      flash[:title] = "Following"
+      respond_with( @product, @users )
+    elsif( params[ :q ] )
+      @users = User.where( User.search_query( params[:q] ) )
+      respond_with( @users )
+    else
+      @users = @user.users
+      flash[:title] = params[:show_users_by]
+      respond_with( @users )
+    end
   end
 
   def home
@@ -43,40 +58,6 @@ class UsersController < Devise::RegistrationsController
     else
       redirect_to user_session_path
     end 
-  end
-
-  def show_followedusers_ads
-    session[:show_ads_by] = "followedusers"
-    @user = User.find(params[:id])
-    redirect_to @user
-  end
-
-  def show_followedproducts_ads
-    session[:show_ads_by] = "followedproducts"
-    @user = User.find(params[:id])
-    redirect_to @user
-  end
-
-  def show_followedads_ads
-    session[:show_ads_by] = "followedads"
-    @user = User.find(params[:id])
-    redirect_to @user
-  end
-
-  def show_all_ads
-    session[:show_ads_by] = "all"
-    @user = User.find(params[:id])
-    redirect_to @user
-  end
-
-  def show_myads_ads
-    session[:show_ads_by] = "myads"
-    redirect_to ads_path
-  end
-
-  def show_myquoted_ads
-    session[:show_ads_by] = "myquoted"
-    redirect_to ads_path
   end
 
   # GET /users/new
@@ -165,31 +146,5 @@ class UsersController < Devise::RegistrationsController
       format.json { head :no_content }
     end
   end
-  
-  def following
-    @user = User.find(params[:id])
-    session[:show_users_by] = "following"
-    session[:user_id] = params[:id]
-    redirect_to users_path
-  end
 
-  def following_ad
-    session[:show_ads_by] = "followedads"
-    session[:user_id] = params[:id]
-    redirect_to ads_path
-  end
-
-  def following_product
-    @title = "Following"
-    @user = User.find(params[:id])
-    session[:show_products_by] = "followedproducts"
-    session[:user_id] = params[:id]
-    redirect_to products_path
-  end
-
-  def followers
-    session[:show_users_by] = "followers"
-    session[:user_id] = params[:id]
-    redirect_to users_path
-  end
 end

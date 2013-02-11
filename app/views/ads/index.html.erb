@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
 <%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
-<%= stylesheet_link_tag "gmaps4rails", "bootstrap/bootstrap-responsive" %>
+<%= stylesheet_link_tag "gmaps4rails" %>
 
 <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
@@ -12,18 +12,34 @@
     <div class="row-fluid">
      <aside>
         <div class="span2">
-	  <section>
- 	    <%= render 'shared/userInfo' %>
-	  </section>
-	  <br>
-          <section>
- 	    <%= render 'shared/userpage_links' %>
-	  </section>
+          <% if @ad %>
+            <section>
+              <%= render 'shared/adInfo' %>
+            </section>
+          <% elsif @product %>
+            <section>
+              <%= render 'shared/productInfo' %>
+            </section>
+          <% else %>
+  	    <section>
+ 	      <%= render 'shared/userInfo' %>
+  	    </section>
+	    <br>
+            <section>
+ 	      <%= render 'shared/userpage_links' %>
+	    </section>
+          <% end %>
         </div>
         <div class="span6 offset1">  
+          <% if flash[:notice] %>
+  	  <redcolor>*<%= flash[:notice] %>*</redcolor>
+          <% end %>
+	  <headertag> <%= flash[:title].capitalize %> </headertag>
 	  <div id="gallery">
             <ul id="grid">
-	      <%= render @ads %>
+              <% @groupedads.each do |k, ads| %>
+                <%= render :partial => 'adscollection', :locals => { :ads => ads } %>
+              <% end %>
             </ul>
           </div>
         </div>

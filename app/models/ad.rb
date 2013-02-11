@@ -23,6 +23,7 @@ class Ad < ActiveRecord::Base
     end
 
   monetize :price_cents
+#  after_create :check_product_entry
   
   validates :user_id, presence: true
   has_many :comments, :inverse_of => :ad, :dependent => :destroy
@@ -86,10 +87,9 @@ class Ad < ActiveRecord::Base
   end
 
   def self.my_quoted_ads(user)
-    ad_ids = "SELECT ad_id FROM comments
-                         WHERE user_id = :user_id"
-    where("id IN (#{ad_ids}) AND user_id <> :user_id", 
-          user_id: user.id)
+    ad_ids = "SELECT ad_id FROM comments c
+                         WHERE c.user_id = #{user.id}"
+    connection.select_values("select id from ads WHERE id IN (#{ad_ids}) AND user_id <>  #{user.id}")
   end
 
   def self.my_created_ads(user)
@@ -107,6 +107,18 @@ class Ad < ActiveRecord::Base
     self.comments
   end
 
+  def self.ads_group
+    Ad.find(:all).group_by &:brand_product_id
+  end
+
+  def self.brand_product_collection_name(ads)
+    names = []
+    ads.each do |ad|
+      names << ad.ad_name unless names.include?(ad.ad_name)
+    end
+    names.join(', ')
+  end
+
   def best_price
     case ad_type
       when 'Buy'
@@ -120,9 +132,53 @@ class Ad < ActiveRecord::Base
     end
   end
 
+  def self.product_ads(productname, ad_type = '', ad_id = nil)
+    # find relevant products from Products table
+    brand_product_ids = "SELECT c.id FROM brand_products c
+                         WHERE c.product_id IN (SELECT p.id FROM products p WHERE p.name= '#{productname}' )"
+
+    
+    query = "brand_product_id IN (#{brand_product_ids})"
+    if( ad_type.present? )
+      query = query + " AND ad_type = '#{ad_type}'"
+    end
+    if( ad_id.present? )
+      query = query + " AND id <> #{ad_id}"
+    end
+    Ad.where(query, ad_type: ad_type)
+  end
+
+  def ads_of_type(type)
+    # find the product of the ad
+    product_id = BrandProduct.find( brand_product_id ).product_id
+    product    = Product.find(product_id)
+    productname = product.name
+    case type
+      when 'relevant'
+        if ad_type == 'Buy'
+	  ad_type_to_use = 'Sell'
+        else
+          ad_type_to_use = 'Buy'
+        end
+      when 'similar'
+        ad_type_to_use = ad_type
+	ad_id_to_ignore = id
+      else
+           ad_type_to_use = ""
+    end
+    Ad.product_ads(productname, ad_type_to_use, ad_id_to_ignore)
+  end
+
   def user_price(user)
     self.connection.select_value( "SELECT indicative_price_cents FROM comments
                          WHERE ad_id = #{self.id} and user_id= #{user.id}" )
+  end
+
+  def self.search_query( param )
+    brand_product_ids = "SELECT c.id FROM brand_products c
+                         WHERE c.product_id IN (SELECT p.id FROM products p WHERE p.name LIKE '%#{param}%' OR p.model LIKE '%#{param}%' ) OR
+			       c.brand_id IN (SELECT b.id FROM brands b WHERE b.name LIKE '%#{param}%' )"
+    "details LIKE '%#{param}%' OR brand_product_id IN (#{brand_product_ids})"
   end
 
  TYPES.each do |state_name|

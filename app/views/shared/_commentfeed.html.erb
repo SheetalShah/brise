@@ -1,10 +1,24 @@
+<section class="span12">
+Comments(<%= ad.comments.count %>)
+<small><section id = "maphelp">View map </section></small>
+</section>
+<section>
+  <%= render 'shared/adcomment_form', :ad => ad %>
+</section>
+<div id="mapmodal">
+  <div id="maphelpcontent">
+  <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span><br/>
+                <p>
+                <div class="row">
+                  <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
+    </div></div></div>
+
 <% if ad.comments.any? %>
-  <ol class="collection no-padding">
+  <ol class="collection">
     <%= render :partial => 'comments/comment', :collection => ad.comments, :ad => ad, :current_user => current_user %>
   </ol>
 <% end %>
-<section class="no-padding">
-  <%= render 'shared/adcomment_form', :ad => ad %>
-</section>
+
+
 
 

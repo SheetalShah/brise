@@ -8,10 +8,10 @@
         <ul class="nav">
 	<li class="downdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">By:<%= @user.show_ads_by %><b class="caret"></b></a>	    
          <ul class="dropdown-menu">
-	  <li><%= link_to "All", :controller => "users", :action => :show_all_ads, :id => @user %></li>
-          <li><%= link_to "followedusers", :controller => "users", :action => :show_followedusers_ads, :id => @user %></li>
-          <li><%= link_to "followedads", :controller => "users", :action => :show_followedads_ads, :id => @user %></li>
-          <li><%= link_to "followedproducts", :controller => "users", :action => :show_followedproducts_ads, :id => @user %></li>
+	  <li><%= link_to "All", ads_path %></li>
+          <li><%= link_to "followedusers", user_ads_path( @user, :show_ads_by => "followedusers" ) %></li>
+          <li><%= link_to "followedads", user_ads_path( @user, :show_ads_by => "followedads" ) %></li>
+          <li><%= link_to "followedproducts", user_ads_path( @user, :show_ads_by => "followedproducts" ) %></li>
 	</ul>
         </li></ul>
       </nav>

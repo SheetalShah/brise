@@ -28,7 +28,21 @@ class BrandProduct < ActiveRecord::Base
   has_many :ads, :foreign_key => :brand_product_id 
 
   def brand_product
-    brand_name + " " + model_name + " " + product_name
+    parts = []
+    if brand_name.present?
+      parts << brand_name
+    end
+    if model_name.present?
+      parts << model_name
+    end
+    if product_name.present?
+      parts << product_name
+    end
+    parts.join(" | ")
+  end
+
+  def self.brand_models_for_product( productname )
+    where( "product_id IN (SELECT p.id FROM products p WHERE p.name= '#{productname}' )" );
   end
 
   def self.search(product, brand)

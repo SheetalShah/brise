@@ -1,0 +1,11 @@
+<% if ads.count == 1 %>
+  <% ads.each do |ad| %>
+    <%= render :partial => 'ad', :locals => { :ad => ad } %>
+  <% end %>
+<% else %>
+  <li><%= link_to image_tag( "stack.png" ), ads_path( :conditions => { brand_product_id:  ads[0].brand_product_id } ) %>
+  <%= Ad.brand_product_collection_name(ads) %></li>
+<% end %>
+
+
+

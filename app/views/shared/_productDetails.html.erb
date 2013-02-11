@@ -1,26 +1,14 @@
-<div class="row-fluid center">
-  <div class="extraneous-non-semantic-markup">
-    <section>
-      <groupthin>
-        <headertag><%= @product.name %>:</headertag> <%= best_in_place @product, :description, :type => :textarea, :nil => "N/A - Click to provide a generic product description common to all brands" %>
-        <br/>
-        <br/>
-	<% if Product.models_for_product(@product.name).any? %>
-        <ad-title>Models:</ad-title><br/>
-          <div class="layer1">
-            <%= render Product.models_for_product(@product.name), :current_user => @current_user %>
-	  </div>
-        <% end %>
-	<br/>
-	<br/>
-        <% if @product.brands.any? %>
-	  <ad-title>Brands:</ad-title><br/>
-          <div class="layer1">
-            <%= render @product_brands, :current_user => @current_user %>
-	  </div>
-        <% end %>
-      </groupthin>
-    </section>
+<link href='http://fonts.googleapis.com/css?family=Rancho' rel='stylesheet' type='text/css'>
+<div class="row-fluid">
+  <redcolor class="text-left font15">About me: </redcolor><br/>
+  <div class="backcolor displayblock">
+    <div class="row-fluid">
+      <div class="span12 bold text-center"><aboutme>Product <%= @product.name %>:</aboutme></div> 
+      <div class="span12"><%= best_in_place @product, :description, :type => :textarea, :nil => "N/A - Click to provide a generic product description common to all brands" %></div><br/>
+      <% Product.models_for_product(@product.name).each do |model| %>
+        <%= render 'shared/model', :model => model %>
+      <% end %>
+    </div>
   </div>
 </div>
 

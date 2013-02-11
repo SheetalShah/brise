@@ -1,0 +1,12 @@
+<div class="brandheading" id=<%= brand_product.id %>><%= brand_product.model_name %> - <%= brand_product.brand_name %>
+  <div class="float-right"><%= rating_for_override brand_product, "quality", :readonly => true %></div>
+</div>
+<div class="brandcontent">
+  <div class="row-fluid">
+    <div class="span4 float-right-text"><%= brand_product.model_name %>:</div> <div class="span6"><%= best_in_place brand_product.product, :modeldescription, :type => :textarea, :nil => "N/A - Click to provide a generic model description common to all brands" %></div>
+    <% if brand_product.brand %>
+      <div class="span4 float-right-text"><%= brand_product.brand_name %>:</div> <div class="span6"><%= best_in_place brand_product.brand, :description, :type => :textarea, :nil => "N/A - Click to provide a brand description" %></div>
+    <% end %>
+  </div>
+</div>
+

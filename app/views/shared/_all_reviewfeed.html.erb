@@ -1,0 +1,5 @@
+<% if @product.brand_products_for_product.any? %>
+  <% @product.brand_products_for_product.each do |brand_product| %>
+    <%= render 'shared/reviewfeed', :brand_product => brand_product %>
+  <% end %>
+<% end %>

@@ -1,0 +1,11 @@
+<li id=model<%= model.id %> class="node">
+  <a href="#" style="height:100;width:150;word-wrap: break-word;"><%= model.model %></a>
+  <ul>
+    <% if model.brands.any? %>
+      <% model.brands.each do |brand| %>
+        <%= render 'shared/brandnode', :brand => brand, :model => model, :showrating => showrating %>
+      <% end %>
+    <% end %>
+  </ul>
+</li>
+

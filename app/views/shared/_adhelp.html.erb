@@ -1,0 +1,12 @@
+<div class="display-hidden" data-id=<%= id %> data-image-url=<%=avatar_url(object)%> data-image-html='   
+              <p>
+		<div class="row-fluid">
+	          <section>(<%= object.ad_type %>)<br/>
+<% if object.user_price(@user).present? %><br/>Your price: 
+<% if( object.user_price(@user) == 0 ) %> Match <% else %><%= humanized_money_with_symbol object.user_price(@user) %> <% end %>
+<% end %>
+<% if object.best_price.present? %><br/>Best <%= object.opp_price_type %> price: <%= humanized_money_with_symbol object.best_price %><% end %>
+		  </section>
+		</div>
+              </p>'>
+ </div>

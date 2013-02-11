@@ -7,23 +7,16 @@
   <%= render 'layouts/header' %>
     <div class="row-fluid">
       <aside>	
-        <div class="unit span2">
-      	  <h3></h3>
-            <ad-title> 
-	      <bold><%= @product.name %></bold></ad-title><sub><%= render 'users/followproduct_form', :product => @product, :type => "link" %></sub>
-              <ad-title>
-              <% if !@product.model.blank? %> | <bold><%= @product.model %>  </bold><% end %>
-            </ad-title>
-	  <br/>
+        <div class="span3">
           <section>
-            <%= render 'shared/stats', :statobject => @product %>
-          </section>
-	  <br>
-          <section>
-            <%= render 'shared/productDetails' %>
+ 	    <%= render 'shared/productInfo' %>
+	  </section>
+        </div>
+        <div class="span6 offset1">  
+	  <section>
+            <%= render 'shared/all_reviewfeed' %>
           </section>
         </div>
-        
       </aside>
     </div>
    	

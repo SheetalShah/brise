@@ -1,4 +1,25 @@
-<br/>@price: <%= humanized_money_with_symbol statobject.price %>
-<% if statobject.user_price(@user).present? %><br/>Your price: <%= humanized_money_with_symbol statobject.user_price(@user) %><% end %>
-<% if statobject.best_price.present? %><br/>Best <%= statobject.opp_price_type %> price: <%= humanized_money_with_symbol statobject.best_price %><% end %>
+    <div class="stats">
+      <a href="<%= ad_users_path(statobject) %>">
+        <smallinline id="followers">
+          <%= statobject.followers.count %>
+        follower/s</smallinline>
+      </a>
+      <a href="<%= comments_path(statobject) %>">
+        <smallinline id="followers">
+          <%= statobject.comments.count %>
+        comment/s</smallinline>
+      </a>
+    </div>
+    <div class="stats">
+      <a href="<%= ad_ads_path(statobject, ads_of_type: 'similar') %>">
+        <smallinline id="followers">
+          <%= statobject.ads_of_type('similar').count %>
+        similar ad/s</smallinline>
+      </a>
+      <a href="<%= ad_ads_path(statobject, ads_of_type: 'relevant') %>">
+        <smallinline id="followers">
+          <%= statobject.ads_of_type('relevant').count %>
+        match/es</smallinline>
+      </a>
+    </div>
 

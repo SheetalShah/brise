@@ -1,3 +1,4 @@
+<link href='http://fonts.googleapis.com/css?family=Rancho' rel='stylesheet' type='text/css'>
           <div class="row">
             <section id="logo"><%= image_tag avatar_url(@user), :size => "48x48" %></section>
   	    <%= render 'shared/help', :id => 'modal_user_'+ @user.id.to_s, :object => @user %>
@@ -14,6 +15,11 @@
   </p>
 </div>
 </div>
+<br/><br/>
+<redcolor class="text-left">About me: </redcolor>
+<aboutme>
+<%= best_in_place @user, :description %>
+</aboutme>
           <section>
             <%= render 'shared/stats', :statobject => @user %>
           </section>

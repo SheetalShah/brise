@@ -1,36 +1,34 @@
 Brise::Application.routes.draw do
   match '/rate' => 'rater#create', :as => 'rate'
-  match '/following_ad' => 'users#following_ad', :as => 'following_ad'
 
   resources :brands
-
   resources :company_products
-
   resources :helps
-
   resources :companies
-
   resources :reviews
-
   resources :events
-  
   resources :comments
 
-  resources :ads, only: [ :create, :destroy, :edit, :update, :show, :new, :index, :myads, :myquotedads ] do
-    member do
-      get :myads, :myquotedads
-    end
+  resources :ads do
+    resources :ads, only: [:index]
     resources :brand
     resources :product 
     resources :comments
+    constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
+      resources :users, only: [:index] # ad followers
+    end 
   end
 
   resources :products do
     resources :brands_products
     resources :brands
+    constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
+      resources :users, only: [:index] # ad followers
+    end 
+    resources :ads, only: [:index]
+    resources :products
   end
 
-  resources :brand_products
   resources :brand_products do
     resources :reviews
     member do
@@ -38,22 +36,24 @@ Brise::Application.routes.draw do
     end
   end
 
-  resources :relationships, only: [:create, :destroy]
-
-  resources :relationship_ads, only: [:create, :destroy]
-  
+  resources :relationships,         only: [:create, :destroy]
+  resources :relationship_ads,      only: [:create, :destroy]
   resources :relationship_products, only: [:create, :destroy]
 
   constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
     devise_for :users, :controllers => {:sessions => 'devise/sessions', :registrations => 'users'} do
-      get "/login", :to => "devise/sessions#new", :as => :login
+      get "/login",  :to => "devise/sessions#new",     :as => :login
       get "/signup", :to => "devise/registration#new", :as => :signup
       get "/logout", :to => "devise/sessions#destroy", :as => :logout
     end
     resources :users do
-      member do
-        get :following, :followers, :following_ad, :following_product, :show, :show_all_ads, :show_followedusers_ads, :show_followedads_ads, :show_followedproducts_ads, :show_myads_ads, :show_myquoted_ads, :home
-      end
+      resources :users, only: [:index] 
+
+      resources :ads
+        member do
+          get :followedads, :followedproductads, :myads, :myquotedads
+        end
+      resources :products, only: [ :index ]
       resources :companies
     end
     root :to => "users#home"

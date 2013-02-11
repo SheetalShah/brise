@@ -1,0 +1,6 @@
+  <ul>
+    <% Product.models_for_product(product.name).each do |model| %>
+      <%= render 'shared/modelnode', :model => model, :showrating => showrating %>
+    <% end %>
+  </ul>
+

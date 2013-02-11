@@ -1,0 +1,11 @@
+<% if model.model.present? %>
+  <div id=smodel<%= model.id %> class="productconditional">
+    <div class="span12 text-center bold"><aboutme>Model <%= model.model %>:</aboutme></div> <br/>
+    <div class="span12"><%= best_in_place model, :modeldescription, :type => :textarea, :nil => "N/A - Click to provide a generic model description common to all brands" %></div>
+  </div>
+<% end %>
+<% if model.brands.any? %>
+  <% model.brands.each do |brand| %>
+    <%= render 'shared/brand', :brand => brand, :model => model %>
+  <% end %>
+<% end %>

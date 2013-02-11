@@ -1,24 +1,20 @@
-
-<%= form_for([ad,ad.comments.build]) do |f| %>
-  <div class="comment">
-    <% if ad.price_eval? %>
-      <div class="row-fluid">
-	<span class="span7">
-          1. Enter your best<% if ad.ad_type == "Buy" %> ask<% else %> bid<% end %> price<%= f.number_field :indicative_price_cents %></span>
-	<span class="span2 text-center">
-	OR</span>
-	<span class="span3">
-	  <label class="checkbox">
-            <%= f.check_box :match_price, :class => 'check_boxes optional'  %>Match <% if ad.ad_type == "Buy" %> buyer<% else %> seller<% end %> price
-          </label>
-	</span>
-      </div>
-      
-    
-      
-    <% end %>
-    <bold></bold> <%= f.text_area :description, placeholder: "Share useful information", size: "1x1" %>
-  </div>
-  <%= render "/shared/error_messages", object: f.object %>
-  <%= f.submit "Comment", class: "btn" %>
+<div class="span12">
+<span class="pointer-up"></span>
+<div class="formcontent">
+<div class="row-fluid">
+<%= simple_form_for([ad,ad.comments.build], :html => {:novalidate => true }) do |f| %>
+   <%= f.input :description, as: "text", placeholder: "Write something useful", :label => false, :input_html => { :class => "span12", :rows => "1" } %>
+<div class="row-fluid onfocuscommentitems">
+   <div class="span6">
+   <%=  f.input :indicative_price_cents, label: "Your price", class: "float-right" %>
+   </div>
+   <div class="span6"><%= f.submit "POST", class: "btn btn-small btn-primary float-right" %></div>
+</div>
 <% end %>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+
+

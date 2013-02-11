@@ -1,0 +1,24 @@
+<%= render 'users/followproduct_form', :product => @product, :type => "link" %><br/>
+<ad-title><normal><%= @product.name %>  </normal></ad-title>
+<section>
+  <%= render 'shared/productstatsimple', :statobject => @product %>
+</section>
+<br/>
+<div id="selectedModel"></div>
+Model-Brand Tree View
+<div id="product" product-id= <%= @product.id %> class="product" style="height:auto;width:auto">
+  <%= render 'shared/modelbrandtree', :product => @product, :showrating => true %>
+</div>
+<br/>
+
+<section>
+<a href="#" class="addmodel">Add Model</a>
+<% Product.models_for_product(@product.name).each do |model| %>
+  <%= render 'shared/productlinks', :product => @product, :model => model %>
+<% end %>
+<%= render 'shared/addModel_form', :product => @product %>
+</section>
+<br/>
+<section>
+  <%= render 'shared/productDetails' %>
+</section>

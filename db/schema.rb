@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
     t.float    "latitude"
     t.float    "longitude"
     t.boolean  "gmaps"
+    t.text     "description"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
