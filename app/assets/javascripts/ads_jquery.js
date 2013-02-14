@@ -41,10 +41,14 @@ function input_price_best_change(){
     }
   };
 
-  $(".onfocuscommentitems").hide();
+  $(".onfocusitems").hide();
   $("textarea#comment_description").focus(function() {
 
-     $(".onfocuscommentitems").show();
+     $(".onfocusitems").show();
+  } );
+  $("textarea#review_description").focus(function() {
+
+     $(".onfocusitems").show();
   } );
   input_price_best_change();
 //  input_price_change();

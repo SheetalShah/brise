@@ -1,15 +1,17 @@
 class UsersController < Devise::RegistrationsController
-  before_filter :authenticate_user!, except: [:index ]
+# require ActionController::RequestForgeryProtection::ClassMethods 
+#  before_filter :authenticate_user!, except: [:index ]
  # before_filter :correct_user, only: [:edit, :update, :show]
-  before_filter :admin_user, only: :destroy
-
+#rescue_from ActionController::InvalidAuthenticityToken, :with => :your_strategy
+#  before_filter :admin_user, only: :destroy
+  respond_to :html, :json
+  skip_before_filter :verify_authenticity_token  
   # GET /users
   # GET /users.json
   def index
     @current_user = current_user
     user_id = params[:user_id] || current_user.id
     @user   = User.find( user_id )
-    @user.show_users_by = params[:show_users_by]
     @json             = @user.to_gmaps4rails
     if( params[:ad_id].present? )
       @ad         = Ad.find( params[:ad_id]) # if you want to find users following ads
@@ -18,14 +20,15 @@ class UsersController < Devise::RegistrationsController
       respond_with( @ad, @users )
     elsif( params[ :product_id ] )
       @product    = Product.find( params[ :product_id ] )
-      @users      = @product.followers
-      flash[:title] = "Following"
+      @object     = @product
+      @users      = @product.userfeed( params[ :show_users_by] )
+      flash[:title] = params[ :show_users_by]
       respond_with( @product, @users )
     elsif( params[ :q ] )
       @users = User.where( User.search_query( params[:q] ) )
       respond_with( @users )
     else
-      @users = @user.users
+      @users = @user.userfeed( params[:show_users_by] )
       flash[:title] = params[:show_users_by]
       respond_with( @users )
     end
@@ -55,8 +58,7 @@ class UsersController < Devise::RegistrationsController
        
       @userpage_right = session[:userpage_right ] || "adfeed"
       respond_with @user
-    else
-      redirect_to user_session_path
+    
     end 
   end
 
@@ -96,7 +98,6 @@ class UsersController < Devise::RegistrationsController
       if params[:back_button]
         @user.signup_previous_step
       elsif @user.signup_last_step?
-	@user.build_company(params[:user][:company_attributes])
         @user.save if @user.signup_all_valid?
       elsif @user.valid?
         @user.signup_next_step
@@ -123,16 +124,8 @@ class UsersController < Devise::RegistrationsController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    @user.update_attributes(params[:user])
+    respond_with @user
   end
 
   # DELETE /users/1

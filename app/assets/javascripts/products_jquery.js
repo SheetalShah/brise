@@ -13,25 +13,16 @@ var text = $("a").contents().filter(function() {
 });
 $(text).wrap("<span />");
 
-$(".addmodel").click(function()
+$(".addobject").click(function()
 {
-  $( ".addbrand_form").hide();
-  $(".addmodel_form").show();
-
-  //$( "#product").jstree( "create", null, "last", { "attr" : { "rel" : this.id.toString().replace( "add_", "" ) } });
-});
-
-$(".addbrand").click(function()
-{
-  $(".addmodel_form").hide();
-  $( ".addbrand_form").hide();
+  $(".addobject_form").hide();
   val = $(this).attr('data-id');
   $("#f"+val).show();
-
-  //$( "#product").jstree( "create", null, "last", { "attr" : { "rel" : this.id.toString().replace( "add_", "" ) } });
+  type = $(this).attr('type');
+  $("formdiv[type=" + type +"]").show();
 });
 
-$(".product")
+$(".object")
 	        // call `.jstree` with the options object
 	        .jstree({
 	            // the `plugins` array allows you to configure the active plugins on this instance
@@ -46,12 +37,16 @@ $(".product")
 	        // so listen for `function_name`.`jstree` - you can function names from the docs
 	        .bind("loaded.jstree", function (event, data) {
 	            // you get two params - event & data - check the core docs for a detailed description
-		    $(".product").jstree("open_all");
+		    $(".object").jstree("open_all");
 		    jQuery("li").css('height', "auto");
-
-
 	        });
-$("#product")
+
+                $(".object").bind("select_node.jstree", function (e, data) {
+		  var pathnodes = data.inst.get_path(data.rslt.obj, true);
+		  v = pathnodes[ pathnodes.length - 1 ];
+		  window.location = "/" + $("#"+v).attr('data-type') + "/" + $("#"+v).attr('data-id');
+                });
+$("#object")
 	        // call `.jstree` with the options object
 	        .jstree({
 	            // the `plugins` array allows you to configure the active plugins on this instance
@@ -66,29 +61,23 @@ $("#product")
 	        // so listen for `function_name`.`jstree` - you can function names from the docs
 	        .bind("loaded.jstree", function (event, data) {
 	            // you get two params - event & data - check the core docs for a detailed description
-		    $("#product").jstree("open_all");
+		    $("#object").jstree("open_all");
 	        });
 	    
-	    $("#product").bind("select_node.jstree", function (e, data) {
-		$(".productconditional").hide();
-		$(".addbrand").hide();
+	    $("#object").bind("select_node.jstree", function (e, data) {
+		$(".objectconditional").hide();
 		$(".reviewfeed").hide();
 		var pathnodes = data.inst.get_path(data.rslt.obj, true);
 		$.each(pathnodes, function (k, v) {
-		      if( k == 0 )
-		      {
-  		        $("#l"+v).show();
-		      }
-
-		      var vid = "#s"+v;
-		      $(vid).show();
-		      $("#review"+v).show();
+	     	     var objectToShow = "section[type="+v+"]";
+  		     $(objectToShow).show();
+		     $("#review"+v).show();
 		});
 	    } );
 	    // 4) when you are working with an event you can use a shortcut
-	    $("#product").bind("open_node.jstree", function (e, data) {
+	    $("#object").bind("open_node.jstree", function (e, data) {
 	        // data.inst is the instance which triggered this event
-	        //window.location = "/brand_products/" + $(this).attr('id');
+//	        window.location = "/" + $(this).attr('data-type') + "/" + $(this).attr('data-id');
 //		data.inst.select_node("#phtml_2", true);
 	    });
 

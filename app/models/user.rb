@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :confirmable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :invite_for => 2.weeks
 
+#  skip_filter :verify_authenticity_token  
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country, :company_attributes, 
   :avatar, :description
@@ -15,14 +16,14 @@ class User < ActiveRecord::Base
   before_save { |user| user.email = email.downcase }
 
   validates :display_name, presence: true, length: { maximum: 50 }
-  validates_uniqueness_of :display_name
+#  validates_uniqueness_of :display_name
   validates :password, length: { minimum: 6 }, presence: true
    
  
   USER_TYPES = %w(individual company)
   validates_inclusion_of :user_type, :in => USER_TYPES
 
-  has_one :company, :dependent => :destroy
+#  has_one :company, :dependent => :destroy
   has_many :ads, :dependent => :destroy
   has_many :comments
   has_many :followed_users, through: :relationships, source: :followed
@@ -37,9 +38,17 @@ class User < ActiveRecord::Base
   has_many :relationship_products, foreign_key: "follower_id", dependent: :destroy
   has_many :followedproducts, through: :relationship_products
 
+  has_many :company_retail_products, foreign_key: "company_id"
+  has_many :retail_products, through: :company_retail_products, source: :product
+
+  has_many :company_manufactured_products, foreign_key: "company_id"
+  has_many :manufactured_products, through: :company_manufactured_products, source: :product
+
+  accepts_nested_attributes_for :company_manufactured_products, :allow_destroy => true
+  accepts_nested_attributes_for :company_retail_products, :allow_destroy => true
   letsrate_rater
   acts_as_gmappable validation: false
-  accepts_nested_attributes_for :company, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
+#  accepts_nested_attributes_for :company, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
 
   def gmaps4rails_address
     "#{self.city} #{self.zip_code}, #{self.country}" 
@@ -139,8 +148,8 @@ class User < ActiveRecord::Base
     "display_name LIKE '%#{param}%' OR description LIKE '%#{param}%'"
   end
 
-  def users
-    case self.show_users_by
+  def userfeed(show_users_by)
+    case show_users_by
       when 'following'
         self.followed_users
       when 'followers'
@@ -150,8 +159,21 @@ class User < ActiveRecord::Base
     end
   end
 
-  def feed
-    case self.show_ads_by
+  def productfeed(show_products_by)
+    case show_products_by
+      when 'followedproducts'
+        self.followedproducts
+      when 'manufacturedproducts'
+        self.manufactured_products
+      when 'retailproducts'
+        self.retail_products
+      else
+        Product.all
+    end
+  end
+
+  def adfeed(show_ads_by)
+    case show_ads_by
       when 'followedusers'
         @ads = Ad.from_users_followed_by(self)	
       when 'followedads'

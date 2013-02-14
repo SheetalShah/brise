@@ -11,6 +11,7 @@
    <div class="container-fluid">
     <div class="row-fluid">
      <aside>
+        <% if params[:ad_id] || params[:product_id] || params[:user_id] %>
         <div class="span2">
           <% if @ad %>
             <section>
@@ -31,6 +32,9 @@
           <% end %>
         </div>
         <div class="span6 offset1">  
+       <% else %>
+       <div class="span12">
+       <% end %>
           <% if flash[:notice] %>
   	  <redcolor>*<%= flash[:notice] %>*</redcolor>
           <% end %>

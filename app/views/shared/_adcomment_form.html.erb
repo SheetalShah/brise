@@ -4,11 +4,11 @@
 <div class="row-fluid">
 <%= simple_form_for([ad,ad.comments.build], :html => {:novalidate => true }) do |f| %>
    <%= f.input :description, as: "text", placeholder: "Write something useful", :label => false, :input_html => { :class => "span12", :rows => "1" } %>
-<div class="row-fluid onfocuscommentitems">
-   <div class="span6">
-   <%=  f.input :indicative_price_cents, label: "Your price", class: "float-right" %>
-   </div>
-   <div class="span6"><%= f.submit "POST", class: "btn btn-small btn-primary float-right" %></div>
+<div class="onfocusitems">
+  <div class="form-actions">
+    Your price <%=  f.input_field :indicative_price_cents %>
+    <%= f.submit "POST", class: "btn btn-small btn-primary float-right" %>
+  </div>
 </div>
 <% end %>
 </div>

@@ -1,10 +1,10 @@
-<div class="addmodel_form">
+<div class="addmodel_form" id=fbrand<%= brand.id %>>
 <div class="row-fluid">
 <div class="span12">
-New model
-<%= simple_form_for([product, Product.new], :html => {:novalidate => true}) do |f| %>
-    <%= f.input :model, placeholder: "Model name",   :input_html => { :class => "span12" },:label => false %>
-    <%= f.input :modeldescription, as: :text, placeholder: "Model description",  :input_html => { :class => "span12", :rows => "2" }, :label => false  %>
+New model for brand <%= brand.name %>
+<%= simple_form_for([product, brand, Model.new], :html => {:novalidate => true}) do |f| %>
+    <%= f.input :name, placeholder: "Model name",   :input_html => { :class => "span12" },:label => false %>
+    <%= f.input :description, as: :text, placeholder: "Model description",  :input_html => { :class => "span12", :rows => "2" }, :label => false  %>
   <%= render "/shared/error_messages", object: f.object %>
   <%= f.submit "Add", class: "btn" %>
 <% end %>

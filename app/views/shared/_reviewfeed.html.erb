@@ -1,6 +1,10 @@
-<div class="reviewfeed" id=reviewbrand<%= brand_product.brand_id %>>
+<% if brand_product.model_id %>
+  <div class="reviewfeed" id=reviewmodel<%= brand_product.model_id %>>
+<% else %>
+  <div class="reviewfeed" id=reviewbrand<%= brand_product.brand_id %>>
+<% end %>
 <section class="span12">
-Reviews for <%= brand_product.brand_name %>(<%= brand_product.reviews.count %>)
+Reviews for <%= brand_product.brand_name %> - <%= brand_product.model_name %>(<%= brand_product.reviews.count %>)
 </section>
 <section class="no-padding">
   <%= render 'shared/adreview_form', :brand_product => brand_product %>

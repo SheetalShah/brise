@@ -1,0 +1,12 @@
+<section type=<%= current.class %><%= current.id %> class="objectconditional" ><br/>
+  <section class="span12 bold text-center"><aboutme><%= current.class.to_s.capitalize %> <%= current.name %>:</aboutme></section> 
+  <section class="span12"><%= best_in_place current, :description, :type => :textarea, :nil => "N/A - Click to provide a description" %></section>
+</section>
+<% if level != "level2" %>
+  <% if object.has_any_treeView_objects_for([object, current]).any? %>
+    <% object.has_any_treeView_objects_for([object, current]).each do |nextdetail| %>
+      <%= render 'shared/object', :current => nextdetail, :object => object, :level => "level2" %>
+    <% end %>
+  <% end %>
+<% end %>
+

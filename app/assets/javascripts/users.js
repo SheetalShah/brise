@@ -1,4 +1,5 @@
 $(document).ready(function(){
+$('.best_in_place').bind("ajax:success", function () {$(this).closest('tr').effect('highlight'); });
   function user_type_change(){
     if( $('#user_user_type').val() == 'company' )
     {	

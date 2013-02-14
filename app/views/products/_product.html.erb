@@ -1,7 +1,9 @@
 <listitem>
+<div class="text-center bold">
 <%= link_to product.name, product %>
-<div product-id= <%= product.id %> class="product" style="overflow:auto;">
-<%= render('shared/modelbrandtree', :product => product, :showrating => false) %>
+</div>
+<div product-id= <%= product.id %> class=object style="overflow:auto;">
+<%= render('shared/modelbrandtree', :object => product ) %>
 </div>
 <%= render 'users/followproduct_form', :product => product, :type => "link" %>
 <%= render 'shared/productstatsimple', statobject: product %>

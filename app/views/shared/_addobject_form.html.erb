@@ -1,0 +1,19 @@
+<formdiv class="addobject_form" type=<%= type %>>
+<div class="row-fluid">
+<div class="span12">
+<% if current == object %>
+<% formcomponents = [current, eval(addtype.camelize).new] %>
+New <%= addtype.capitalize %> for <%= current.class.to_s %> <%= current.name %>
+<% else %>
+<% formcomponents = [object, current, eval(addtype.camelize).new] %>
+New <%= addtype.capitalize %> for <%= object.class.to_s %> <%= object.name %> - <%= current.class.to_s %> <%= current.name %> 
+<% end %>
+
+<%= simple_form_for(formcomponents, :html => {:novalidate => true}) do |f| %>
+    <%= f.input :name, placeholder: addtype.capitalize + " name",   :input_html => { :class => "span12" },:label => false %>
+    <%= f.input :description, as: :text, placeholder: addtype.capitalize + " description",  :input_html => { :class => "span12", :rows => "2" }, :label => false  %>
+  <%= render "/shared/error_messages", object: f.object %>
+  <%= f.submit "Add", class: "btn" %>
+<% end %>
+</div>
+</div></formdiv>

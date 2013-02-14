@@ -1,0 +1,12 @@
+<section id=sbrand<%= brand.id %> class="productconditional" ><br/>
+<section class="span12 bold text-center"><aboutme>Brand <%= brand.name %>:</aboutme></section> 
+<section class="span12"><%= best_in_place brand, :description, :type => :textarea, :nil => "N/A - Click to provide a brand description" %></section>
+</section>
+
+<% if BrandProduct.find_all_by_brand_id_and_product_id(brand, product).any? %>
+  <%  BrandProduct.find_all_by_brand_id_and_product_id(brand, product).each do |brand_product| %>
+    <% if brand_product.model_id.present? %>
+    <%= render 'shared/model', :brand => brand, :product => product, :model => Model.find( brand_product.model_id ) %>
+    <% end %>
+  <% end %>
+<% end %>

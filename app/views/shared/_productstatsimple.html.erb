@@ -1,4 +1,3 @@
-<br/>
     <div class="stats">
       <a href="<%= product_users_path(statobject) %>">
         <smallinline id="followers" class="stat">
@@ -11,4 +10,15 @@
         ads/s</smallinline>
       </a>
     </div>
-
+    <div class="stats">
+      <a href="<%= product_users_path(statobject, :show_users_by => "retailers") %>">
+        <smallinline id="followers" class="stat">
+          <%= statobject.retail_companies.count %>
+        retailer/s</smallinline>
+      </a>
+      <a href="<%= product_users_path(statobject, :show_users_by => "manufacturers") %>">
+        <smallinline id="followers">
+          <%= statobject.manufacturing_companies.count %>
+        manufacturer/s</smallinline>
+      </a>
+    </div>

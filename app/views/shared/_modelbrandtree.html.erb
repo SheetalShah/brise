@@ -1,6 +1,10 @@
+<% if object.has_any_treeView_objects_for([object]).any? %>
   <ul>
-    <% Product.models_for_product(product.name).each do |model| %>
-      <%= render 'shared/modelnode', :model => model, :showrating => showrating %>
+    <% objects = object.has_any_treeView_objects_for([object]) %>
+    <% object.treeView_next_level %>
+    <% objects.each do |currentnode| %>
+      <%= render 'shared/objectnode', :object => object, :currentnode => currentnode, :level => "level1" %>
     <% end %>
   </ul>
+<% end %>
 

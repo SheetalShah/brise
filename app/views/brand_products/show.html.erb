@@ -4,7 +4,7 @@
 <meta charset="utf-8"> 
 </head>
 <body class="body">
-  <%= render 'layouts/header' %>
+  <%= render 'shared/header' %>
     <div class="row-fluid">
       <aside>	
         <div class="unit span3">
@@ -15,8 +15,8 @@
   	      <% if @brand && !@brand.name.blank? %> | <bold><%= @brand.name %>  </bold><% end %> </ad-title>
           <div id="product" class="product" style="height:auto;width:auto">
  <ul>
-  <% Product.models_for_product(@product.name).each do |model| %>
-  <%= render 'shared/modelnode', :model => model %>
+  <% @product.brands.each do |brand| %>
+  <%= render 'shared/brandnode', :brand => brand, :product => @product, :showrating => true, :showby => "product" %>
   <% end %>
 </ul>
 </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="span4">  
 	  <section>
-            <%= render 'shared/reviewfeed' %>
+            <%= render 'shared/all_reviewfeed' %>
           </section>
         </div>
       </aside>

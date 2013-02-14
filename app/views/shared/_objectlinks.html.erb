@@ -1,0 +1,17 @@
+<section>
+  <% objecttype = object.class.to_s()+object.id.to_s %>
+  <% objectlevel = object.treeView_current_level %>
+  <a href="#" class=addobject type=<%= objecttype %>>Add <%= objectlevel %></a>
+  <% objects = object.has_any_treeView_objects_for([object]) %>
+  <% object.treeView_next_level %>
+  <% objects.each do |current| %>
+    <% currentobjecttype = current.class.to_s()+current.id.to_s %>
+    <section class="objectconditional" type=<%= currentobjecttype %>>
+ | <a href="#" class=addobject type=<%= currentobjecttype %>>Add <%= object.treeView_current_level %></a>  </section>
+  <%= render 'shared/addobject_form', :object => @object, :current => current, :type => currentobjecttype, :addtype => object.treeView_current_level %>
+<% end %>
+  <%= render 'shared/addobject_form', :object => @object, :current => @object, :type => objecttype, :addtype => objectlevel %>
+</section>
+
+
+

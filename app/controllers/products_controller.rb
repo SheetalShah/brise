@@ -6,8 +6,8 @@ class ProductsController < ApplicationController
     @current_user = current_user
     user_id       = params[:user_id] || current_user.id
     @user         = User.find(user_id)
-    @json             = @user.to_gmaps4rails
-    @products     = Product.feed(@user, params[:show_products_by])
+    @json         = @user.to_gmaps4rails
+    @products     = @user.productfeed(params[:show_products_by])
     flash[:title] = params[:show_products_by]
     respond_with @products
   end
@@ -17,6 +17,7 @@ class ProductsController < ApplicationController
   def show
     @user = current_user	
     @product = Product.find(params[:id])
+    @object = @product
     @product_brands = @product.brands
     @current_user = current_user	
     session[:return_to] = request.fullpath

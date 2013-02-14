@@ -2,12 +2,6 @@
               <p><br/>
 		<div class="row-fluid">
 	          <section>(<%= object.user_type.capitalize %>)<br/>
-		  <% if	object.street_address1.present? %>
-		    <%= object.street_address1 %>,<br/>
-                  <% end %>
-		  <% if	object.street_address2.present? %>
-                    <%= object.street_address2 %>,<br/>
-		  <% end %>
 		  <% if	object.city.present? %>
                     <%= object.city %><% end%><% if object.zip_code.present? %>-<%= object.zip_code %>,<% end %><br/>
                    <% if	object.state.present? %>

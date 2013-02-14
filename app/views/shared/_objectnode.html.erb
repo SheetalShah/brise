@@ -1,0 +1,13 @@
+<li id=<%= currentnode.class %><%= currentnode.id %> data-type=<%= currentnode.class.to_s.tableize %> data-id=<%= currentnode.id %>>
+  <%= link_to currentnode.name, currentnode %>
+  <% if level != "level2" %>
+    <ul>
+      <% if object.has_any_treeView_objects_for([object, currentnode]).any? %>
+        <% object.has_any_treeView_objects_for([object, currentnode]).each do |nextnode| %>
+          <%= render 'shared/objectnode', :currentnode => nextnode, :level => "level2" %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+</li>
+

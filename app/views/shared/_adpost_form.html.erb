@@ -8,17 +8,19 @@
     <legend><small>Item</small></legend>
 
     <%= simple_fields_for @ad.brand_product do |c| %>
-      <%= c.input :id, :collection => BrandProduct.all.map { |r| [r.brand_product, r.id] },   :input_html => { :class => "span6" }, :label => "Brand|Model|Product", :prompt => "Other", :value_method => lambda {|t| t[1]}, :hint => "Select *Other* if your item is not in the list"  %>
+      <%= c.input :id, :collection => BrandProduct.all.map { |r| [r.brand_product, r.id] },   :input_html => { :class => "span6" }, :label => "Brand | Model | Product", :prompt => "Other", :value_method => lambda {|t| t[1]}, :hint => "Select *Other* if your item is not in the list"  %>
     <% end %>
 
     <div class="productcomponents">
 <div class="control-group">
 <%= simple_fields_for @ad.brand_product.build_product do |c|%>
-    <%= c.input :name,        :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "Smartphone",        :input_html => { :maxlength => 10}, :label => "Product" %>
-    <%= c.input :model,      :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "e.g. Galaxy",      :input_html => { :maxlength => 5},  :label => "Model(if any specific)" %>
+    <%= c.input :name,        :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "e.g. Smartphone",  :label => "Product" %>
     <% end %>
     <%= simple_fields_for @ad.brand_product.build_brand do |c| %>
-    <%= c.input :name, :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "e.g. Samsung", :input_html => { :maxlength => 10}, :label => "Brand(if any specific)" %>
+    <%= c.input :name, :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "e.g. Samsung", :label => "Brand(if any specific)" %>
+    <% end %>
+    <%= simple_fields_for @ad.brand_product.build_model do |c| %>
+    <%= c.input :name,      :wrapper_html => { :class => "inline_field_wrapper" }, :placeholder => "e.g. Galaxy",  :label => "Model(if any specific)" %>
     <% end %>
 </div>
 

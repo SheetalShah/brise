@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
     t.integer  "product_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "model_id"
   end
 
   create_table "brands", :force => true do |t|
@@ -70,6 +71,34 @@ ActiveRecord::Schema.define(:version => 20121212073150573) do
   create_table "companies_products", :force => true do |t|
     t.integer "company_id", :null => false
     t.integer "product_id", :null => false
+  end
+
+  create_table "company_manufactured_products", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "company_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "company_retail_products", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "company_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "feedbacks", :force => true do |t|
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "models", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "products", :force => true do |t|

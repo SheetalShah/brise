@@ -18,9 +18,8 @@ class AdsController < ApplicationController
       @ads = @product.ads
       flash[:title] = "Product Ads"
     elsif( params[:show_ads_by].present? )
-      @user.show_ads_by = params[:show_ads_by]
       flash[:title] = params[:show_ads_by]
-      @ads = @user.feed
+      @ads = @user.adfeed(params[:show_ads_by])
     else
       @ads = Ad.all
       flash[:title] = "N/A"
@@ -83,13 +82,15 @@ class AdsController < ApplicationController
 
     @ad   = current_user.ads.build(params[:ad])
     if params[:brand_product][:id].empty?
-      @product       = Product.find_by_name_and_model(params[:product][:name], params[:product][:model]) 
+      @product       = Product.find_by_name(params[:product][:name]) 
       @brand         = Brand.find_by_name(params[:brand][:name]) unless params[:brand][:name].empty?
-      @brand_product = BrandProduct.find_by_brand_id_and_product_id(@brand, @product) || nil
+      @model         = Model.find_by_name(params[:model][:name]) unless params[:model][:name].empty?
+      @brand_product = BrandProduct.find_by_brand_id_and_product_id_and_model_id(@brand, @product, @model) || nil
 
       @brand_product = @brand_product || BrandProduct.new
       @brand_product.product = @product || @brand_product.build_product(params[:product]) if !@brand_product.product
       @brand_product.brand = @brand || @brand_product.build_brand(params[:brand]) if !@brand_product.brand
+      @brand_product.model = @model || @brand_product.build_model(params[:model]) if !@brand_product.model
     else
       @brand_product = BrandProduct.find(params[:brand_product][:id].to_i)
     end

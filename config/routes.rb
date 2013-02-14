@@ -1,18 +1,29 @@
 Brise::Application.routes.draw do
   match '/rate' => 'rater#create', :as => 'rate'
 
-  resources :brands
-  resources :company_products
-  resources :helps
-  resources :companies
+  resources :feedbacks
+
   resources :reviews
-  resources :events
+
   resources :comments
 
+
+  resources :brands do
+    resources :products do
+      resources :models 
+    end
+  end  
+  
+  resources :models do
+    resources :products do
+      resources :brands 
+    end
+  end
+  
   resources :ads do
     resources :ads, only: [:index]
-    resources :brand
-    resources :product 
+    resources :brands
+    resources :products 
     resources :comments
     constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
       resources :users, only: [:index] # ad followers
@@ -20,8 +31,9 @@ Brise::Application.routes.draw do
   end
 
   resources :products do
-    resources :brands_products
-    resources :brands
+    resources :brands do
+      resources :models 
+    end
     constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
       resources :users, only: [:index] # ad followers
     end 
@@ -39,6 +51,8 @@ Brise::Application.routes.draw do
   resources :relationships,         only: [:create, :destroy]
   resources :relationship_ads,      only: [:create, :destroy]
   resources :relationship_products, only: [:create, :destroy]
+  resources :company_manufactured_products, only: [:create, :destroy]
+  resources :company_retail_products, only: [:create, :destroy]
 
   constraints lambda { |r| r.env[ "devise.mapping" ] = Devise.mappings[:user] } do
     devise_for :users, :controllers => {:sessions => 'devise/sessions', :registrations => 'users'} do
@@ -54,7 +68,6 @@ Brise::Application.routes.draw do
           get :followedads, :followedproductads, :myads, :myquotedads
         end
       resources :products, only: [ :index ]
-      resources :companies
     end
     root :to => "users#home"
   end

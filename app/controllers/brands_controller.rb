@@ -14,7 +14,12 @@ class BrandsController < ApplicationController
   # GET /brands/1.json
   def show
     @brand = Brand.find(params[:id])
+    @object = @brand
+    @user = current_user	
+    @current_user = current_user	
+    session[:return_to] = request.fullpath
 
+  
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @brand }

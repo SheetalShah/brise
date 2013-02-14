@@ -59,8 +59,17 @@ class Ad < ActiveRecord::Base
     if model_name.present?
       parts << model_name
     end
-    if product_name.present?
-      parts << product_name
+    parts << product_name
+    parts.join(" | ")
+  end
+
+  def pre_ad_name
+    parts = []
+    if brand_name.present?
+      parts << brand_name
+    end
+    if model_name.present?
+      parts << model_name
     end
     parts.join(" | ")
   end

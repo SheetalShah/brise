@@ -1,0 +1,22 @@
+<% if @object.class.to_s == "Product" %>
+  <%= render 'users/followproduct_form', :product => @object, :type => "link" %><br/>
+<% end %>
+<normal><%= @object.name %>  </normal>
+<br/>
+<% if @object.class.to_s == "Product" %>
+<section>
+  <%= render 'shared/productstatsimple', :statobject => @object %>
+</section>
+<% end %>
+<%= @object.treeViewLevels.join(" - ").capitalize %> tree view
+<div id="object" data-product-id= <%= @object.id %> style="height:auto;width:auto">
+  <%= render 'shared/modelbrandtree', :object => @object %>
+</div>
+<section>
+  <% @object.treeView_level_reset %>
+  <%= render 'shared/objectlinks', :object => @object %>
+</section>
+<br/>
+<section>
+  <%= render 'shared/objectDetails', :object => @object %>
+</section>

@@ -1,3 +1,4 @@
+@import 'bootstrap';
 
 .wrapper { 	width: 980px; 	margin: 0 auto; }
 .column-left {
@@ -26,11 +27,9 @@
   width: auto;
   background-color: white;
   display:block;
-  border: 1px solid #dadada;
   position: relative;
   top: -8px;
   left: 8px;
-
 }
 .column-center {
 	width: 480px;
@@ -71,6 +70,23 @@ label {
   display: inline;
   margin-bottom: 2px;
   width: 30%;
+}
+
+.purr {
+  position: fixed;
+  top: 30px;
+  right: 100px;
+  width: 250px;
+  padding: 20px;
+  background-color: #FCC;
+  border: solid 2px #666;
+  &:first-letter { text-transform: uppercase };
+}
+
+.form-actions {
+  padding: 2px 2px 2px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .form-horizontal .control-label {
@@ -242,9 +258,7 @@ a.morelink {
     margin-right:10px;
     cursor:pointer
 }
-textarea#comment_description {
-  border: none;
-}
+
 
 .float-right {
   float: right;
@@ -471,10 +485,14 @@ main strong.stat:before {
   vertical-align: middle;
 }
 
-.addmodel_form, .addbrand_form, .addbrand {
+.addmodel, .addobject_form {
   display: none;
 }
-
+.followlink {
+	color: gray;
+	font-size: 9px;
+	cursor: pointer;
+}
 .stats {
    overflow: auto;
 
@@ -499,8 +517,8 @@ main strong.stat:before {
 
     smallinline {
 	display: inline;
-        font-size: .8em;
-	color: black;
+	color: #006699;
+        font-size: 9px;
     }
 }
 
@@ -622,7 +640,7 @@ p { padding: 5px 0; }
 	top: 50%;
  	left: 4px;
 }
-.productconditional {
+.objectconditional {
 	display: none;
 }
 
@@ -658,7 +676,7 @@ ul#grid, list#gridproduct {
   width: 135px;
   height: 200px;
   }
- #gridproduct listitem .product {
+ #gridproduct listitem .object {
   border-bottom: 1px solid black;
   padding: 2px; 
   margin: 2px;
@@ -666,7 +684,7 @@ ul#grid, list#gridproduct {
   height: auto;
   }
 
-#grid li a:hover img,#gridproduct listitem a:hover .product {
+#grid li a:hover img,#gridproduct listitem a:hover .object {
 opacity:0.3; filter:alpha(opacity=30);
   }
 

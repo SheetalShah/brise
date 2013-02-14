@@ -1,45 +1,47 @@
-class Product < ActiveRecord::Base
-  attr_accessible :category, :description, :industry, :name, :product_type , :model, :brands_attributes, :ads_attributes, :modeldescription
+class Product < ProductComponent
+  attr_accessible :category, :industry, :product_type, :brands_attributes, :ads_attributes
   has_many :ads, :dependent => :nullify, :class_name => 'Ad', :foreign_key => :product_id
-  has_and_belongs_to_many :company
   has_many :brand_products, :foreign_key => :product_id
   has_many :brands, :through => :brand_products, :source => "brand", :dependent => :destroy
+  has_many :models, :through => :brand_products, :source => "model"
+
+  has_many :company_manufactured_products, foreign_key: "product_id" #, class_name: "ManufacturedProduct"
+  has_many :manufacturing_companies, through: :company_manufactured_products, source: :company
+
+  has_many :company_retail_products, foreign_key: "product_id" #, class_name: "RetailProduct"
+  has_many :retail_companies, through: :company_retail_products, source: :company
+
+  accepts_nested_attributes_for :company_manufactured_products, :allow_destroy => true
+  accepts_nested_attributes_for :company_retail_products, :allow_destroy => true
 
   has_many :relationship_products, foreign_key: "followedproduct_id", class_name: "RelationshipProduct", dependent: :destroy
   has_many :followers, through: :relationship_products
   accepts_nested_attributes_for :brands, :allow_destroy => true, :reject_if => proc { |attributes| attributes[ 'name' ].blank? }
   
-  validates :name, length: { maximum: 60 }  
-  validates_presence_of :name
-
-  def self.findProduct(productname, modelname)
-    connection.select_value("select * from products WHERE name='#{productname}' AND model='#{modelname}'");
-  end
-
-  def self.models_for_product(name)
-    where("name='#{name}' AND model IS NOT NULL")
-  end
-
   def brand_products_for_product
-    query = "product_id IN (SELECT p.id FROM products p WHERE p.name = '#{name}' )"
-
-    BrandProduct.where(query)
+    BrandProduct.where("product_id IN (SELECT p.id FROM products p WHERE p.name = '#{name}' )")
   end 
 
   def ads
     Ad.product_ads(self.name, '')
   end
-  
-  def self.feed(user, type)
-    case type
-      when 'followedproducts'
-        followed_product_ids = "SELECT followedproduct_id FROM relationship_products
-                         WHERE follower_id = :user_id"
-        where("id IN (#{followed_product_ids})", 
-          user_id: user.id)
+
+  def treeViewLevels
+    %w[brand model]
+  end
+
+  def userfeed(show_users_by)
+    case show_users_by
+      when 'manufacturers'
+        self.manufacturing_companies
+      when 'retailers'
+        self.retail_companies
       else
-        Product.all
+        User.all
     end
   end
 
+  def adfeed(show_ads_by)
+    Ad.product_ads(self.name, '')
+  end
 end
