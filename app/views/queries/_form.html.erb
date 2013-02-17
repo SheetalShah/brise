@@ -1,0 +1,12 @@
+<h2> Query </h2>
+<%= simple_form_for([@product, Query.new]) do |f| %>
+  <input name="show_users_by" type="hidden" value= <%= params["show_users_by"]%> />
+  <div class="form-inputs">
+    <%= f.input :subject %>
+    <%= f.input :message %>
+  </div>
+
+  <%= f.submit "Submit", :class => "btn" %>
+  <a href="#" id="cancel-query"><input type="button" name="cancel" value="Cancel" class="btn" /></a>
+<% end %>
+

@@ -1,7 +1,7 @@
 <div class="container-fluid">
 <div class="row-fluid">
 <div class="span9">
-<headertag>Ad Feed(<%= @user.feed.count %>)</headertag>
+<headertag>Ad Feed(<%= @user.adfeed(params[:show_ads_by]).count %>)</headertag>
 </div>
 <div class="span3 float-right-text">
       <nav>
@@ -18,7 +18,7 @@
 </div>
 </div>
 <div>
-  <% if @user.feed.any? %>
+  <% if @user.adfeed(params[:show_ads_by]).any? %>
     <ol class="ads collection">
       <%= render @ads, :current_user => @current_user %>
     </ol>

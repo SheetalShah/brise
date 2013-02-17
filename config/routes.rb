@@ -1,4 +1,6 @@
 Brise::Application.routes.draw do
+  resources :queries
+
   match '/rate' => 'rater#create', :as => 'rate'
 
   resources :feedbacks
@@ -7,6 +9,7 @@ Brise::Application.routes.draw do
 
   resources :comments
 
+  resources :emailer
 
   resources :brands do
     resources :products do
@@ -31,6 +34,7 @@ Brise::Application.routes.draw do
   end
 
   resources :products do
+    resources :queries
     resources :brands do
       resources :models 
     end

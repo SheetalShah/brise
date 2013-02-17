@@ -2,13 +2,15 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+  acts_as_taggable
+  acts_as_tagger
   devise :invitable, :database_authenticatable, :confirmable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :invite_for => 2.weeks
 
 #  skip_filter :verify_authenticity_token  
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type, :display_name, :street_address1, :street_address2, :city, :state, :zip_code, :country, :company_attributes, 
-  :avatar, :description
+  :avatar, :description, :tag_list
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/guest.png"
   attr_writer :signup_current_step, :show_ads_by, :show_users_by
 

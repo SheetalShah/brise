@@ -61,6 +61,21 @@ Brise::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   config.log_level = :debug
+
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  
+  ActsAsTaggableOn.force_lowercase = true
+
+  ActionMailer::Base.smtp_settings = {
+		:address => "smtp.gmail.com",
+		:port => 587,
+		:authentication => :plain,
+		:user_name => "onlysheetal@gmail.com",
+		:password => "arunshah",
+  }
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5

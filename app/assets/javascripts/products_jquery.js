@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  jQuery(".best_in_place").best_in_place()
   $(".brandcontent").hide();
   //toggle the componenet with class msg_body
   $(".brandheading").click(function()
@@ -69,9 +70,8 @@ $("#object")
 		$(".reviewfeed").hide();
 		var pathnodes = data.inst.get_path(data.rslt.obj, true);
 		$.each(pathnodes, function (k, v) {
-	     	     var objectToShow = "section[type="+v+"]";
-  		     $(objectToShow).show();
-		     $("#review"+v).show();
+  		     $("section[type="+v+"]").show();
+  		     $("tr[type="+v+"]").show();
 		});
 	    } );
 	    // 4) when you are working with an event you can use a shortcut

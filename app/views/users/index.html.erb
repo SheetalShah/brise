@@ -35,7 +35,10 @@
        <% else %>
        <div class="span12">
        <% end %>
-	  
+          <% if @product %>
+  	    <div id="send-queryform" class="objectconditional"><%= render 'queries/form' %></div>
+	    <div id="send-query" class="btn text-center">Send Query</div>
+          <% end %>
 	  <div id="gallery">
             <ul id="grid">
 	      <%= render @users %>

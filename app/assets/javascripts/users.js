@@ -1,4 +1,21 @@
 $(document).ready(function(){
+  $('#send-query').click(function() {        // Button which will activate our modal
+   $("div#send-queryform").dialog('open' );
+});
+
+$('#cancel-query').click(function() {
+  $("div#send-queryform").dialog('close');
+});
+
+$( "#send-queryform" ).dialog({
+autoOpen: false,
+closeText: '',
+modal: true,
+width: 450,
+height: 600,
+});
+
+
 $('.best_in_place').bind("ajax:success", function () {$(this).closest('tr').effect('highlight'); });
   function user_type_change(){
     if( $('#user_user_type').val() == 'company' )

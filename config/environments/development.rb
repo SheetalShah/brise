@@ -40,7 +40,7 @@ Brise::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   
-
+  ActsAsTaggableOn.force_lowercase = true
   ActionMailer::Base.smtp_settings = {
 		:address => "smtp.gmail.com",
 		:port => 587,

@@ -20,6 +20,7 @@ gem 'gemcutter'
 gem 'paperclip', '~>3.0'
 gem 'gmaps4rails'
 gem 'simple_form'
+gem 'acts-as-taggable-on', '~> 2.3.1'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -33,7 +34,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'best_in_place'
+gem 'best_in_place', '~>0.2.0'
 group :development do
 	gem 'ajaxful_rating', '3.0.0.beta3'
 end

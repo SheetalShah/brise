@@ -15,6 +15,7 @@ class AdsController < ApplicationController
       flash[:title] = params[:ads_of_type]
     elsif( params[:product_id].present? )
       @product = Product.find( params[:product_id] )
+      @object = @product
       @ads = @product.ads
       flash[:title] = "Product Ads"
     elsif( params[:show_ads_by].present? )

@@ -15,9 +15,9 @@
 <a href="#" id="help" class="smallfont" title="Helps find nearest to position ads">Why do I need to provide my address?</a>
 <%= f.label "Tell us something about yourself that will help others understand your personality better" %>
 <%= f.text_area :description, placeholder: "e.g. I love reading" %>
-<%= f.fields_for :company do |c| %>
-  <%= render "/layouts/signup_company_details", :c => c %>
-<% end %>
+<%= f.label "Tags" %>
+<%= f.text_field :tag_list, placeholder: "Upto 3 tags comma separated" %>
+
 
 
 

@@ -1,4 +1,5 @@
-class Product < ProductComponent
+class Product < ProductComponent 
+  acts_as_taggable
   attr_accessible :category, :industry, :product_type, :brands_attributes, :ads_attributes
   has_many :ads, :dependent => :nullify, :class_name => 'Ad', :foreign_key => :product_id
   has_many :brand_products, :foreign_key => :product_id

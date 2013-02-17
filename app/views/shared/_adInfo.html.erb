@@ -2,7 +2,7 @@
   CloudZoom.quickStart();
 </script>
 <%= render 'users/followad_form', :ad => @ad, :type => "link" %><br/>
-<ad-title><normal><%= @ad.ad_type %></normal><bold><%= @ad.pre_ad_name %> | <%= link_to @ad.product_name, @ad.brand_product.product %></bold>
+<ad-title><normal><%= @ad.ad_type %> </normal><bold><%= @ad.pre_ad_name %> | <%= link_to @ad.product_name, @ad.brand_product.product %></bold>
 </ad-title><br/>
 <section><img src= "<%= avatar_url(@ad) %>", height = 200, width = 140, class = 'cloudzoom ad', data-cloudzoom = '{"captionSource": "#caption1", "captionType": "html"}' /></section>
 <div id="caption1" class="cloudzoom-caption"></div>

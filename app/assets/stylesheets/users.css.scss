@@ -1,9 +1,13 @@
 @import 'bootstrap';
 
+
 .wrapper { 	width: 980px; 	margin: 0 auto; }
 .column-left {
-	width: 250px;
-	float: left;
+	text-align: right;
+}
+
+.block {
+ 	display: block;
 }
 
         .pointer-up
@@ -37,8 +41,8 @@
 }
  
 .column-right {
-	width: 250px;
-	float: left;
+	width: 70%;
+  *display: inline-block;
 }
 footer {
 	clear: both;
@@ -635,6 +639,16 @@ background-color:#fafafa;
 }
 p { padding: 5px 0; }
 
+#send-queryform {
+  background-color: white;
+-webkit-border-radius:2%;
+  -moz-border-radius:2%;
+  border-radius:2%;
+  width: auto;
+  background-color: white;
+  border: 2px groove #eee;
+  padding: 10px;
+}
 .placecenter {
 	position: relative;
 	top: 50%;
@@ -764,7 +778,7 @@ redcolor {
 
 aboutme {
   font-family: 'Rancho', cursive;
-  font-size: 20px;
+  font-size: 15px;
 }
  
 label,

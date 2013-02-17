@@ -47,13 +47,12 @@ class UsersController < Devise::RegistrationsController
   def show
     if user_signed_in?
       @user             = User.find(params[:id])
-      @user.show_ads_by = session[:show_ads_by] 
       @current_user     = current_user
 
       @ad               = @user.ads.build(params[:ad])
       @brand_product    = @ad.build_brand_product
       @comment          = @ad.comments.build(params[:comment])
-      @ads              = @user.feed
+      @ads              = @user.adfeed(session[:show_ads_by])
       @json             = @user.to_gmaps4rails
        
       @userpage_right = session[:userpage_right ] || "adfeed"
@@ -68,7 +67,7 @@ class UsersController < Devise::RegistrationsController
     session[:signup_params] ||= {}
     @user                     = User.new(session[:signup_params])
     @user.signup_current_step = session[:signup_step]	
-    @company                  = @user.build_company
+#    @company                  = @user.build_company
 
     respond_to do |format|
       format.html # new.html.erb
@@ -101,7 +100,7 @@ class UsersController < Devise::RegistrationsController
         @user.save if @user.signup_all_valid?
       elsif @user.valid?
         @user.signup_next_step
-        @user.build_company
+#        @user.build_company
       end
       session[:signup_step] = @user.signup_current_step
     end

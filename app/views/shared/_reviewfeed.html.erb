@@ -1,7 +1,7 @@
 <% if brand_product.model_id %>
-  <div class="reviewfeed" id=reviewmodel<%= brand_product.model_id %>>
+  <section class="reviewfeed" type=Model<%= brand_product.model_id %>>
 <% else %>
-  <div class="reviewfeed" id=reviewbrand<%= brand_product.brand_id %>>
+  <section class="reviewfeed" type=Brand<%= brand_product.brand_id %>>
 <% end %>
 <section class="span12">
 Reviews for <%= brand_product.brand_name %> - <%= brand_product.model_name %>(<%= brand_product.reviews.count %>)
@@ -17,7 +17,7 @@ Reviews for <%= brand_product.brand_name %> - <%= brand_product.model_name %>(<%
     </ol>
   <% end %>
 </div>
-</div>
+</section>
 
 
 

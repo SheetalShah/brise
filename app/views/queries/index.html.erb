@@ -1,0 +1,27 @@
+<h1>Listing queries</h1>
+
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>Message</th>
+    <th>Sent at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @queries.each do |query| %>
+  <tr>
+    <td><%= query.subject %></td>
+    <td><%= query.message %></td>
+    <td><%= query.sent_at %></td>
+    <td><%= link_to 'Show', query %></td>
+    <td><%= link_to 'Edit', edit_query_path(query) %></td>
+    <td><%= link_to 'Destroy', query, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Query', new_query_path %>
