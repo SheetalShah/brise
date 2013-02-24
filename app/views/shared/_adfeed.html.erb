@@ -1,28 +1,18 @@
-<div class="container-fluid">
-<div class="row-fluid">
-<div class="span9">
-<headertag>Ad Feed(<%= @user.adfeed(params[:show_ads_by]).count %>)</headertag>
-</div>
-<div class="span3 float-right-text">
-      <nav>
-        <ul class="nav">
-	<li class="downdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">By:<%= @user.show_ads_by %><b class="caret"></b></a>	    
-         <ul class="dropdown-menu">
-	  <li><%= link_to "All", ads_path %></li>
-          <li><%= link_to "followedusers", user_ads_path( @user, :show_ads_by => "followedusers" ) %></li>
-          <li><%= link_to "followedads", user_ads_path( @user, :show_ads_by => "followedads" ) %></li>
-          <li><%= link_to "followedproducts", user_ads_path( @user, :show_ads_by => "followedproducts" ) %></li>
-	</ul>
-        </li></ul>
-      </nav>
-</div>
-</div>
-<div>
-  <% if @user.adfeed(params[:show_ads_by]).any? %>
-    <ol class="ads collection">
-      <%= render @ads, :current_user => @current_user %>
-    </ol>
+<script type="text/javascript">
+  CloudZoom.quickStart();
+</script>
+<div class="row-fluid fadeinItems">
+  
+  <% if session[:ads_view] == 'grid' %>
+    <%= link_to "List View", user_ads_path( @user, :show_ads_by => params[:show_ads_by], :ads_view => "list" ) %> | Grid View
+  <% else %>
+    List View | <%= link_to "Grid View", user_ads_path( @user, :show_ads_by => params[:show_ads_by], :ads_view => "grid" ) %>
   <% end %>
 </div>
+<% if session[:ads_view] == 'grid' %>
+  <%= render 'shared/adgridview' %>
+<% else %>
+  <%= render 'shared/adlistview' %>
+<% end %>
 
 

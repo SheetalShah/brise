@@ -1,15 +1,22 @@
-<script type="text/javascript">
-  CloudZoom.quickStart();
-</script>
-<%= render 'users/followad_form', :ad => @ad, :type => "link" %><br/>
-<ad-title><normal><%= @ad.ad_type %> </normal><bold><%= @ad.pre_ad_name %> | <%= link_to @ad.product_name, @ad.brand_product.product %></bold>
-</ad-title><br/>
-<section><img src= "<%= avatar_url(@ad) %>", height = 200, width = 140, class = 'cloudzoom ad', data-cloudzoom = '{"captionSource": "#caption1", "captionType": "html"}' /></section>
-<div id="caption1" class="cloudzoom-caption"></div>
 <section>
-  <%= render 'shared/adstatsimple', :statobject => @ad %>
-</section>
+	    <%= render 'ads/ad', :ad => @ad, :cloudzoom => true, :showdetails => true %>
+<div class="row-fluid">
+  <span class="span12">
+    <%= render 'shared/adpage_links' %>
+  </span>
+</div>
 <br/>
-<section>
-  <%= render 'shared/adDetails' %>
-</section>
+<div id="chart_div"></div>
+<div id="mapcontainer1" class=objectconditional>
+  <div id="maphelpcontent1">
+     <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span><br/>
+     <p>
+       <div class="row">
+          <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
+       </div>
+     </p>
+  </div>
+</div>
+            
+          </section>
+

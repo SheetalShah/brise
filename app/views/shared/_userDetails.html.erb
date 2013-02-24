@@ -1,0 +1,19 @@
+<br/>
+<redcolor class="text-left">About me: </redcolor>
+<table id="tableinfo">
+<tr>
+<td><em><i class="icon-time"></i><b>Member since:</b> <span class="timeago timestamp" title="<%= @user.created_at.getutc.iso8601 %>"><%= @user.created_at.to_s %></span></em>
+</td>
+<td><em><i class="icon-globe"></i><b>From:</b> <section id = "maphelp"><%= @user.gmaps4rails_address %></section></em></td>
+</tr>
+<tr>
+<td><i class="icon-tags"></i><em><b>Tags:</b> </em><%= @user.tag_list %></td>
+</tr>
+<tr>
+<td colspan=2>
+<i class="icon-leaf"></i><b>Description:</b><%= @user.description %>
+</td>
+</tr>
+</table>
+
+

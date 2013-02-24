@@ -1,34 +1,32 @@
 <% statobject ||= current_user %><br/>
+  <div class="stats">
     <% if isValidFollowingType(statobject) %>
-      Following:
-      <div class="stats">
-        <a href="<%= user_users_path(statobject, :show_users_by => 'following') %>">
-          <strong class="stat">
-            <%= statobject.followed_users.count %>
-          </strong>
-          users
-        </a>
+      <a href="<%= user_users_path(statobject, :show_users_by => 'following') %>">
+      <i class="icon-user"></i>
+        <smallinline class="stat">
+          <%= statobject.followed_users.count %> following
+        </smallinline>
+      </a>
         <a href="<%= user_ads_path(statobject, :show_ads_by => 'followedads') %>">
-          <strong class="stat">
-            <%= statobject.followedads.count %>
-          </strong>
-          ads
+          <i class="icon-font"></i>
+          <smallinline class="stat">
+           following <%= statobject.followedads.count %> ads
+          </smallinline>
         </a>
         <a href="<%= user_products_path(statobject) %>">
-          <strong class="stat">
-            <%= statobject.followedproducts.count %>
-          </strong>
-          products
+          <i class="icon-qrcode"></i>
+          <smallinline class="stat">
+            following <%= statobject.followedproducts.count %> products
+          </smallinline>
         </a>
-      </div>
     <% end %>
-    Followers:
-    <div class="stats">
+      
       <a href="<%= user_users_path(statobject, :show_users_by => 'followers') %>">
-        <strong id="followers" class="stat">
-          <%= statobject.followers.count %>
-        </strong>
-        users
+	<i class="icon-user"></i>
+        <smallinline id="followers" class="stat">
+          <%= statobject.followers.count %> followers
+        </smallinline>
       </a>
     </div>
 
+	    

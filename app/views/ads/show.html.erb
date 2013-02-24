@@ -1,6 +1,9 @@
 <!DOCTYPE html> 
 <html lang="en"> 
 <head> 
+<script type="text/javascript">
+  CloudZoom.quickStart();
+</script>
 <meta charset="utf-8"> 
 <%= javascript_include_tag "jquery-ui.min.js", "highcharts", "exporting" %>
 <%= stylesheet_link_tag "gmaps4rails" %>
@@ -12,18 +15,14 @@
      <aside>	
         <div class="span2">
           <section>
- 	    <%= render 'shared/adInfo' %>
 	  </section>
         </div>
-        <div class="span6 offset1">  
-	  <section>
-            <%= render 'shared/commentfeed', :ad => @ad %>
-          </section>
-          <%= debug(params) %>
+        <div class="span7">  
+	  <%= render 'shared/adInfo' %>
         </div>
 	<div class="span3">  
 	  <section>
-            <%= render 'shared/charts', :ad => @ad %>
+            
           </section>
         </div>
       </aside>

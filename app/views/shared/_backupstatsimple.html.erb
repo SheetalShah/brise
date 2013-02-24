@@ -1,0 +1,34 @@
+<% statobject ||= current_user %><br/>
+    <% if isValidFollowingType(statobject) %>
+      Following:
+      <div class="stats">
+        <a href="<%= user_users_path(statobject, :show_users_by => 'following') %>">
+          <strong class="stat">
+            <%= statobject.followed_users.count %>
+          </strong>
+          users
+        </a>
+        <a href="<%= user_ads_path(statobject, :show_ads_by => 'followedads') %>">
+          <strong class="stat">
+            <%= statobject.followedads.count %>
+          </strong>
+          ads
+        </a>
+        <a href="<%= user_products_path(statobject) %>">
+          <strong class="stat">
+            <%= statobject.followedproducts.count %>
+          </strong>
+          products
+        </a>
+      </div>
+    <% end %>
+    Followers:
+    <div class="stats">
+      <a href="<%= user_users_path(statobject, :show_users_by => 'followers') %>">
+        <strong id="followers" class="stat">
+          <%= statobject.followers.count %>
+        </strong>
+        users
+      </a>
+    </div>
+

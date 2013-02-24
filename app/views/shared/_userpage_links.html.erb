@@ -1,6 +1,23 @@
-<ul class="square text-center">
-  <li><%= link_to "Create Ad", new_user_ad_path( :user_id => @user.id ) %></li>
-  <li><%= link_to "My Ads", user_ads_path( @user, :group_by => "brand_product_id", :show_ads_by => "myads") %>(<%= @user.ads.count %>)</li>
-  <li><%= link_to "My Quoted Ads", user_ads_path( @user, :group_by => "brand_product_id", :show_ads_by => "myquoted" ) %>(<%= Ad.my_quoted_ads(@user).count %>)</li>
-  <li><%= link_to " Give feedback", new_feedback_path %></li>
-</ul>
+<span class="pagelinks navbar">
+<div class="navbar-inner nav-list">
+      <nav>
+        <ul id="pagelinks" class="nav text-center">
+	<li><%= link_to "All Ads("+Ad.all.count.to_s+")", ads_path %></li>
+        <li><%= link_to "My Ads("+@user.ads.count.to_s+")", user_ads_path( @user, :group_by => "brand_product_id", :show_ads_by => "myads") %></li>
+        <li><%= link_to "My Quoted Ads("+Ad.my_quoted_ads(@user).count.to_s+")", user_ads_path( @user, :group_by => "brand_product_id", :show_ads_by => "myquoted" ) %></li>
+        <li><%= link_to "followed product Ads", user_ads_path( @user, :show_ads_by => "followedproducts" ) %></li>
+	</ul>
+      </nav>
+  </div>
+</span>
+<div id="mapmodal">
+  <div id="maphelpcontent">
+     <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span><br/>
+     <p>
+       <div class="row">
+          <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
+       </div>
+     </p>
+  </div>
+</div>
+

@@ -1,20 +1,10 @@
-   <div class="container-fluid">
-<div class="row-fluid center">
-  <div class="span12">
-  <div class="extraneous-non-semantic-markup">
-    <section>
-      <groupthin>
-        <redcolor class="text-left font15">About me: </redcolor><br/>
-	<div class="column-left bold">State: </div> <div class="column-right"><%= image_tag(@ad.state+".png", :size => "16x16") %></div>
-	<div class="column-left bold">Created by: </div> <div class="column-right"><%= link_to @ad.user.display_name, user_path(@ad.user) %></div>
-	<div class="column-left bold">Description: </div> <div class="column-right"><%= @ad.details %></div>
-        <div class="column-left bold">Price: </div> <div class="column-right"><redcolor><% if( @ad.price == 0 ) %> Best <% else %><%= humanized_money_with_symbol @ad.price %> <% end %></redcolor></div>
-	<div class="column-left bold">Zipcode: </div> <div class="column-right"><% if( @ad.use_address_zip_code ) %> <%= @ad.user.zip_code %> <% else %><%= @ad.ad_zip_code %> <% end %></div>
-      </groupthin>
-    </section>
-  </div>
- </div>
-</div>
-</div>
-
-
+<redcolor class="text-left">About me: </redcolor>
+<table id="tableinfo">
+<tr>
+<td><em><i class="icon-flag"></i><b>State:</b> <%= image_tag(ad.state+".png", :size => "16x16") %></em>
+</td>
+</tr>
+<tr>
+<td colspan=2><em><i class="icon-leaf"></i><b>Description:</b> <%= ad.details %></em></td>
+</tr>
+</table>

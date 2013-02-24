@@ -1,6 +1,6 @@
 <tr type=<%= current.class %><%= current.id %> class="objectconditional">
-  <td><div class="column-left bold"><aboutme><%= current.class.to_s.capitalize %> <%= current.name %>:</aboutme></div> </td>
-  <td><div class=""><%= best_in_place current, :description, :type => :textarea, :nil => "N/A - Click to provide a description" %></div></td>
+  <td><em><b> <%= current.name %>:</div> </td>
+  <td><%= best_in_place current, :description, :type => :textarea, :nil => "N/A - Click to provide a description" %></td>
 </tr>
 
 <% if level != "level2" %>

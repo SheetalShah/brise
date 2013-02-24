@@ -7,6 +7,10 @@ $('#cancel-query').click(function() {
   $("div#send-queryform").dialog('close');
 });
 
+$('[data-id=user-tag-info]').click(function() {
+/* put onclick handler of tag here */
+});
+
 $( "#send-queryform" ).dialog({
 autoOpen: false,
 closeText: '',
@@ -15,6 +19,21 @@ width: 450,
 height: 600,
 });
 
+  $('#post-ad').click(function() {        // Button which will activate our modal
+   window.location = "/ads/new";
+});
+
+$('#cancel-ad').click(function() {
+  $("div#post-adform").dialog('close');
+});
+
+$( "#post-adform" ).dialog({
+autoOpen: false,
+closeText: '',
+modal: true,
+width: 450,
+height: 600,
+});
 
 $('.best_in_place').bind("ajax:success", function () {$(this).closest('tr').effect('highlight'); });
   function user_type_change(){

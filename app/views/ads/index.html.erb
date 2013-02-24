@@ -13,7 +13,9 @@
      <aside>
         <% if params[:ad_id] || params[:product_id] || params[:user_id] %>
         <div class="span2">
-          <% if @ad %>
+        </div>
+        <div class="span7">  
+<% if @ad %>
             <section>
               <%= render 'shared/adInfo' %>
             </section>
@@ -25,27 +27,14 @@
   	    <section>
  	      <%= render 'shared/userInfo' %>
   	    </section>
-	    <br>
-            <section>
- 	      <%= render 'shared/userpage_links' %>
-	    </section>
           <% end %>
-        </div>
-        <div class="span6 offset1">  
        <% else %>
        <div class="span12">
        <% end %>
           <% if flash[:notice] %>
   	  <redcolor>*<%= flash[:notice] %>*</redcolor>
           <% end %>
-	  <headertag> <%= flash[:title].capitalize %> </headertag>
-	  <div id="gallery">
-            <ul id="grid">
-              <% @groupedads.each do |k, ads| %>
-                <%= render :partial => 'adscollection', :locals => { :ads => ads } %>
-              <% end %>
-            </ul>
-          </div>
+          <%= render 'shared/adfeed' %>
         </div>
       </aside>
     </div>

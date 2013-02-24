@@ -13,7 +13,10 @@
      <aside>
         <% if params[:ad_id] || params[:product_id] || params[:user_id] %>
         <div class="span2">
-          <% if @ad %>
+          
+        </div>
+        <div class="span6 offset1">  
+<% if @ad %>
             <section>
               <%= render 'shared/adInfo' %>
             </section>
@@ -25,21 +28,13 @@
   	    <section>
  	      <%= render 'shared/userInfo' %>
   	    </section>
-	    <br>
-            <section>
- 	      <%= render 'shared/userpage_links' %>
-	    </section>
           <% end %>
-        </div>
-        <div class="span6 offset1">  
        <% else %>
        <div class="span12">
        <% end %>
 	 
-	  <div id="gallery">
-            <list id="gridproduct">
+	  <div id="feedcolumns">
 	      <%= render @products %>
-            </list>
           </div>
         </div>
       </aside>

@@ -1,0 +1,12 @@
+<div>
+  <% if @user.adfeed(params[:show_ads_by]).any? %>
+    <ol class="ads collection" id="listview">
+<% @ads.each do |ad| %>
+<li class="collectionitem" data-id=ad<%= ad.id %> data-adid=<%=ad.id%>>
+		<%= render 'ads/ad', :cloudzoom => false, :showdetails => false, :ad => ad %>
+</li>
+              <% end %>
+
+    </ol>
+  <% end %>
+</div>

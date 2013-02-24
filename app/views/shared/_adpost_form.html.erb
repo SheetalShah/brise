@@ -1,8 +1,14 @@
-<headertag class="span12">New Ad</headertag>
+<div style="position:relative;">
+<span class="point-down"></span>
+<div href="#" class="pagetipheader">
+New Ad
+
+</div></div>
+<br/>
 <div class="span12">
   <%= simple_form_for @ad, :html => {:novalidate => true, :class => "form-horizontal"} do |f| %>
   <fieldset>
-    <legend>Step 1. Ad details</legend>
+    <legend>Step 1. Basic information</legend>
     <%= f.input :ad_type, :collection => [ ['Buy','Buy'], ['Sell','Sell'], ['Rent','Rent'] ],   :input_html => { :class => "span6" }, :priority => [ "Buy" ], :label => "Looking to", :id => 'adtype' %>
     <%= f.input :avatar, :as => "file",  :input_html => { :class => "span6" }, label: "Image"  %>
     <legend><small>Item</small></legend>
@@ -26,6 +32,7 @@
 
     </div>
     <%= f.input :details, :as => :text, :label => "Details", :input_html => { :class => "span6" } %>
+
     <legend>Step 2. Help us help you!</legend>
     <legend><small>Price</small></legend><br/>
     <div class="priceinputs">

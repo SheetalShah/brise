@@ -15,6 +15,13 @@
 <a href="#" id="help" class="smallfont" title="Helps find nearest to position ads">Why do I need to provide my address?</a>
 <%= f.label "Tell us something about yourself that will help others understand your personality better" %>
 <%= f.text_area :description, placeholder: "e.g. I love reading" %>
+<div style="position:relative;">
+<span href="#" class="helptip"><span class="point-right"></span>
+User community will find you via these useful tags.<br/>
+Make the best use of it.<br/>
+If you are an individual, put in your buy/sell preference categories.
+If you are a business, promote your product/brand/industry via tags.</span>
+</div>
 <%= f.label "Tags" %>
 <%= f.text_field :tag_list, placeholder: "Upto 3 tags comma separated" %>
 

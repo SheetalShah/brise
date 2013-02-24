@@ -13,6 +13,8 @@
      <aside>
         <% if params[:ad_id] || params[:product_id] || params[:user_id] %>
         <div class="span2">
+        </div>
+        <div class="span6 offset1">  
           <% if @ad %>
             <section>
               <%= render 'shared/adInfo' %>
@@ -26,23 +28,16 @@
  	      <%= render 'shared/userInfo' %>
   	    </section>
 	    <br>
-            <section>
- 	      <%= render 'shared/userpage_links' %>
-	    </section>
           <% end %>
-        </div>
-        <div class="span6 offset1">  
        <% else %>
        <div class="span12">
        <% end %>
           <% if @product %>
   	    <div id="send-queryform" class="objectconditional"><%= render 'queries/form' %></div>
-	    <div id="send-query" class="btn text-center">Send Query</div>
+	    <button type="button" id="send-query" class="text-center">Send Query</button>
           <% end %>
-	  <div id="gallery">
-            <ul id="grid">
-	      <%= render @users %>
-            </ul>
+	  <div id="feedcolumns">
+            <%= render @users %>
           </div>
         </div>
       </aside>

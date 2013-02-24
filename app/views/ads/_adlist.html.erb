@@ -1,0 +1,12 @@
+<li class="collectionitem">
+<section class="span1 collectionimage"><%= link_to image_tag( avatar_url(ad), :size => "48x48" ), ad %></section>
+<section class="span11"><%= render 'users/followad_form', :ad => ad, :type => "link" %>
+<%= ad.ad_type %><%= render 'shared/adhelp', :id => 'modal_ad_'+ ad.id.to_s, :object => ad %>
+<section class="contact-card" data-id=modal_ad_<%= ad.id %>><%= ad.ad_name %>
+@price:<% if( ad.price == 0 ) %> Best <% else %><%= humanized_money_with_symbol ad.price %> <% end %>
+</section>
+<%= render 'shared/adstatsimple', statobject: ad %>
+</section>
+</li>
+
+

@@ -1,14 +1,10 @@
 <link href='http://fonts.googleapis.com/css?family=Rancho' rel='stylesheet' type='text/css'>
-
   <redcolor class="text-left font15">About me: </redcolor><br/>
-  <div class="backcolor">
 <table>
 <tr>
-      <td><div class="column-left bold"><aboutme><%= object.class.to_s.capitalize %> <%= object.name %></aboutme>:</div></td>
+      <td><em><b><%= object.name %>:</b></td>
       <td><div class=""><%= best_in_place object, :description, :type => :textarea, :nil => "N/A - Click to provide a description" %></div></td>
 </tr>
-
-
       <% object.treeView_level_reset %>
       <% objects = object.has_any_treeView_objects_for([object]) %>
       <% object.treeView_next_level %>
@@ -16,6 +12,5 @@
         <%= render 'shared/object', :current => current, :object => object, :level => "level1" %>
       <% end %>
 </table>
-  </div>
 
 

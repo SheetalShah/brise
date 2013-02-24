@@ -26,6 +26,10 @@ class AdsController < ApplicationController
       flash[:title] = "N/A"
     end
 
+    if( params[:ads_view].present? )
+      session[:ads_view] = params[:ads_view]
+    end
+
     conditions = params[:conditions] || {}
     groupby    = params[:group_by] || "id"
 

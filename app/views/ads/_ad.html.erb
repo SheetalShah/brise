@@ -1,9 +1,37 @@
-<li><%= link_to image_tag( avatar_url(ad) ), ad %>
-<%= render 'users/followad_form', :ad => ad, :type => "link" %>
-<%= ad.ad_type %><%= render 'shared/adhelp', :id => 'modal_ad_'+ ad.id.to_s, :object => ad %>
-<section class="contact-card" data-id=modal_ad_<%= ad.id %>><%= ad.ad_name %>
-@price:<% if( ad.price == 0 ) %> Best <% else %><%= humanized_money_with_symbol ad.price %> <% end %>
-</section>
-<%= render 'shared/adstatsimple', statobject: ad %></li>
+  <div class="row-fluid">
+    <section class="span2 collectionimage" data-id=ad<%= ad.id %>>
+      <% if cloudzoom == true %><img src= "<%= image_path( avatar_url(@ad) ) %>", class = 'cloudzoom normal', data-cloudzoom = '{"captionSource": "#caption1", "captionType": "html"}'></img>
+        <div id="caption1" class="cloudzoom-caption"></div>
+      <% else %>
+        <%= image_tag( avatar_url(ad), :class=>"mini", :size => "100x100" ) %>
+      <% end %>
+    </section>
+    <section class="span10">
+      <section class="float-right">
+ <em>
+        <span class="timeago timestamp" title="<%= ad.updated_at.getutc.iso8601 %>"><%= ad.updated_at.to_s %></span></em>
+        <% if ad.user_is_owner(@current_user) %> 
+          <sup><%= link_to image_tag('delete-gray.png', :size => "20x20"), ad, method: :delete %></sup>
+        <% end %>
+      </section>
+      <%= render 'users/followad_form', :ad => ad, :type => "link" %>
+      <span class="displayname"><%= ad.ad_type %> <span class="bold"><%= ad.ad_name %></span></span><em> posted by <%= link_to ad.display_name, user_path(ad.user) %>( <%= ad.by_type %> ) from
+      <i class="icon-globe"></i><% if( ad.use_address_zip_code ) %> <%= ad.user.zip_code %> <% else %><%= ad.ad_zip_code %> <% end %></em>
+      <br/>
+<%= render 'shared/adstatsimple', statobject: ad %>
+      <ul class="inline">
+        <li>@price:<% if( ad.price == 0 ) %> Best <% else %><%= humanized_money_with_symbol ad.price %> <% end %></li>
+        <% if ad.best_price.present? %><li>Best <%= ad.opp_price_type %> price: <span class="greencolor"><%= humanized_money_with_symbol ad.best_price %></span></li><% end %>
+        <% if ad.user_price(@user).present? %><li>Your price: <% if( ad.user_price(@user) == 0 ) %> Match <% else %><%= humanized_money_with_symbol ad.user_price(@user) %><% end %></li><% end %>
+      </ul>
+      <% if showdetails %>
+        <section data-id=ad<%= ad.id %>>
+          <%= render 'shared/adDetails', :ad => ad %>
+        </section>
+      <% end %>
+
+    </section>
+  </div>
+
 
 

@@ -18,7 +18,28 @@ alert("hover in");
 			}, 200);
   });
 */
+  $("#viewchart").click(function() {
+	$("#chart_div").show();
+  });
+
+  $("#viewmap").click(function() {
+	$("#mapcontainer1").show();
+  });
+  
    Gmaps.loadMaps();
+  goToAds = function() {
+    window.location = "/ads/" + $(this).attr('data-adid');
+  }
+
+  $(".collectionitem").click(function() {
+//    $(".fadeinItems").fadeOut('slow');   
+    var dataid = $(this).attr('data-id');
+//    $(".collectionitem").hide();
+ //   $(".collectionitem[data-id="+dataid+"]").show();
+//    $(".objectconditional").fadeIn('slow'); 
+    var item = $(".collectionimage[data-id="+dataid+"]");
+    window.location = "/ads/" + $(this).attr('data-adid');
+  });
 /*
   function input_price_change(){
     if( $("input#remove:checkbox:checked").val() == undefined )

@@ -1,21 +1,10 @@
 <div class="stat-viewer">
 <li class="no-padding">
-  <% if ad.created_at %>
+
     <div class="row-fluid">
       <div class="span11">
         <ad-title><normal><%= ad.ad_type %>  </normal>
-          <% if !ad.brand_name.blank? && !ad.model_name.blank? %>
-            <bold><%= ad.brand_name %>  </bold>|<bold>   <%= ad.model_name %></bold>  |
-          <% else %>
-            <% if !ad.brand_name.blank? %>
-              <bold><%= ad.brand_name %></bold>  |
-            <% else %>
-              <% if !ad.model_name.blank? %>
-                <bold><%= ad.model_name %></bold>  |
-              <% end %>
-            <% end %>
-          <% end %>
-          <bold><%= ad.product_name %></bold>
+ 	  <bold><%= ad.ad_name %></bold> @
         </ad-title><money><% if ad.price_cents != 0 %> <%= humanized_money_with_symbol ad.price %><% else %>( negotiable )<% end %></money>
       </div>
       <div class="span1">
@@ -25,15 +14,7 @@
               <nav>
                 <ul class="nav">
 	          <li class="downdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <% if ad.state == "active" %>
-                      <%= image_tag("active.png", :size => "16x16") %>
-	            <% else %>
-	              <% if ad.state == "inactive" %>
-                        <%= image_tag("inactive.png", :size => "16x16") %>
-                      <% else %>
-                        <%= image_tag("closed.png", :size => "16x16") %>
-	              <% end %>
-                    <% end %>
+                      <%= image_tag(ad.state+".png", :size => "16x16") %>
                     </a>	    
                     <ul class="dropdown-menu">
 	              <li><%= link_to image_tag('active.png', :size => "16x16"), ad_path(ad, :ad => { :state => "active" } ), :method => :put  %></li>
@@ -81,7 +62,7 @@
     <section class="comment no-padding" id="comment">
       <%= render 'shared/commentfeed', :ad => ad %>
     </section>
-  <% end %>
+
 </li>
 
 </div>

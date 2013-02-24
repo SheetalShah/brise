@@ -1,25 +1,11 @@
     <div class="stats">
       <a href="<%= ad_users_path(statobject) %>">
+	<i class="icon-user"></i>
         <smallinline id="followers">
           <%= statobject.followers.count %>
         follower/s</smallinline>
       </a>
-      <a href="<%= comments_path(statobject) %>">
-        <smallinline id="followers">
-          <%= statobject.comments.count %>
-        comment/s</smallinline>
-      </a>
-    </div>
-    <div class="stats">
-      <a href="<%= ad_ads_path(statobject, ads_of_type: 'similar') %>">
-        <smallinline id="followers">
-          <%= statobject.ads_of_type('similar').count %>
-        similar ad/s</smallinline>
-      </a>
-      <a href="<%= ad_ads_path(statobject, ads_of_type: 'relevant') %>">
-        <smallinline id="followers">
-          <%= statobject.ads_of_type('relevant').count %>
-        match/es</smallinline>
-      </a>
+      
+      
     </div>
 

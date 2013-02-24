@@ -1,4 +1,4 @@
-<li id=<%= currentnode.class %><%= currentnode.id %> data-type=<%= currentnode.class.to_s.tableize %> data-id=<%= currentnode.id %>>
+<li id=<%= currentnode.class %><%= currentnode.id %> data-type=<%= currentnode.class.to_s.tableize %> data-id=<%= currentnode.id %> rel=<%= currentnode.class.to_s %>>
   <%= link_to currentnode.name, currentnode %>
   <% if level != "level2" %>
     <ul>

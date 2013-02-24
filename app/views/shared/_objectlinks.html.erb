@@ -1,17 +1,25 @@
-<section>
-  <% objecttype = object.class.to_s()+object.id.to_s %>
-  <% objectlevel = object.treeView_current_level %>
-  <a href="#" class=addobject type=<%= objecttype %>>Add <%= objectlevel %></a>
-  <% objects = object.has_any_treeView_objects_for([object]) %>
-  <% object.treeView_next_level %>
+<span class="pagelinks navbar">
+  <div class="navbar-inner nav-list">
+    <nav>
+      <ul id="pagelinks" class="nav text-center">
+  <li><a href=product_ads_path(statobject)><%=statobject.ads.count.to_s%> ad/s</a></li>
+  <li><a href=product_users_path(statobject, show_users_by: 'retailers')><%= statobject.retail_companies.count.to_s%> retailer/s</a></li>
+  <li><a href=product_users_path(statobject, show_users_by: 'manufacturers')><%= statobject.manufacturing_companies.count.to_s%> manufacturer/s</a></li>
+  <% objecttype = statobject.class.to_s()+statobject.id.to_s %>
+  <% objectlevel = statobject.treeView_current_level %>
+  <li><a href="#" class=addobject type=<%= objecttype %>>Add <%= objectlevel %></a></li>
+  <% objects = statobject.has_any_treeView_objects_for([statobject]) %>
+  <% statobject.treeView_next_level %>
   <% objects.each do |current| %>
     <% currentobjecttype = current.class.to_s()+current.id.to_s %>
     <section class="objectconditional" type=<%= currentobjecttype %>>
- | <a href="#" class=addobject type=<%= currentobjecttype %>>Add <%= object.treeView_current_level %></a>  </section>
-  <%= render 'shared/addobject_form', :object => @object, :current => current, :type => currentobjecttype, :addtype => object.treeView_current_level %>
+ | <li><a href="#" class=addobject type=<%= currentobjecttype %>>Add <%= statobject.treeView_current_level %></a></li></section>
+</ul>
+</nav>
+  </div>
+</span>
+  <%= render 'shared/addobject_form', :object => @object, :current => current, :type => currentobjecttype, :addtype => statobject.treeView_current_level %>
 <% end %>
   <%= render 'shared/addobject_form', :object => @object, :current => @object, :type => objecttype, :addtype => objectlevel %>
-</section>
-
 
 

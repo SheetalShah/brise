@@ -6,7 +6,7 @@
     <%= f.input :description, as: "text", placeholder: "Write something useful", :label => false, :input_html => { :class => "span12", :rows => "1" } %> 
   <div class="onfocusitems">   
     Your rating?  <%= rating_for brand_product, "quality", class: "float-right" %>
-    <%= f.submit "POST", class: "btn btn-small btn-primary float-right" %>
+    <%= f.submit "POST", class: "btn float-right" %>
   </div>
   <% end %>
 </div>

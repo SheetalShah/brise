@@ -1,0 +1,9 @@
+<div id="feedcolumns">
+            
+              <% @ads.each do |ad| %>
+		<%= render :partial => 'ads/adgrid', :locals => { :ad => ad } %>
+              <% end %>
+
+          </div>
+
+

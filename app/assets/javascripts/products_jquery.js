@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  jQuery(".best_in_place").best_in_place()
+  jQuery(".best_in_place").best_in_place();
   $(".brandcontent").hide();
   //toggle the componenet with class msg_body
   $(".brandheading").click(function()
@@ -27,9 +27,30 @@ $(".object")
 	        // call `.jstree` with the options object
 	        .jstree({
 	            // the `plugins` array allows you to configure the active plugins on this instance
-	            "plugins" : ["themes","html_data","ui","crrm","hotkeys"],
+	            "plugins" : ["themes","html_data","ui","crrm","hotkeys", "types"],
 	            // each plugin you have included can have its own config object
 	            //"core" : { "initially_open" : [ "root" ] },
+		
+		    "types" : {
+			"valid_children" : [ "Brand" ],
+			"types" : {
+ 			   "Brand" : {
+				"valid_children" : [ "Model" ],
+      			        "icon" : {
+				   "image" :  "/assets/glyphicons-halflings.png",
+				   "position" : "-167px -48px"
+          	 	         }
+			     },
+			    "Model" : {
+				"valid_children" : [ "default" ],
+      			        "icon" : {
+				   "image" : "/assets/glyphicons-halflings.png",
+				   "position" : "-48px -48px"
+          	 	         }
+			     }
+	               }
+		    }
+
 	            // it makes sense to configure a plugin only if overriding the defaults
 	        })
 	        // EVENTS
@@ -51,10 +72,32 @@ $("#object")
 	        // call `.jstree` with the options object
 	        .jstree({
 	            // the `plugins` array allows you to configure the active plugins on this instance
-	            "plugins" : ["themes","html_data","ui","crrm","hotkeys"],
+	            "plugins" : ["themes","html_data","ui","crrm","hotkeys", "types"],
 	            // each plugin you have included can have its own config object
 	            //"core" : { "initially_open" : [ "root" ] },
 	            // it makes sense to configure a plugin only if overriding the defaults
+		    "types" : {
+			"valid_children" : [ "Brand" ],
+			"max_depth" : -2,
+                        "max_children" : -2,
+
+			"types" : {
+ 			   "Brand" : {
+				"valid_children" : [ "Model", ],
+      			        "icon" : {
+				   "image" :  "/assets/glyphicons-halflings.png",
+				   "position" : "-167px -48px"
+          	 	         }
+			     },
+			    "Model" : {
+				"valid_children" : [ "default" ],
+      			        "icon" : {
+				   "image" : "/assets/glyphicons-halflings.png",
+				   "position" : "-48px -48px"
+          	 	         }
+			     }
+	               }
+		    }
 	        })
 	        // EVENTS
 	        // each instance triggers its own events - to process those listen on the container

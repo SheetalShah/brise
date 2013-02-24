@@ -1,0 +1,14 @@
+<span class="pagelinks navbar">
+  <div class="navbar-inner nav-list">
+    <nav>
+      <ul id="pagelinks" class="nav text-center">
+        <li><a href=comments_path(@ad)><i class="icon-comment"></i>Comments(<%= @ad.comments.count.to_s %>)</a></li>
+        <li><a href=ad_ads_path(@ad, ads_of_type: 'similar')><i class="icon-heart"></i>Similar(<%=@ad.ads_of_type('similar').count.to_s%>)</a></li>
+  <li><a href=ad_ads_path(@ad, ads_of_type: 'relevant')><i class="icon-ok"></i>Relevant hits(<%=@ad.ads_of_type('relevant').count.to_s%>)</a></li>
+  <li><a href="#" id=viewchart><i class="icon-signal"></i>View chart</a></li>
+  <li><a href="#" id=viewmap><i class="icon-globe"></i>View map</a></li>
+	</ul>
+      </nav>
+  </div>
+</span>
+<%= render 'shared/charts', :ad => @ad %>

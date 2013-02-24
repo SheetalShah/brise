@@ -1,22 +1,38 @@
-<% if @object.class.to_s == "Product" %>
-  <%= render 'users/followproduct_form', :product => @object, :type => "link" %><br/>
+<link href='http://fonts.googleapis.com/css?family=Rancho' rel='stylesheet' type='text/css'>
+<div class="row-fluid">
+  <section class="span3 formviewer">
+      <%= @object.class.to_s %>'s <%= @object.treeViewLevels.join(" with ").capitalize %> 
+      <div id="object" class="">
+      <%= render 'shared/modelbrandtree', :object => @object %>
+      </div>
+  <i class="icon-book"></i>Model
+  <i class="icon-bold"></i>Brand
+  </section>
+  <section class="span9">
+    <section class="float-right">
+  </section>
+
+  <% if @object.class.to_s == "Product" %>
+  <%= render 'users/followproduct_form', :product => @object, :type => "link" %>
 <% end %>
-<normal><%= @object.name %>  </normal>
-<br/>
-<% if @object.class.to_s == "Product" %>
-<section>
-  <%= render 'shared/productstatsimple', :statobject => @object %>
-</section>
-<% end %>
-<%= @object.treeViewLevels.join(" - ").capitalize %> tree view
-<div id="object" data-product-id= <%= @object.id %> style="height:auto;width:auto">
-  <%= render 'shared/modelbrandtree', :object => @object %>
+
+  <section class="contact-card displayname" data-id=modal_user_<%= @user.id %>><%= @object.name %></section><br>
+  <section>
+    <%= render 'shared/productstatsimple', :statobject => @object %>
+  </section><br>
+  <section>
+    <%= render 'shared/objectDetails', :object => @object %>
+  </section>
+
 </div>
-<section>
+
+<div class="row-fluid">
+  <span class="span12 form-actions">
   <% @object.treeView_level_reset %>
-  <%= render 'shared/objectlinks', :object => @object %>
-</section>
+  <%= render 'shared/objectlinks', :statobject => @object %>
+  </span>
+</div>
 <br/>
-<section>
-  <%= render 'shared/objectDetails', :object => @object %>
-</section>
+
+
+

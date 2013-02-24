@@ -51,6 +51,10 @@ class Ad < ActiveRecord::Base
     end
   end
 
+  def user_is_owner(current_user)
+    current_user == self.user
+  end
+
   def ad_name
     parts = []
     if brand_name.present?
@@ -60,7 +64,7 @@ class Ad < ActiveRecord::Base
       parts << model_name
     end
     parts << product_name
-    parts.join(" | ")
+    parts.join(" ")
   end
 
   def pre_ad_name
@@ -190,6 +194,29 @@ class Ad < ActiveRecord::Base
     "details LIKE '%#{param}%' OR brand_product_id IN (#{brand_product_ids})"
   end
 
+def all_prices_hash(records)
+  arr = Hash.new
+  records.each do |t|
+    if t.indicative_price_cents != 0 
+      arr[t.indicative_price_cents] ||= 0
+      arr[t.indicative_price_cents] = arr[t.indicative_price_cents] + 1
+    end
+  end
+    arr
+end
+
+def all_prices(records)
+  arr = []
+  total = 0
+  all_prices_hash = all_prices_hash(records)
+  all_prices_hash_count = all_prices_hash.values.sum
+
+  all_prices_hash.each do |key, val|
+    total += val
+    arr << [ key.to_f, 100 * val / all_prices_hash_count ]
+  end
+  arr
+end
  TYPES.each do |state_name|
     define_method "#{state_name}?" do
 	state == state_name

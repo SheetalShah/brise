@@ -1,83 +1,39 @@
-<div id="chart"></div>
-<title>Price distribution</title>
-<script type="text/javascript">
-$(function () {
-    var chart;
-    $(document).ready(function() {
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container',
-                type: 'column'
-            },
-            loading: {
-               hideDuration: 0,
-               showDuration: 0
-            },
-            title: {
-                text: 'Bid Price'
-            },
-            
-            xAxis: {
-		title: {
-                  text: "Price"
- 		},
-                labels: {
-                    formatter: function() {
-                        return this.value; // clean, unformatted number for year
-                    }
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Pct'
-                },
-                labels: {
-                    formatter: function() {
-                        return this.value + "%";
-                    }
-                }
-            },
-            tooltip: {
-                formatter: function() {
-                    return Highcharts.numberFormat(this.y, 0);
-                }
-            },
-            columnrange: {
-		dataLabels: {
-		  formatter: function() {
-			return this.percentage;
-	          }
-                  
-                }
-            },
-            plotOptions: {
-		
-                bar: {
-                    pointStart: 1,
-                    marker: {
-                        enabled: false,
-                        symbol: 'circle',
-                        radius: 1,
-                        states: {
-                            hover: {
-                                enabled: true
-                            }
-                        }
-                    }
-                }
-            },
-            series: [{
-		pointInterval: 1,
-                name: 'Price v/s Pct distribution',
-                data: <%= all_prices(ad.indicative_prices) %>
-            }]
-        });
-    
-});
-    
-});
-		</script>
-<div id="container" style="width: 400px; height: 400px; margin: 0 auto"></div>
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Price');
+        data.addColumn('number', 'Pct');
+        data.addRows(<%= all_prices(ad.indicative_prices) %>);
+
+        // Set chart options
+        var options = {'title':'Price distribution',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
+
+  
+    <!--Div that will hold the pie chart-->
 
 
 

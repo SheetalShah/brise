@@ -1,0 +1,28 @@
+<link href='http://fonts.googleapis.com/css?family=Rancho' rel='stylesheet' type='text/css'>
+<% for index in 0..2 %><div data-id=user-tag-info class="btn">
+  #<%= @user.tag_list[index] %></div>
+<% end %>
+          <div class="row">
+            <section id="logo"><%= image_tag avatar_url(@user), :size => "48x48" %></section>
+  	    <%= render 'shared/help', :id => 'modal_user_'+ @user.id.to_s, :object => @user %>
+            <section class="helppadding"><%= render 'users/follow_form' %>
+            <section class="contact-card" data-id=modal_user_<%= @user.id %>><%= @user.display_name %></section>
+	    <br/><small><section id = "maphelp">View map </section></small></section></div>
+            <div id="mapmodal">
+              <div id="maphelpcontent">
+                <span class="close"><%= image_tag('delete-gray.png', :size => "20x20") %></span><br/>
+                <p>
+                <div class="row">
+                  <%= gmaps({"map_options" => {"auto_zoom" => false, "zoom" => 10, "center_latitude" => @user.latitude, "center_longitude" => @user.longitude }, "markers" => {"data" => @json} }) %>
+    </div>
+  </p>
+</div>
+</div>
+<br/><br/>
+<redcolor class="text-left">About me: </redcolor>
+<aboutme>
+<%= best_in_place @user, :description %>
+</aboutme>
+          <section>
+            <%= render 'shared/stats', :statobject => @user %>
+          </section>
